@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Page = require('./models/Page');
+const Sponsor = require('./models/Sponsor');
 const connectDB = require('./config/database');
 const dotenv = require('dotenv');
 
@@ -51,6 +52,35 @@ const seedData = async () => {
                 }
             });
             console.log('Contact page content seeded');
+        }
+
+        // 4. Tickets Page
+        const ticketsPage = await Page.findOne({ slug: 'tickets' });
+        if (!ticketsPage) {
+            await Page.create({
+                slug: 'tickets',
+                title: 'Tickets Page',
+                content: {
+                    headerTitle: 'BILLETTERIE OFFICIELLE',
+                    headerSubtitle: 'Réservez vos places pour les prochains matchs.',
+                    ticketsDescription: '<h2>INFORMATIONS GÉNÉRALES</h2><p>Les billets sont disponibles en ligne ou au guichet.</p>',
+                    priceStandard: '10€',
+                    priceVIP: '25€',
+                    pointsOfSale: 'Stade de Lichtenberg, Boutique Officielle'
+                }
+            });
+            console.log('Tickets page content seeded');
+        }
+
+        // 5. Sponsors
+        const sponsorsExist = await Sponsor.countDocuments();
+        if (sponsorsExist === 0) {
+            await Sponsor.create([
+                { name: 'Nike', website: 'https://nike.com', tier: 'main', logo: '/uploads/sponsors/nike.png' },
+                { name: 'MTN', website: 'https://mtn.cm', tier: 'main', logo: '/uploads/sponsors/mtn.png' },
+                { name: 'Orange', website: 'https://orange.cm', tier: 'main', logo: '/uploads/sponsors/orange.png' }
+            ]);
+            console.log('Mock sponsors seeded (logos are placeholders)');
         }
 
         console.log('Seeding completed successfully');

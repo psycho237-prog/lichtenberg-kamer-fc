@@ -19,11 +19,17 @@ const RichTextEditor = ({ value, onChange, label }) => {
     const formats = [
         'header', 'font',
         'bold', 'italic', 'underline', 'strike',
-        'list', 'bullet',
+        'list',
         'color', 'background',
         'align',
         'link'
     ];
+
+    const handleEditorChange = (content, delta, source, editor) => {
+        if (value !== content) {
+            onChange(content);
+        }
+    };
 
     return (
         <div className="mb-6">
@@ -31,14 +37,15 @@ const RichTextEditor = ({ value, onChange, label }) => {
             <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
                 <ReactQuill
                     theme="snow"
-                    value={value}
-                    onChange={onChange}
+                    value={value || ''}
+                    onChange={handleEditorChange}
                     modules={modules}
                     formats={formats}
                     className="text-white bg-transparent"
                 />
             </div>
-            <style jsx global>{`
+            <style dangerouslySetInnerHTML={{
+                __html: `
                 .ql-toolbar.ql-snow {
                     border: none !important;
                     background: rgba(255, 255, 255, 0.05);
@@ -71,10 +78,10 @@ const RichTextEditor = ({ value, onChange, label }) => {
                 }
                 .ql-snow .ql-active .ql-stroke,
                 .ql-snow .ql-picker-label.ql-active {
-                    stroke: #0066FF !important;
-                    color: #0066FF !important;
+                    stroke: #1B5BA6 !important;
+                    color: #1B5BA6 !important;
                 }
-            `}</style>
+            `}} />
         </div>
     );
 };
