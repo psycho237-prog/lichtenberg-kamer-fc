@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp, FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
 
 const Footer = () => {
+    const [settings, setSettings] = useState(null);
+    const [contactData, setContactData] = useState(null);
+
+    useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const [settingsRes, contactRes] = await Promise.all([
+                    axios.get('http://localhost:5000/api/pages/settings'),
+                    axios.get('http://localhost:5000/api/pages/contact')
+                ]);
+                if (settingsRes.data && settingsRes.data.content) setSettings(settingsRes.data.content);
+                if (contactRes.data && contactRes.data.content) setContactData(contactRes.data.content);
+            } catch (err) {
+                console.error("Erreur chargement footer:", err);
+            }
+        };
+        fetchSettings();
+    }, []);
     return (
         <footer className="bg-dark-bg border-t border-white/10 pt-16 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,15 +38,21 @@ const Footer = () => {
                             Lichtenberg-Kamer e.V. est bien plus qu'un club. C'est une famille, une ambition et l'excellence au service du football. Rejoignez l'aventure.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="bg-white/5 p-3 rounded-full hover:bg-primary-blue transition-colors">
-                                <FaFacebook className="text-white" />
-                            </a>
-                            <a href="#" className="bg-white/5 p-3 rounded-full hover:bg-primary-blue transition-colors">
-                                <FaInstagram className="text-white" />
-                            </a>
-                            <a href="#" className="bg-white/5 p-3 rounded-full hover:bg-primary-blue transition-colors">
-                                <FaTwitter className="text-white" />
-                            </a>
+                            {settings?.facebook && (
+                                <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="bg-white/5 p-3 rounded-full hover:bg-primary-blue transition-colors">
+                                    <FaFacebook className="text-white" />
+                                </a>
+                            )}
+                            {settings?.instagram && (
+                                <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="bg-white/5 p-3 rounded-full hover:bg-pink-500 transition-colors">
+                                    <FaInstagram className="text-white" />
+                                </a>
+                            )}
+                            {settings?.twitter && (
+                                <a href={settings.twitter} target="_blank" rel="noopener noreferrer" className="bg-white/5 p-3 rounded-full hover:bg-blue-400 transition-colors">
+                                    <FaTwitter className="text-white" />
+                                </a>
+                            )}
                         </div>
                     </div>
 
@@ -51,15 +76,15 @@ const Footer = () => {
                         <ul className="space-y-4">
                             <li className="flex items-start space-x-3 text-gray-400">
                                 <FaMapMarkerAlt className="mt-1 text-primary-blue" />
-                                <span>Stadium Road, Yaoundé, Cameroun</span>
+                                <span>{contactData?.address || "Stadium Road, Yaoundé, Cameroun"}</span>
                             </li>
                             <li className="flex items-center space-x-3 text-gray-400">
                                 <FaEnvelope className="text-primary-blue" />
-                                <span>contact@lichtenberg-kamer.de</span>
+                                <span>{contactData?.email || "contact@lichtenberg-kamer.de"}</span>
                             </li>
                             <li className="flex items-center space-x-3 text-gray-400">
                                 <FaPhone className="text-primary-blue" />
-                                <span>+237 600 000 000</span>
+                                <span>{contactData?.phone || "+237 600 000 000"}</span>
                             </li>
                         </ul>
                     </div>
@@ -92,14 +117,16 @@ const Footer = () => {
             </div>
 
             {/* WhatsApp Float */}
-            <a
-                href="https://wa.me/237600000000"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fixed bottom-8 right-8 bg-green-500 p-4 rounded-full shadow-lg hover:scale-110 transition-transform z-40"
-            >
-                <FaWhatsapp className="text-white text-2xl" />
-            </a>
+            {settings?.whatsapp && (
+                <a
+                    href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(settings.contactWhatsAppMessage || '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="fixed bottom-8 right-8 bg-green-500 p-4 rounded-full shadow-lg hover:scale-110 transition-transform z-40"
+                >
+                    <FaWhatsapp className="text-white text-2xl" />
+                </a>
+            )}
         </footer>
     );
 };
