@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MatchCard from '../../components/MatchCard/MatchCard';
-import API from '../../services/api';
+import axios from 'axios';
+import { motion } from 'framer-motion';
 
 const Matches = () => {
     const [matches, setMatches] = useState([]);
@@ -9,66 +9,90 @@ const Matches = () => {
     useEffect(() => {
         const fetchMatches = async () => {
             try {
-                const { data } = await API.get('/matches');
-                setMatches(data);
-            } catch (error) {
-                setMatches([
-                    { _id: 1, opponent: 'CANON YDE', date: '2024-10-24T16:00:00', stadium: 'Stade Ahmadou Ahidjo', competition: 'ELITE ONE', status: 'upcoming' },
-                    { _id: 2, opponent: 'COTON SPORT', date: '2024-10-31T18:30:00', stadium: 'Stade Roumdé Adjia', competition: 'ELITE ONE', status: 'upcoming' },
-                    { _id: 3, opponent: 'UNION DOUALA', date: '2024-10-15T15:00:00', stadium: 'Stade de la Réunification', competition: 'ELITE ONE', status: 'finished', score: { home: 3, away: 1 } },
-                    { _id: 4, opponent: 'PWD BAMENDA', date: '2024-10-08T15:30:00', stadium: 'Stade Municipal', competition: 'ELITE ONE', status: 'finished', score: { home: 0, away: 0 } },
-                ]);
-            } finally {
+                const res = await axios.get('http://localhost:5000/api/matches');
+                setMatches(res.data);
+                setLoading(false);
+            } catch (err) {
+                console.error(err);
                 setLoading(false);
             }
         };
         fetchMatches();
     }, []);
 
-    const upcoming = matches.filter(m => m.status === 'upcoming');
-    const results = matches.filter(m => m.status === 'finished');
+    if (loading) return (
+        <div className="min-h-screen bg-dark-bg flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary-blue"></div>
+        </div>
+    );
 
     return (
-        <div className="bg-dark-bg min-h-screen pt-32 pb-20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <header className="mb-16 text-center">
-                    <span className="text-primary-blue font-black italic uppercase tracking-widest bg-primary-blue/10 px-4 py-1 rounded">Calendrier Officiel</span>
-                    <h1 className="text-5xl md:text-8xl font-black italic text-white mt-4 uppercase tracking-tighter">
-                        CALENDRIER & <span className="text-primary-yellow">RÉSULTATS</span>
-                    </h1>
-                </header>
+        <div className="min-h-screen bg-dark-bg pt-32 pb-20 px-4">
+            <div className="max-w-5xl mx-auto">
+                <div className="mb-12">
+                    <h1 className="text-5xl font-black italic text-white uppercase italic">Calendrier & Résultats</h1>
+                    <p className="text-gray-500 font-bold uppercase tracking-widest text-sm mt-2">Suivez le parcours du Lichtenberg-Kamer FC</p>
+                </div>
 
-                {/* Upcoming Section */}
-                <section className="mb-24">
-                    <div className="flex items-center space-x-4 mb-10">
-                        <h2 className="text-3xl font-black italic text-white uppercase flex items-center">
-                            <span className="w-10 h-10 bg-primary-blue/20 text-primary-blue rounded flex items-center justify-center mr-4">
-                                <span className="animate-pulse">●</span>
-                            </span>
-                            Prochains Matchs
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 gap-6">
-                        {upcoming.map(match => (
-                            <MatchCard key={match._id} match={match} />
-                        ))}
-                    </div>
-                </section>
+                <div className="space-y-6">
+                    {matches.map((match, index) => (
+                        <motion.div
+                            key={match._id}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="card-gradient rounded-3xl p-8 border border-white/5 flex flex-col md:flex-row items-center justify-between group hover:border-primary-blue/30 transition-all shadow-xl"
+                        >
+                            <div className="text-center md:text-left mb-6 md:mb-0">
+                                <span className="inline-block bg-primary-blue/10 text-primary-blue text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full italic mb-3">
+                                    {match.competition || 'Elite One'}
+                                </span>
+                                <div className="text-white font-black italic text-2xl uppercase">
+                                    {new Date(match.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                </div>
+                                <div className="text-gray-500 text-sm font-bold mt-1 uppercase tracking-widest">
+                                    {new Date(match.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })} • {match.location}
+                                </div>
+                            </div>
 
-                {/* Results Section */}
-                <section>
-                    <div className="flex items-center space-x-4 mb-10">
-                        <h2 className="text-3xl font-black italic text-white uppercase flex items-center">
-                            <span className="w-10 h-10 bg-primary-yellow/20 text-primary-yellow rounded flex items-center justify-center mr-4 italic">FT</span>
-                            Derniers Résultats
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 gap-6">
-                        {results.map(match => (
-                            <MatchCard key={match._id} match={match} isResult={true} />
-                        ))}
-                    </div>
-                </section>
+                            <div className="flex items-center justify-center space-x-6 md:space-x-12">
+                                <div className="text-center w-24 md:w-32">
+                                    <div className="text-white font-black italic uppercase text-lg mb-2">LK FC</div>
+                                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto border border-white/10 group-hover:border-primary-blue/50 transition-colors">
+                                        <img src="/images/logo.png" className="w-10 h-10 object-contain" alt="LK FC" />
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center space-x-4">
+                                    <span className="text-5xl font-black italic text-white">{match.score.home}</span>
+                                    <span className="text-gray-700 font-black text-3xl">-</span>
+                                    <span className="text-5xl font-black italic text-white">{match.score.away}</span>
+                                </div>
+
+                                <div className="text-center w-24 md:w-32">
+                                    <div className="text-white font-black italic uppercase text-lg mb-2 truncate">{match.opponent}</div>
+                                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto border border-white/10 group-hover:border-primary-yellow/50 transition-colors uppercase font-black italic text-primary-yellow">
+                                        {match.opponent.slice(0, 2)}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-8 md:mt-0">
+                                <span className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg italic ${match.status === 'finished' ? 'bg-gray-500/10 text-gray-400' :
+                                        match.status === 'ongoing' ? 'bg-red-500 text-white animate-pulse' : 'bg-primary-blue text-white'
+                                    }`}>
+                                    {match.status === 'finished' ? 'Terminé' : match.status === 'ongoing' ? 'En Direct' : 'À Venir'}
+                                </span>
+                            </div>
+                        </motion.div>
+                    ))}
+
+                    {matches.length === 0 && (
+                        <div className="text-center py-20 text-gray-500 uppercase font-black italic tracking-widest">
+                            Aucun match programmé pour le moment
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -29,6 +29,10 @@ if (process.env.NODE_ENV === 'development') {
 // Routes
 app.use('/api/players', require('./routes/playersRoutes'));
 app.use('/api/matches', require('./routes/matchesRoutes'));
+app.use('/api/news', require('./routes/newsRoutes'));
+app.use('/api/gallery', require('./routes/photoRoutes'));
+app.use('/api/pages', require('./routes/pageRoutes'));
+app.use('/api/sponsors', require('./routes/sponsorRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 
 // Static folder for uploads

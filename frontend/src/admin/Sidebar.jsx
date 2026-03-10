@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaTachometerAlt, FaUsers, FaCalendarAlt, FaNewspaper, FaImages, FaHandshake, FaSignOutAlt } from 'react-icons/fa';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
     const location = useLocation();
@@ -9,11 +9,14 @@ const Sidebar = () => {
 
     const menuItems = [
         { name: 'Dashboard', icon: <FaTachometerAlt />, path: '/admin/dashboard' },
-        { name: 'Joueurs', icon: <FaUsers />, path: '/admin/players' },
-        { name: 'Matchs', icon: <FaCalendarAlt />, path: '/admin/matches' },
+        { name: 'CMS Accueil', icon: <FaNewspaper />, path: '/admin/home-page' },
         { name: 'Actualités', icon: <FaNewspaper />, path: '/admin/news' },
-        { name: 'Galerie', icon: <FaImages />, path: '/admin/gallery' },
+        { name: 'Joueurs', icon: <FaUsers />, path: '/admin/players' },
+        { name: 'Calendrier', icon: <FaCalendarAlt />, path: '/admin/matches' },
+        { name: 'CMS Contact', icon: <FaUsers />, path: '/admin/contact-page' },
+        { name: 'CMS Tickets', icon: <FaNewspaper />, path: '/admin/tickets-page' },
         { name: 'Sponsors', icon: <FaHandshake />, path: '/admin/sponsors' },
+        { name: 'Galerie', icon: <FaImages />, path: '/admin/gallery' },
     ];
 
     return (

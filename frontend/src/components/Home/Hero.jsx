@@ -2,7 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaPlay, FaTicketAlt } from 'react-icons/fa';
 
-const Hero = () => {
+const Hero = ({ title, subtitle }) => {
+    // Split title if it contains <br /> or custom marker if needed, 
+    // or just use the first word for the big white part
+    const mainTitle = title ? title.split(' ').slice(0, -1).join(' ') : 'LICHTENBERG';
+    const highlightTitle = title ? title.split(' ').pop() : 'KAMER FC';
+
     return (
         <div className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
             {/* Background with Overlay */}
@@ -25,15 +30,15 @@ const Hero = () => {
                     transition={{ duration: 0.8 }}
                     className="max-w-3xl"
                 >
-                    <span className="inline-block px-4 py-1 mb-6 border-l-4 border-primary-yellow bg-primary-blue/20 text-primary-yellow font-bold uppercase tracking-widest text-sm">
+                    <span className="inline-block px-4 py-1 mb-6 border-l-4 border-primary-yellow bg-primary-blue/20 text-primary-yellow font-bold uppercase tracking-widest text-sm italic">
                         Saison 2024 / 2025
                     </span>
-                    <h1 className="text-6xl md:text-8xl font-black italic text-white leading-none mb-8">
-                        LICHTENBERG <br />
-                        <span className="text-primary-yellow">KAMER FC</span>
+                    <h1 className="text-6xl md:text-8xl font-black italic text-white leading-none mb-8 uppercase italic">
+                        {mainTitle} <br />
+                        <span className="text-primary-yellow">{highlightTitle}</span>
                     </h1>
-                    <p className="text-xl text-gray-300 mb-10 leading-relaxed font-semibold max-w-2xl">
-                        L'ascension d'un club, la passion d'un peuple. Ensemble, vers les sommets du football camerounais.
+                    <p className="text-xl text-gray-300 mb-10 leading-relaxed font-semibold max-w-2xl italic">
+                        {subtitle || "L'ascension d'un club, la passion d'un peuple. Ensemble, vers les sommets du football camerounais."}
                     </p>
 
                     <div className="flex flex-wrap gap-4">

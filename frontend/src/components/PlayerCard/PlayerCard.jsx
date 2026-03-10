@@ -11,12 +11,12 @@ const PlayerCard = ({ player }) => {
         >
             <div className="relative h-96 overflow-hidden">
                 {/* Number Background */}
-                <div className="absolute top-4 right-4 text-8xl font-black italic text-white/5 select-none transition-all group-hover:text-primary-blue/20">
+                <div className="absolute top-4 right-4 text-8xl font-black italic text-white/5 select-none transition-all group-hover:text-primary-blue/10">
                     {player.number}
                 </div>
 
                 <img
-                    src={player.photo || 'https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80'}
+                    src={player.photo ? `http://localhost:5000${player.photo}` : 'https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80'}
                     alt={player.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
                 />

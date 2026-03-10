@@ -1,13 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
 const Dashboard = () => {
-    const stats = [
-        { label: 'Visites Site', value: '45.2k', trend: '+12%', color: 'blue' },
-        { label: 'Ventes Shop', value: '1.2M', trend: '+8%', color: 'green' },
-        { label: 'Billets Vendus', value: '85%', trend: 'Stable', color: 'yellow' },
-        { label: 'Inscrits Académie', value: '128', trend: '+18%', color: 'purple' },
-    ];
+    const [stats, setStats] = useState([
+        { label: 'Joueurs Total', value: '0', icon: '🏃', color: 'blue' },
+        { label: 'Articles Publiés', value: '0', icon: '📰', color: 'green' },
+        { label: 'Matchs Calendrier', value: '0', icon: '⚽', color: 'yellow' },
+        { label: 'Photos / Vidéos', value: '0', icon: '🖼️', color: 'purple' },
+    ]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchStats = async () => {
+        try {
+            const [players, news, matches, gallery] = await Promise.all([
+                axios.get('http://localhost:5000/api/players'),
+                axios.get('http://localhost:5000/api/news'),
+                axios.get('http://localhost:5000/api/matches'),
+                axios.get('http://localhost:5000/api/gallery')
+            ]);
+
+            setStats([
+                { label: 'Joueurs Total', value: players.data.length, icon: '🏃', color: 'blue' },
+                { label: 'Articles Publiés', value: news.data.length, icon: '📰', color: 'green' },
+                { label: 'Matchs Calendrier', value: matches.data.length, icon: '⚽', color: 'yellow' },
+                { label: 'Photos / Vidéos', value: gallery.data.length, icon: '🖼️', color: 'purple' },
+            ]);
+            setLoading(false);
+        } catch (err) {
+            console.error('Error fetching stats:', err);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchStats();
+    }, []);
 
     return (
         <div className="flex bg-dark-bg min-h-screen">
@@ -15,12 +44,12 @@ const Dashboard = () => {
             <div className="flex-grow ml-64 p-10">
                 <header className="flex justify-between items-center mb-12">
                     <div>
-                        <h1 className="text-4xl font-black italic text-white uppercase italic">Tableau de Bord</h1>
+                        <h1 className="text-4xl font-black italic text-white uppercase">Tableau de Bord</h1>
                         <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-1">Gérer Lichtenberg-Kamer FC</p>
                     </div>
                     <div className="flex space-x-4">
-                        <button className="btn-primary py-3">Créer Article</button>
-                        <button className="btn-outline py-3 bg-white/5 border-white/10 hover:border-primary-blue">Ajouter Joueur</button>
+                        <Link to="/admin/news" className="btn-primary py-3">Créer Article</Link>
+                        <Link to="/admin/players" className="btn-outline py-3 bg-white/5 border-white/10 hover:border-primary-blue">Ajouter Joueur</Link>
                     </div>
                 </header>
 

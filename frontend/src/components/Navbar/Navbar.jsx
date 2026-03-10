@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HiMenu, HiX } from 'react-icons/hi';
-import { FaUserShield } from 'react-icons/fa';
+import { FaGlobe } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
+    const { t, i18n } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [showLang, setShowLang] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -17,12 +20,23 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'Équipe', path: '/team' },
-        { name: 'Matchs', path: '/matches' },
-        { name: 'Actualités', path: '/news' },
-        { name: 'Galerie', path: '/gallery' },
-        { name: 'Contact', path: '/contact' },
+        { name: t('Home'), path: '/' },
+        { name: t('Équipe'), path: '/team' },
+        { name: t('Matchs'), path: '/matches' },
+        { name: t('Actualités'), path: '/news' },
+        { name: t('Galerie'), path: '/gallery' },
+        { name: t('Contact'), path: '/contact' },
+    ];
+
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+        setShowLang(false);
+    };
+
+    const languages = [
+        { code: 'fr', name: 'FR', flag: '🇫🇷' },
+        { code: 'en', name: 'EN', flag: '🇺🇸' },
+        { code: 'de', name: 'DE', flag: '🇩🇪' },
     ];
 
     return (
@@ -41,18 +55,42 @@ const Navbar = () => {
                     <div className="hidden md:flex items-center space-x-8">
                         {navLinks.map((link) => (
                             <Link
-                                key={link.name}
+                                key={link.path}
                                 to={link.path}
                                 className={`text-sm font-semibold uppercase tracking-wider transition-colors ${location.pathname === link.path ? 'text-primary-yellow underline underline-offset-8' : 'text-white hover:text-primary-yellow'}`}
                             >
                                 {link.name}
                             </Link>
                         ))}
-                        <Link to="/admin/login" className="flex items-center space-x-1 text-white/60 hover:text-white transition-colors">
-                            <FaUserShield className="text-lg" />
-                        </Link>
+
+                        {/* Language Selector */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowLang(!showLang)}
+                                className="flex items-center space-x-1 text-white hover:text-primary-yellow transition-colors font-bold text-xs uppercase"
+                            >
+                                <FaGlobe className="text-sm" />
+                                <span>{i18n.language?.split('-')[0].toUpperCase()}</span>
+                            </button>
+
+                            {showLang && (
+                                <div className="absolute right-0 mt-2 w-32 bg-card-bg border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+                                    {languages.map((lang) => (
+                                        <button
+                                            key={lang.code}
+                                            onClick={() => changeLanguage(lang.code)}
+                                            className="w-full text-left px-4 py-3 text-xs font-bold text-white hover:bg-primary-blue transition-colors flex items-center justify-between"
+                                        >
+                                            <span>{lang.name}</span>
+                                            <span>{lang.flag}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
                         <Link to="/tickets" className="btn-primary">
-                            Tickets
+                            {t('Tickets')}
                         </Link>
                     </div>
 
