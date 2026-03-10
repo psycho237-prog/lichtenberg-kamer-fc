@@ -8,13 +8,16 @@ import RichTextEditor from './components/RichTextEditor';
 const AdminHome = () => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [image, setImage] = useState(null);
+    const [preview, setPreview] = useState(null);
     const [content, setContent] = useState({
         heroTitle: '',
         heroSubtitle: '',
         seasonPeriod: '',
         aboutContent: '',
         visionContent: '',
-        philosophyContent: ''
+        philosophyContent: '',
+        aboutImage: ''
     });
 
     const fetchContent = async () => {
@@ -22,10 +25,12 @@ const AdminHome = () => {
             const res = await axios.get(API_BASE + '/api/pages/home');
             if (res.data && res.data.content) {
                 setContent(res.data.content);
+                if (res.data.content.aboutImage) {
+                    setPreview(API_BASE + res.data.content.aboutImage);
+                }
             }
             setLoading(false);
         } catch (err) {
-            // If home page not found, keep default state
             setLoading(false);
         }
     };
@@ -38,19 +43,33 @@ const AdminHome = () => {
         setContent({ ...content, [key]: value });
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+            setPreview(URL.createObjectURL(file));
+        }
+    };
+
     const handleSave = async (e) => {
         e.preventDefault();
         setSaving(true);
         try {
             const config = {
                 headers: {
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             };
-            await axios.put(API_BASE + '/api/pages/home', {
-                title: 'Home Page',
-                content: content
-            }, config);
+
+            const formData = new FormData();
+            formData.append('title', 'Home Page');
+            formData.append('content', JSON.stringify(content));
+            if (image) {
+                formData.append('image', image);
+            }
+
+            await axios.put(API_BASE + '/api/pages/home', formData, config);
             toast.success('Page d\'accueil mise à jour');
             setSaving(false);
         } catch (err) {
@@ -103,13 +122,33 @@ const AdminHome = () => {
                             </div>
                         </div>
 
-                        <div className="card-gradient rounded-3xl p-8 border border-white/5">
+                        <div className="card-gradient rounded-3xl p-8 border border-white/5 space-y-6">
                             <h3 className="text-primary-blue font-black italic uppercase text-lg mb-6 italic tracking-widest">Section À Propos</h3>
-                            <RichTextEditor
-                                value={content.aboutContent}
-                                onChange={(val) => handleChange('aboutContent', val)}
-                                label="Description du Club"
-                            />
+
+                            <div className="flex flex-col md:flex-row gap-8 items-start">
+                                <div className="w-full md:w-1/3">
+                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Image de présentation</label>
+                                    <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group mb-4 bg-white/5">
+                                        {preview ? (
+                                            <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <div className="flex items-center justify-center h-full text-gray-600 text-xs font-bold uppercase tracking-widest">Aucune image</div>
+                                        )}
+                                        <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer text-white text-xs font-black uppercase tracking-widest">
+                                            Changer
+                                            <input type="file" onChange={handleImageChange} className="hidden" accept="image/*" />
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className="w-full md:w-2/3">
+                                    <RichTextEditor
+                                        value={content.aboutContent}
+                                        onChange={(val) => handleChange('aboutContent', val)}
+                                        label="Description du Club"
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         <div className="card-gradient rounded-3xl p-8 border border-white/5 grid grid-cols-1 md:grid-cols-2 gap-8">

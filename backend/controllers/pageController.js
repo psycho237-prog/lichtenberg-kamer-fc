@@ -17,7 +17,15 @@ exports.getPageBySlug = async (req, res) => {
 exports.updatePageContent = async (req, res) => {
     try {
         const { slug } = req.params;
-        const { title, content } = req.body;
+        let { title, content } = req.body;
+
+        if (typeof content === 'string') {
+            content = JSON.parse(content);
+        }
+
+        if (req.file) {
+            content.aboutImage = `/uploads/gallery/${req.file.filename}`;
+        }
 
         const updateData = {
             title,

@@ -75,7 +75,11 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="relative aspect-video rounded-3xl overflow-hidden border border-white/10"
                         >
-                            <img src="/images/hero.png" className="w-full h-full object-cover" alt="Club" />
+                            <img
+                                src={pageData.aboutImage ? `${API_BASE}${pageData.aboutImage}` : '/images/hero.png'}
+                                className="w-full h-full object-cover"
+                                alt="Club"
+                            />
                             <div className="absolute inset-0 bg-primary-blue/20 mix-blend-overlay"></div>
                         </motion.div>
                     </div>
