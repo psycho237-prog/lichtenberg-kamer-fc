@@ -6,10 +6,11 @@ const connectDB = require('./config/database');
 const dotenv = require('dotenv');
 
 dotenv.config();
-connectDB();
 
 const seedData = async () => {
     try {
+        await connectDB();
+        console.log('--- Starting Seeding ---');
         // 1. Admin User
         const adminExists = await User.findOne({ email: process.env.ADMIN_EMAIL });
         if (!adminExists) {
