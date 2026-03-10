@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -21,7 +22,7 @@ const AdminSponsors = () => {
 
     const fetchSponsors = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/sponsors');
+            const res = await axios.get(API_BASE + '/api/sponsors');
             setSponsors(res.data);
             setLoading(false);
         } catch (err) {
@@ -60,10 +61,10 @@ const AdminSponsors = () => {
             };
 
             if (editingSponsor) {
-                await axios.put(`http://localhost:5000/api/sponsors/${editingSponsor._id}`, data, config);
+                await axios.put(`${API_BASE}/api/sponsors/${editingSponsor._id}`, data, config);
                 toast.success('Sponsor mis à jour');
             } else {
-                await axios.post('http://localhost:5000/api/sponsors', data, config);
+                await axios.post(API_BASE + '/api/sponsors', data, config);
                 toast.success('Sponsor ajouté');
             }
 
@@ -79,7 +80,7 @@ const AdminSponsors = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Supprimer ce sponsor ?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/sponsors/${id}`, {
+                await axios.delete(`${API_BASE}/api/sponsors/${id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 toast.success('Sponsor supprimé');
@@ -129,7 +130,7 @@ const AdminSponsors = () => {
                             <div key={sponsor._id} className="card-gradient rounded-2xl overflow-hidden border border-white/5 flex flex-col group p-6">
                                 <div className="h-32 flex items-center justify-center bg-white/5 rounded-xl mb-4 relative">
                                     <img
-                                        src={`http://localhost:5000${sponsor.logo}`}
+                                        src={`${API_BASE}${sponsor.logo}`}
                                         className="max-h-20 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all"
                                         alt={sponsor.name}
                                     />

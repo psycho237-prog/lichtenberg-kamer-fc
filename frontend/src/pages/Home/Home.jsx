@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import Hero from '../../components/Home/Hero';
 import NextMatch from '../../components/Home/NextMatch';
@@ -18,10 +19,10 @@ const Home = () => {
         const fetchData = async () => {
             try {
                 const [newsRes, pageRes, sponsorRes, matchesRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/news'),
-                    axios.get('http://localhost:5000/api/pages/home'),
-                    axios.get('http://localhost:5000/api/sponsors'),
-                    axios.get('http://localhost:5000/api/matches')
+                    axios.get(API_BASE + '/api/news'),
+                    axios.get(API_BASE + '/api/pages/home'),
+                    axios.get(API_BASE + '/api/sponsors'),
+                    axios.get(API_BASE + '/api/matches')
                 ]);
                 setNews(newsRes.data.slice(0, 3));
                 setPageData(pageRes.data.content);
@@ -149,7 +150,7 @@ const Home = () => {
                             <Link to={`/news/${item._id}`}>
                                 <div className="relative h-64 overflow-hidden">
                                     <img
-                                        src={item.image ? `http://localhost:5000${item.image}` : '/images/hero.png'}
+                                        src={item.image ? `${API_BASE}${item.image}` : '/images/hero.png'}
                                         alt={item.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                     />
@@ -186,7 +187,7 @@ const Home = () => {
                             {sponsors.map(sponsor => (
                                 <img
                                     key={sponsor._id}
-                                    src={`http://localhost:5000${sponsor.logo}`}
+                                    src={`${API_BASE}${sponsor.logo}`}
                                     alt={sponsor.name}
                                     className="h-12 w-auto object-contain"
                                     title={sponsor.name}

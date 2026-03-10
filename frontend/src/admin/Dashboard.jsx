@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -15,10 +16,10 @@ const Dashboard = () => {
     const fetchStats = async () => {
         try {
             const [players, news, matches, gallery] = await Promise.all([
-                axios.get('http://localhost:5000/api/players'),
-                axios.get('http://localhost:5000/api/news'),
-                axios.get('http://localhost:5000/api/matches'),
-                axios.get('http://localhost:5000/api/gallery')
+                axios.get(API_BASE + '/api/players'),
+                axios.get(API_BASE + '/api/news'),
+                axios.get(API_BASE + '/api/matches'),
+                axios.get(API_BASE + '/api/gallery')
             ]);
 
             setStats([

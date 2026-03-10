@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -18,7 +19,7 @@ const AdminTickets = () => {
 
     const fetchContent = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/pages/tickets');
+            const res = await axios.get(API_BASE + '/api/pages/tickets');
             if (res.data && res.data.content) {
                 setContent(res.data.content);
             }
@@ -45,7 +46,7 @@ const AdminTickets = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             };
-            await axios.put('http://localhost:5000/api/pages/tickets', {
+            await axios.put(API_BASE + '/api/pages/tickets', {
                 title: 'Tickets Page',
                 content: content
             }, config);

@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -12,7 +13,7 @@ const NewsList = () => {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/news');
+                const res = await axios.get(API_BASE + '/api/news');
                 setNews(res.data);
                 setLoading(false);
             } catch (err) {
@@ -34,7 +35,7 @@ const NewsList = () => {
             <PageHero
                 title="ACTUALITÉS DU CLUB"
                 subtitle="Dernières nouvelles, résultats et coulisses du Lichtenberg-Kamer FC."
-                bgImage="https://images.unsplash.com/photo-1508344928928-7165b67de128?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+                bgImage="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
             />
 
             <div className="max-w-7xl mx-auto px-4 mt-16">
@@ -49,7 +50,7 @@ const NewsList = () => {
                         >
                             <div className="relative h-64 overflow-hidden">
                                 <img
-                                    src={item.image ? `http://localhost:5000${item.image}` : '/images/hero.png'}
+                                    src={item.image ? `${API_BASE}${item.image}` : '/images/hero.png'}
                                     alt={item.title}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />

@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -22,7 +23,7 @@ const AdminPlayers = () => {
 
     const fetchPlayers = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/players');
+            const res = await axios.get(API_BASE + '/api/players');
             setPlayers(res.data);
             setLoading(false);
         } catch (err) {
@@ -62,10 +63,10 @@ const AdminPlayers = () => {
             };
 
             if (editingPlayer) {
-                await axios.put(`http://localhost:5000/api/players/${editingPlayer._id}`, data, config);
+                await axios.put(`${API_BASE}/api/players/${editingPlayer._id}`, data, config);
                 toast.success('Joueur mis à jour');
             } else {
-                await axios.post('http://localhost:5000/api/players', data, config);
+                await axios.post(API_BASE + '/api/players', data, config);
                 toast.success('Joueur ajouté');
             }
 
@@ -81,7 +82,7 @@ const AdminPlayers = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Supprimer ce joueur ?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/players/${id}`, {
+                await axios.delete(`${API_BASE}/api/players/${id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 toast.success('Joueur supprimé');
@@ -133,7 +134,7 @@ const AdminPlayers = () => {
                                 <div className="flex items-center space-x-4">
                                     <div className="w-16 h-16 rounded-xl overflow-hidden bg-white/5">
                                         <img
-                                            src={player.photo ? `http://localhost:5000${player.photo}` : '/images/hero.png'}
+                                            src={player.photo ? `${API_BASE}${player.photo}` : '/images/hero.png'}
                                             className="w-full h-full object-cover"
                                             alt={player.name}
                                         />

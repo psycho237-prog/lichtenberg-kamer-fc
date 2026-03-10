@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -11,7 +12,7 @@ const Tickets = () => {
     useEffect(() => {
         const fetchPage = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/pages/tickets');
+                const res = await axios.get(API_BASE + '/api/pages/tickets');
                 setPageData(res.data.content);
                 setLoading(false);
             } catch (err) {

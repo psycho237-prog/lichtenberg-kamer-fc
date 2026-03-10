@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -21,7 +22,7 @@ const AdminGallery = () => {
 
     const fetchPhotos = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/gallery');
+            const res = await axios.get(API_BASE + '/api/gallery');
             setPhotos(res.data);
             setLoading(false);
         } catch (err) {
@@ -66,7 +67,7 @@ const AdminGallery = () => {
                 }
             };
 
-            await axios.post('http://localhost:5000/api/gallery', data, config);
+            await axios.post(API_BASE + '/api/gallery', data, config);
             toast.success('Élément ajouté à la galerie');
             setIsModalOpen(false);
             setFormData({ title: '', category: 'match', isVideo: false, videoUrl: '', photo: null });
@@ -79,7 +80,7 @@ const AdminGallery = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Supprimer cet élément ?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/gallery/${id}`, {
+                await axios.delete(`${API_BASE}/api/gallery/${id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 toast.success('Supprimé avec succès');
@@ -125,7 +126,7 @@ const AdminGallery = () => {
                                     </div>
                                 ) : (
                                     <img
-                                        src={photo.url ? `http://localhost:5000${photo.url}` : '/images/hero.png'}
+                                        src={photo.url ? `${API_BASE}${photo.url}` : '/images/hero.png'}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         alt={photo.title}
                                     />

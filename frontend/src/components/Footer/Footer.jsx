@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -11,8 +12,8 @@ const Footer = () => {
         const fetchSettings = async () => {
             try {
                 const [settingsRes, contactRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/pages/settings'),
-                    axios.get('http://localhost:5000/api/pages/contact')
+                    axios.get(API_BASE + '/api/pages/settings'),
+                    axios.get(API_BASE + '/api/pages/contact')
                 ]);
                 if (settingsRes.data && settingsRes.data.content) setSettings(settingsRes.data.content);
                 if (contactRes.data && contactRes.data.content) setContactData(contactRes.data.content);

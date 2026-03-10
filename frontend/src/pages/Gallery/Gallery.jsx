@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -10,7 +11,7 @@ const Gallery = () => {
     useEffect(() => {
         const fetchPhotos = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/gallery');
+                const res = await axios.get(API_BASE + '/api/gallery');
                 setPhotos(res.data);
                 setLoading(false);
             } catch (err) {
@@ -51,7 +52,7 @@ const Gallery = () => {
                                 </div>
                             ) : (
                                 <img
-                                    src={`http://localhost:5000${photo.url}`}
+                                    src={`${API_BASE}${photo.url}`}
                                     alt={photo.title}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />

@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -18,7 +19,7 @@ const AdminHome = () => {
 
     const fetchContent = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/pages/home');
+            const res = await axios.get(API_BASE + '/api/pages/home');
             if (res.data && res.data.content) {
                 setContent(res.data.content);
             }
@@ -46,7 +47,7 @@ const AdminHome = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             };
-            await axios.put('http://localhost:5000/api/pages/home', {
+            await axios.put(API_BASE + '/api/pages/home', {
                 title: 'Home Page',
                 content: content
             }, config);

@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -23,7 +24,7 @@ const AdminNews = () => {
 
     const fetchNews = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/news');
+            const res = await axios.get(API_BASE + '/api/news');
             setNews(res.data);
             setLoading(false);
         } catch (err) {
@@ -62,10 +63,10 @@ const AdminNews = () => {
             };
 
             if (editingArticle) {
-                await axios.put(`http://localhost:5000/api/news/${editingArticle._id}`, data, config);
+                await axios.put(`${API_BASE}/api/news/${editingArticle._id}`, data, config);
                 toast.success('Article mis à jour');
             } else {
-                await axios.post('http://localhost:5000/api/news', data, config);
+                await axios.post(API_BASE + '/api/news', data, config);
                 toast.success('Article publié');
             }
 
@@ -81,7 +82,7 @@ const AdminNews = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Supprimer cet article ?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/news/${id}`, {
+                await axios.delete(`${API_BASE}/api/news/${id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 toast.success('Article supprimé');
@@ -131,7 +132,7 @@ const AdminNews = () => {
                             <div key={article._id} className="card-gradient rounded-2xl overflow-hidden border border-white/5 flex flex-col group h-full">
                                 <div className="relative h-48 overflow-hidden">
                                     <img
-                                        src={article.image ? `http://localhost:5000${article.image}` : '/images/hero.png'}
+                                        src={article.image ? `${API_BASE}${article.image}` : '/images/hero.png'}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         alt={article.title}
                                     />

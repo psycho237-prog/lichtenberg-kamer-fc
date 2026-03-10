@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -17,7 +18,7 @@ const AdminSettings = () => {
 
     const fetchSettings = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/pages/settings');
+            const res = await axios.get(API_BASE + '/api/pages/settings');
             if (res.data && res.data.content) {
                 setSettings(res.data.content);
             }
@@ -44,7 +45,7 @@ const AdminSettings = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             };
-            await axios.put('http://localhost:5000/api/pages/settings', {
+            await axios.put(API_BASE + '/api/pages/settings', {
                 title: 'Global Settings',
                 content: settings
             }, config);

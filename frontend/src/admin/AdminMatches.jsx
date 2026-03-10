@@ -1,3 +1,4 @@
+import { API_BASE } from '../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -24,7 +25,7 @@ const AdminMatches = () => {
 
     const fetchMatches = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/matches');
+            const res = await axios.get(API_BASE + '/api/matches');
             setMatches(res.data);
             setLoading(false);
         } catch (err) {
@@ -62,10 +63,10 @@ const AdminMatches = () => {
             };
 
             if (editingMatch) {
-                await axios.put(`http://localhost:5000/api/matches/${editingMatch._id}`, formData, config);
+                await axios.put(`${API_BASE}/api/matches/${editingMatch._id}`, formData, config);
                 toast.success('Match mis à jour');
             } else {
-                await axios.post('http://localhost:5000/api/matches', formData, config);
+                await axios.post(API_BASE + '/api/matches', formData, config);
                 toast.success('Match ajouté');
             }
 
@@ -89,7 +90,7 @@ const AdminMatches = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Supprimer ce match ?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/matches/${id}`, {
+                await axios.delete(`${API_BASE}/api/matches/${id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 toast.success('Match supprimé');

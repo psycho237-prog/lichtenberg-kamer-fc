@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -12,7 +13,7 @@ const NewsDetail = () => {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/news/${id}`);
+                const res = await axios.get(`${API_BASE}/api/news/${id}`);
                 setArticle(res.data);
                 setLoading(false);
             } catch (err) {
@@ -41,7 +42,7 @@ const NewsDetail = () => {
             {/* Header Hero */}
             <div className="relative h-[60vh] min-h-[400px]">
                 <img
-                    src={article.image ? `http://localhost:5000${article.image}` : '/images/hero.png'}
+                    src={article.image ? `${API_BASE}${article.image}` : '/images/hero.png'}
                     alt={article.title}
                     className="w-full h-full object-cover"
                 />

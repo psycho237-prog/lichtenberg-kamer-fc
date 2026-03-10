@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaChevronRight } from 'react-icons/fa';
+import { API_BASE } from '../../services/api';
 
 const PlayerCard = ({ player }) => {
     return (
@@ -16,7 +17,7 @@ const PlayerCard = ({ player }) => {
                 </div>
 
                 <img
-                    src={player.photo ? `http://localhost:5000${player.photo}` : 'https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80'}
+                    src={player.photo ? `${API_BASE}${player.photo}` : 'https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80'}
                     alt={player.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
                 />

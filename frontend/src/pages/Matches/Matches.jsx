@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -10,7 +11,7 @@ const Matches = () => {
     useEffect(() => {
         const fetchMatches = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/matches');
+                const res = await axios.get(API_BASE + '/api/matches');
                 setMatches(res.data);
                 setLoading(false);
             } catch (err) {

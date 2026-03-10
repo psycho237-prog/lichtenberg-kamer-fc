@@ -1,3 +1,4 @@
+import { API_BASE } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -13,8 +14,8 @@ const Contact = () => {
         const fetchData = async () => {
             try {
                 const [pageRes, settingsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/pages/contact'),
-                    axios.get('http://localhost:5000/api/pages/settings')
+                    axios.get(API_BASE + '/api/pages/contact'),
+                    axios.get(API_BASE + '/api/pages/settings')
                 ]);
                 setPageData(pageRes.data.content);
                 if (settingsRes.data && settingsRes.data.content) setSettings(settingsRes.data.content);
