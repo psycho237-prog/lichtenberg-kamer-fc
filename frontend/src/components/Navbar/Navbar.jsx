@@ -119,10 +119,21 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-                    <div className="pt-4">
+                    <div className="pt-4 space-y-2">
                         <Link to="/tickets" className="btn-primary w-full justify-center">
-                            Tickets
+                            {t('Tickets')}
                         </Link>
+                        <div className="flex justify-center space-x-6 py-4 border-t border-white/5 mt-4">
+                            {languages.map((lang) => (
+                                <button
+                                    key={lang.code}
+                                    onClick={() => changeLanguage(lang.code)}
+                                    className={`text-xl p-2 rounded-lg ${i18n.language === lang.code ? 'bg-primary-blue' : 'bg-white/5'}`}
+                                >
+                                    {lang.flag}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}
