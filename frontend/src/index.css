@@ -67,47 +67,47 @@
 }
 
 .ql-editor h1 {
-  @apply text-4xl mb-6 text-white border-l-4 border-primary-blue pl-4 !important;
+  @apply !text-4xl !mb-6 !text-white !border-l-4 !border-primary-blue !pl-4;
 }
 
 .ql-editor h2 {
-  @apply text-3xl mb-5 text-white !important;
+  @apply !text-3xl !mb-5 !text-white;
 }
 
 .ql-editor h3 {
-  @apply text-2xl mb-4 text-white !important;
+  @apply !text-2xl !mb-4 !text-white;
 }
 
 .ql-editor p {
-  @apply text-gray-400 mb-6 font-semibold leading-relaxed !important;
+  @apply !text-gray-400 !mb-6 !font-semibold !leading-relaxed;
 }
 
 .ql-editor ul {
   list-style-type: disc !important;
-  @apply ml-6 mb-6 !important;
+  @apply !ml-6 !mb-6;
 }
 
 .ql-editor ol {
   list-style-type: decimal !important;
-  @apply ml-6 mb-6 !important;
+  @apply !ml-6 !mb-6;
 }
 
 .ql-editor li {
-  @apply mb-2 pl-2 text-gray-400 font-semibold !important;
+  @apply !mb-2 !pl-2 !text-gray-400 !font-semibold;
 }
 
 .ql-editor strong {
-  @apply text-white font-black !important;
+  @apply !text-white !font-black;
 }
 
 .ql-editor em {
-  @apply text-primary-yellow font-bold !important;
+  @apply !text-primary-yellow !font-bold;
 }
 
 .ql-editor a {
-  @apply text-primary-blue underline font-bold !important;
+  @apply !text-primary-blue !underline !font-bold;
 }
 
 .ql-editor.ql-blank::before {
-  @apply text-gray-600 !important;
+  @apply !text-gray-600;
 }
