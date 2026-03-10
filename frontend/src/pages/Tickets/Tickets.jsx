@@ -24,7 +24,6 @@ const Tickets = () => {
     if (loading) return null;
 
     return (
-    return (
         <div className="bg-dark-bg min-h-screen pb-20">
             <PageHero
                 title={`${pageData?.headerTitle || 'BILLETTERIE'} ${pageData?.headerSubtitle ? '' : 'OFFICIELLE'}`}
