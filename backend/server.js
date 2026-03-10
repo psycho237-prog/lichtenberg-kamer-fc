@@ -48,10 +48,6 @@ if (process.env.NODE_ENV === 'production') {
         }
     });
 } else {
-    // Root route
-    app.get('/', (req, res) => {
-        res.send('API is running...');
-    });
 }
 
 const PORT = process.env.PORT || 5000;
