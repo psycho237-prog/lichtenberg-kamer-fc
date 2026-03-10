@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-blue: #1B5BA6;
+  --color-primary-yellow: #F5C518;
+  --color-dark-bg: #0A0F1C;
+  --color-card-bg: #111827;
+  --color-accent-blue: #1B5BA6;
+  
+  --font-family-sport: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-dark-bg text-white font-sport antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold italic uppercase tracking-tighter;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2 bg-primary-blue hover:bg-blue-700 text-white font-bold rounded transition duration-200 transform hover:scale-105 inline-flex items-center;
+  }
+  
+  .btn-outline {
+    @apply px-6 py-2 border-2 border-primary-blue text-white hover:bg-primary-blue font-bold rounded transition duration-200 inline-flex items-center;
+  }
+
+  .card-gradient {
+    @apply bg-card-bg border border-white/10 hover:border-primary-blue/50 transition-all duration-300;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-blue to-primary-yellow;
+  }
+}
+
+/* Custom Sports Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-dark-bg;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-blue rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-600;
+}

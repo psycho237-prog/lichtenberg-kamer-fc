@@ -1,0 +1,107 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp, FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
+
+const Footer = () => {
+    return (
+        <footer className="bg-dark-bg border-t border-white/10 pt-16 pb-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    {/* Club Info */}
+                    <div>
+                        <div className="flex items-center space-x-2 mb-6">
+                            <img src="/images/logo.png" alt="LK Logo" className="h-12 w-auto" />
+                            <span className="text-xl font-bold italic text-white">
+                                LICHTENBERG-<span className="text-primary-yellow">KAMER</span>
+                            </span>
+                        </div>
+                        <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                            Lichtenberg-Kamer e.V. est bien plus qu'un club. C'est une famille, une ambition et l'excellence au service du football. Rejoignez l'aventure.
+                        </p>
+                        <div className="flex space-x-4">
+                            <a href="#" className="bg-white/5 p-3 rounded-full hover:bg-primary-blue transition-colors">
+                                <FaFacebook className="text-white" />
+                            </a>
+                            <a href="#" className="bg-white/5 p-3 rounded-full hover:bg-primary-blue transition-colors">
+                                <FaInstagram className="text-white" />
+                            </a>
+                            <a href="#" className="bg-white/5 p-3 rounded-full hover:bg-primary-blue transition-colors">
+                                <FaTwitter className="text-white" />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Navigation */}
+                    <div>
+                        <h3 className="text-white text-lg font-bold mb-6">Navigation</h3>
+                        <ul className="space-y-4">
+                            {['Home', 'Équipe', 'Matchs', 'Actualités', 'Galerie', 'Contact'].map((item) => (
+                                <li key={item}>
+                                    <Link to={`/${item.toLowerCase()}`} className="text-gray-400 hover:text-primary-yellow transition-colors flex items-center">
+                                        <span className="mr-2">›</span> {item}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Contact Info */}
+                    <div>
+                        <h3 className="text-white text-lg font-bold mb-6">Contact</h3>
+                        <ul className="space-y-4">
+                            <li className="flex items-start space-x-3 text-gray-400">
+                                <FaMapMarkerAlt className="mt-1 text-primary-blue" />
+                                <span>Stadium Road, Yaoundé, Cameroun</span>
+                            </li>
+                            <li className="flex items-center space-x-3 text-gray-400">
+                                <FaEnvelope className="text-primary-blue" />
+                                <span>contact@lichtenberg-kamer.de</span>
+                            </li>
+                            <li className="flex items-center space-x-3 text-gray-400">
+                                <FaPhone className="text-primary-blue" />
+                                <span>+237 600 000 000</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Newsletter */}
+                    <div>
+                        <h3 className="text-white text-lg font-bold mb-6">Newsletter</h3>
+                        <p className="text-gray-400 text-sm mb-4">Abonnez-vous pour recevoir les dernières infos.</p>
+                        <form className="space-y-3">
+                            <input
+                                type="email"
+                                placeholder="Votre Email"
+                                className="w-full bg-white/5 border border-white/10 rounded px-4 py-2 focus:outline-none focus:border-primary-blue text-white"
+                            />
+                            <button className="btn-primary w-full justify-center py-3">
+                                S'abonner
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                {/* Bottom Bar */}
+                <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                    <p>© 2024 LICHTENBERG-KAMER FC. TOUS DROITS RÉSERVÉS.</p>
+                    <div className="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" className="hover:text-white transition-colors">Politique de Confidentialité</a>
+                        <a href="#" className="hover:text-white transition-colors">Mentions Légales</a>
+                    </div>
+                </div>
+            </div>
+
+            {/* WhatsApp Float */}
+            <a
+                href="https://wa.me/237600000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-8 right-8 bg-green-500 p-4 rounded-full shadow-lg hover:scale-110 transition-transform z-40"
+            >
+                <FaWhatsapp className="text-white text-2xl" />
+            </a>
+        </footer>
+    );
+};
+
+export default Footer;
