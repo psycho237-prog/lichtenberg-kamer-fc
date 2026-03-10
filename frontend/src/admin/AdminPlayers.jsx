@@ -15,11 +15,13 @@ const AdminPlayers = () => {
         name: '',
         number: '',
         position: 'Gardiens',
+        category: 'Jeune',
         age: '',
         photo: null
     });
 
     const positions = ['Gardiens', 'Défenseurs', 'Milieux', 'Attaquants'];
+    const categories = ['Jeune', 'Vétéran'];
 
     const fetchPlayers = async () => {
         try {
@@ -51,6 +53,7 @@ const AdminPlayers = () => {
         data.append('name', formData.name);
         data.append('number', formData.number);
         data.append('position', formData.position);
+        data.append('category', formData.category);
         data.append('age', formData.age);
         if (formData.photo) data.append('photo', formData.photo);
 
@@ -72,7 +75,7 @@ const AdminPlayers = () => {
 
             setIsModalOpen(false);
             setEditingPlayer(null);
-            setFormData({ name: '', number: '', position: 'Gardiens', age: '', photo: null });
+            setFormData({ name: '', number: '', position: 'Gardiens', category: 'Jeune', age: '', photo: null });
             fetchPlayers();
         } catch (err) {
             toast.error(err.response?.data?.message || 'Erreur lors de l\'enregistrement');
@@ -99,6 +102,7 @@ const AdminPlayers = () => {
             name: player.name,
             number: player.number,
             position: player.position,
+            category: player.category || 'Jeune',
             age: player.age || '',
             photo: null
         });
@@ -144,7 +148,9 @@ const AdminPlayers = () => {
                                         <div className="flex items-center space-x-2 mt-2">
                                             <span className="text-primary-blue text-[10px] font-black uppercase tracking-widest italic ">{player.position}</span>
                                             <span className="text-white/20">•</span>
-                                            <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest italic">N° {player.number}</span>
+                                            <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest italic font-bold">N° {player.number}</span>
+                                            <span className="text-white/20">•</span>
+                                            <span className="text-primary-yellow text-[10px] font-black uppercase tracking-widest italic">{player.category}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +202,7 @@ const AdminPlayers = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-6">
+                                <div className="grid grid-cols-3 gap-4">
                                     <div>
                                         <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Position</label>
                                         <select
@@ -204,6 +210,15 @@ const AdminPlayers = () => {
                                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none appearance-none"
                                         >
                                             {positions.map(p => <option key={p} value={p}>{p}</option>)}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Catégorie</label>
+                                        <select
+                                            name="category" value={formData.category} onChange={handleChange}
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none appearance-none"
+                                        >
+                                            {categories.map(c => <option key={c} value={c}>{c}</option>)}
                                         </select>
                                     </div>
                                     <div>

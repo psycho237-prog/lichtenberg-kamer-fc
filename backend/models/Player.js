@@ -6,7 +6,13 @@ const playerSchema = mongoose.Schema({
     position: {
         type: String,
         required: true,
-        enum: ['Gardiens', 'Défenseurs', 'Milieux', 'Attaquants'] // Matches French Figma terms
+        enum: ['Gardiens', 'Défenseurs', 'Milieux', 'Attaquants']
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: ['Jeune', 'Vétéran'],
+        default: 'Jeune'
     },
     photo: { type: String, default: '/uploads/players/default.png' },
     age: { type: Number },

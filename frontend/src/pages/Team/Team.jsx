@@ -28,6 +28,7 @@ const Team = () => {
         fetchPlayers();
     }, []);
 
+    const categories = ['Jeune', 'Vétéran'];
     const positions = ['Gardiens', 'Défenseurs', 'Milieux', 'Attaquants'];
 
     return (
@@ -39,25 +40,39 @@ const Team = () => {
             />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-
-                {positions.map((pos) => {
-                    const categoryPlayers = players.filter(p => p.position === pos);
-                    if (categoryPlayers.length === 0) return null;
+                {categories.map((cat) => {
+                    const playersInCat = players.filter(p => (p.category || 'Jeune') === cat);
+                    if (playersInCat.length === 0) return null;
 
                     return (
-                        <section key={pos} className="mb-20">
-                            <div className="flex items-center space-x-4 mb-10">
-                                <span className="w-12 h-[2px] bg-primary-blue"></span>
-                                <h2 className="text-2xl font-black italic text-white uppercase tracking-widest flex items-center">
-                                    <span className="text-primary-blue mr-3 opacity-50">#</span> {pos}
+                        <div key={cat} className="mb-24">
+                            <div className="flex flex-col mb-12">
+                                <h2 className="text-4xl font-black italic text-white uppercase tracking-tighter flex items-center">
+                                    <span className="text-primary-blue mr-4">/</span> {cat}S
                                 </h2>
+                                <div className="h-1 w-24 bg-primary-blue mt-2"></div>
                             </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                                {categoryPlayers.map(player => (
-                                    <PlayerCard key={player._id} player={player} />
-                                ))}
-                            </div>
-                        </section>
+
+                            {positions.map((pos) => {
+                                const posPlayers = playersInCat.filter(p => p.position === pos);
+                                if (posPlayers.length === 0) return null;
+
+                                return (
+                                    <section key={pos} className="mb-16">
+                                        <div className="flex items-center space-x-4 mb-8">
+                                            <h3 className="text-xl font-black italic text-white/50 uppercase tracking-widest flex items-center">
+                                                {pos}
+                                            </h3>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                                            {posPlayers.map(player => (
+                                                <PlayerCard key={player._id} player={player} />
+                                            ))}
+                                        </div>
+                                    </section>
+                                );
+                            })}
+                        </div>
                     );
                 })}
             </div>
