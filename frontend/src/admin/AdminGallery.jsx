@@ -1,4 +1,5 @@
 import { API_BASE } from '../services/api';
+import { getImageUrl } from '../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -126,7 +127,7 @@ const AdminGallery = () => {
                                     </div>
                                 ) : (
                                     <img
-                                        src={photo.url ? `${API_BASE}${photo.url}` : '/images/hero.png'}
+                                        src={photo.url ? getImageUrl(photo.url) : '/images/hero.png'}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         alt={photo.title}
                                     />

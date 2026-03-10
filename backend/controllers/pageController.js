@@ -23,8 +23,14 @@ exports.updatePageContent = async (req, res) => {
             content = JSON.parse(content);
         }
 
-        if (req.file) {
-            content.aboutImage = `/uploads/gallery/${req.file.filename}`;
+        if (req.files && req.files.length > 0) {
+            req.files.forEach(file => {
+                if (file.fieldname === 'image' || file.fieldname === 'aboutImage') {
+                    content.aboutImage = file.path;
+                } else if (file.fieldname === 'heroImage') {
+                    content.heroImage = file.path;
+                }
+            });
         }
 
         const updateData = {

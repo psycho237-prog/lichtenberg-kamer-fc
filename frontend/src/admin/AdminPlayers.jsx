@@ -1,4 +1,5 @@
 import { API_BASE } from '../services/api';
+import { getImageUrl } from '../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -138,7 +139,7 @@ const AdminPlayers = () => {
                                 <div className="flex items-center space-x-4">
                                     <div className="w-16 h-16 rounded-xl overflow-hidden bg-white/5">
                                         <img
-                                            src={player.photo ? `${API_BASE}${player.photo}` : '/images/hero.png'}
+                                            src={player.photo ? getImageUrl(player.photo) : '/images/hero.png'}
                                             className="w-full h-full object-cover"
                                             alt={player.name}
                                         />

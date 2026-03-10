@@ -16,7 +16,7 @@ exports.addPhoto = async (req, res) => {
     try {
         const photoData = { ...req.body, createdAt: new Date() };
         if (req.file) {
-            photoData.url = `/uploads/gallery/${req.file.filename}`;
+            photoData.url = req.file.path;
         }
         const docRef = await db.collection('gallery').add(photoData);
         res.status(201).json({ _id: docRef.id, ...photoData });

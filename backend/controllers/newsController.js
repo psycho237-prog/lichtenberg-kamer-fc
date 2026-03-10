@@ -29,7 +29,7 @@ exports.createNews = async (req, res) => {
             ...req.body,
             publishDate: req.body.publishDate || new Date().toISOString()
         };
-        if (req.file) newsData.image = `/uploads/gallery/${req.file.filename}`;
+        if (req.file) newsData.image = req.file.path;
 
         const docRef = await db.collection('news').add(newsData);
         res.status(201).json({ _id: docRef.id, ...newsData });
@@ -42,7 +42,7 @@ exports.createNews = async (req, res) => {
 exports.updateNews = async (req, res) => {
     try {
         const updateData = { ...req.body };
-        if (req.file) updateData.image = `/uploads/gallery/${req.file.filename}`;
+        if (req.file) updateData.image = req.file.path;
 
         await db.collection('news').doc(req.params.id).update(updateData);
         res.json({ _id: req.params.id, ...updateData });

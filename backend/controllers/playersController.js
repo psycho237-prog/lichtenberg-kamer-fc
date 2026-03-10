@@ -19,7 +19,7 @@ exports.createPlayer = async (req, res) => {
         const playerData = { ...req.body };
         // Photo logic remains local for now, but points to firestore entry
         if (req.file) {
-            playerData.photo = `/uploads/players/${req.file.filename}`;
+            playerData.photo = req.file.path;
         }
 
         const docRef = await db.collection('players').add(playerData);
@@ -36,7 +36,7 @@ exports.updatePlayer = async (req, res) => {
     try {
         const updateData = { ...req.body };
         if (req.file) {
-            updateData.photo = `/uploads/players/${req.file.filename}`;
+            updateData.photo = req.file.path;
         }
 
         await db.collection('players').doc(req.params.id).update(updateData);

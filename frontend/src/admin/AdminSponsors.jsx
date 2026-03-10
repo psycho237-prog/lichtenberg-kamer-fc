@@ -1,4 +1,5 @@
 import { API_BASE } from '../services/api';
+import { getImageUrl } from '../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -130,7 +131,7 @@ const AdminSponsors = () => {
                             <div key={sponsor._id} className="card-gradient rounded-2xl overflow-hidden border border-white/5 flex flex-col group p-6">
                                 <div className="h-32 flex items-center justify-center bg-white/5 rounded-xl mb-4 relative">
                                     <img
-                                        src={`${API_BASE}${sponsor.logo}`}
+                                        src={getImageUrl(sponsor.logo)}
                                         className="max-h-20 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all"
                                         alt={sponsor.name}
                                     />
@@ -141,7 +142,7 @@ const AdminSponsors = () => {
                                 </div>
                                 <h4 className="text-lg font-black italic uppercase italic text-center mb-1">{sponsor.name}</h4>
                                 <span className={`text-[10px] font-black uppercase tracking-widest text-center px-2 py-1 rounded-full ${sponsor.tier === 'main' ? 'bg-primary-yellow text-black' :
-                                        sponsor.tier === 'premium' ? 'bg-primary-blue text-white' : 'bg-gray-700 text-gray-300'
+                                    sponsor.tier === 'premium' ? 'bg-primary-blue text-white' : 'bg-gray-700 text-gray-300'
                                     }`}>
                                     {sponsor.tier}
                                 </span>

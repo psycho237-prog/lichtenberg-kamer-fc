@@ -1,4 +1,5 @@
 import { API_BASE } from '../services/api';
+import { getImageUrl } from '../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -132,7 +133,7 @@ const AdminNews = () => {
                             <div key={article._id} className="card-gradient rounded-2xl overflow-hidden border border-white/5 flex flex-col group h-full">
                                 <div className="relative h-48 overflow-hidden">
                                     <img
-                                        src={article.image ? `${API_BASE}${article.image}` : '/images/hero.png'}
+                                        src={article.image ? getImageUrl(article.image) : '/images/hero.png'}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         alt={article.title}
                                     />

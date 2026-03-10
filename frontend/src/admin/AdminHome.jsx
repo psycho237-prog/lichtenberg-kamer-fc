@@ -1,4 +1,5 @@
 import { API_BASE } from '../services/api';
+import { getImageUrl } from '../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -9,7 +10,9 @@ const AdminHome = () => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [image, setImage] = useState(null);
+    const [heroImage, setHeroImage] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [heroPreview, setHeroPreview] = useState(null);
     const [content, setContent] = useState({
         heroTitle: '',
         heroSubtitle: '',
@@ -26,7 +29,10 @@ const AdminHome = () => {
             if (res.data && res.data.content) {
                 setContent(res.data.content);
                 if (res.data.content.aboutImage) {
-                    setPreview(API_BASE + res.data.content.aboutImage);
+                    setPreview(getImageUrl(res.data.content.aboutImage));
+                }
+                if (res.data.content.heroImage) {
+                    setHeroPreview(getImageUrl(res.data.content.heroImage));
                 }
             }
             setLoading(false);
@@ -43,11 +49,16 @@ const AdminHome = () => {
         setContent({ ...content, [key]: value });
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChange = (e, target) => {
         const file = e.target.files[0];
         if (file) {
-            setImage(file);
-            setPreview(URL.createObjectURL(file));
+            if (target === 'about') {
+                setImage(file);
+                setPreview(URL.createObjectURL(file));
+            } else {
+                setHeroImage(file);
+                setHeroPreview(URL.createObjectURL(file));
+            }
         }
     };
 
@@ -66,7 +77,10 @@ const AdminHome = () => {
             formData.append('title', 'Home Page');
             formData.append('content', JSON.stringify(content));
             if (image) {
-                formData.append('image', image);
+                formData.append('aboutImage', image);
+            }
+            if (heroImage) {
+                formData.append('heroImage', heroImage);
             }
 
             await axios.put(API_BASE + '/api/pages/home', formData, config);
@@ -97,21 +111,42 @@ const AdminHome = () => {
                     <form onSubmit={handleSave} className="space-y-8 max-w-4xl">
                         <div className="card-gradient rounded-3xl p-8 border border-white/5 space-y-6">
                             <h3 className="text-primary-blue font-black italic uppercase text-lg mb-4 italic tracking-widest">Section Hero</h3>
-                            <div>
-                                <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Saison / Période</label>
-                                <input
-                                    type="text" value={content.seasonPeriod || ''} onChange={(e) => handleChange('seasonPeriod', e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold uppercase mb-4"
-                                    placeholder="Ex: 2024/2025"
-                                />
+
+                            <div className="flex flex-col md:flex-row gap-8 items-start mb-6">
+                                <div className="w-full md:w-1/3">
+                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Image de Fond Hero</label>
+                                    <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group mb-4 bg-white/5">
+                                        {heroPreview ? (
+                                            <img src={heroPreview} alt="Hero Preview" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <div className="flex items-center justify-center h-full text-gray-600 text-xs font-bold uppercase tracking-widest text-center px-4">Standard (Unsplash)</div>
+                                        )}
+                                        <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer text-white text-xs font-black uppercase tracking-widest">
+                                            Changer
+                                            <input type="file" onChange={(e) => handleImageChange(e, 'hero')} className="hidden" accept="image/*" />
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className="w-full md:w-2/3 space-y-6">
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Saison / Période</label>
+                                        <input
+                                            type="text" value={content.seasonPeriod || ''} onChange={(e) => handleChange('seasonPeriod', e.target.value)}
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold uppercase"
+                                            placeholder="Ex: 2024/2025"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Titre Principal</label>
+                                        <input
+                                            type="text" value={content.heroTitle} onChange={(e) => handleChange('heroTitle', e.target.value)}
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold uppercase"
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Titre Principal</label>
-                                <input
-                                    type="text" value={content.heroTitle} onChange={(e) => handleChange('heroTitle', e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold uppercase"
-                                />
-                            </div>
+
                             <div>
                                 <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Sous-titre</label>
                                 <textarea
@@ -136,7 +171,7 @@ const AdminHome = () => {
                                         )}
                                         <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer text-white text-xs font-black uppercase tracking-widest">
                                             Changer
-                                            <input type="file" onChange={handleImageChange} className="hidden" accept="image/*" />
+                                            <input type="file" onChange={(e) => handleImageChange(e, 'about')} className="hidden" accept="image/*" />
                                         </label>
                                     </div>
                                 </div>

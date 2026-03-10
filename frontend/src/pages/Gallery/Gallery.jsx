@@ -1,4 +1,5 @@
 import { API_BASE } from '../../services/api';
+import { getImageUrl } from '../../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -52,7 +53,7 @@ const Gallery = () => {
                                 </div>
                             ) : (
                                 <img
-                                    src={`${API_BASE}${photo.url}`}
+                                    src={getImageUrl(photo.url)}
                                     alt={photo.title}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />

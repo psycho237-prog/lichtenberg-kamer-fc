@@ -5,6 +5,6 @@ const { protect } = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
 router.get('/:slug', getPageBySlug);
-router.put('/:slug', protect, upload.single('image'), updatePageContent);
+router.put('/:slug', protect, upload.any(), updatePageContent);
 
 module.exports = router;

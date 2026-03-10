@@ -17,7 +17,7 @@ exports.createSponsor = async (req, res) => {
         const { name, website, tier } = req.body;
         let logo = '';
         if (req.file) {
-            logo = `/uploads/sponsors/${req.file.filename}`;
+            logo = req.file.path;
         }
 
         const sponsorData = {
@@ -40,7 +40,7 @@ exports.updateSponsor = async (req, res) => {
     try {
         const updateData = { ...req.body };
         if (req.file) {
-            updateData.logo = `/uploads/sponsors/${req.file.filename}`;
+            updateData.logo = req.file.path;
         }
 
         await db.collection('sponsors').doc(req.params.id).update(updateData);

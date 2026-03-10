@@ -4,7 +4,7 @@ import { FaPlay, FaTicketAlt } from 'react-icons/fa';
 
 import { Link } from 'react-router-dom';
 
-const Hero = ({ title, subtitle, seasonPeriod }) => {
+const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
     // Split title if it contains <br /> or custom marker if needed, 
     // or just use the first word for the big white part
     const mainTitle = title ? title.split(' ')[0] : 'LICHTENBERG';
@@ -16,7 +16,7 @@ const Hero = ({ title, subtitle, seasonPeriod }) => {
             <div
                 className="absolute inset-0 z-0"
                 style={{
-                    backgroundImage: 'url("https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80")',
+                    backgroundImage: `url("${heroImage || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'}")`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}

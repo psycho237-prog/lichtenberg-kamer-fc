@@ -1,4 +1,5 @@
 import { API_BASE } from '../../services/api';
+import { getImageUrl } from '../../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import Hero from '../../components/Home/Hero';
 import NextMatch from '../../components/Home/NextMatch';
@@ -48,6 +49,7 @@ const Home = () => {
                 title={pageData?.heroTitle}
                 subtitle={pageData?.heroSubtitle}
                 seasonPeriod={pageData?.seasonPeriod}
+                heroImage={getImageUrl(pageData?.heroImage)}
             />
             <NextMatch match={nextMatch} />
 
@@ -76,7 +78,7 @@ const Home = () => {
                             className="relative aspect-video rounded-3xl overflow-hidden border border-white/10"
                         >
                             <img
-                                src={pageData.aboutImage ? `${API_BASE}${pageData.aboutImage}` : '/images/hero.png'}
+                                src={pageData.aboutImage ? getImageUrl(pageData.aboutImage) : '/images/hero.png'}
                                 className="w-full h-full object-cover"
                                 alt="Club"
                             />
@@ -154,7 +156,7 @@ const Home = () => {
                             <Link to={`/news/${item._id}`}>
                                 <div className="relative h-64 overflow-hidden">
                                     <img
-                                        src={item.image ? `${API_BASE}${item.image}` : '/images/hero.png'}
+                                        src={item.image ? getImageUrl(item.image) : '/images/hero.png'}
                                         alt={item.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                     />
@@ -191,7 +193,7 @@ const Home = () => {
                             {sponsors.map(sponsor => (
                                 <img
                                     key={sponsor._id}
-                                    src={`${API_BASE}${sponsor.logo}`}
+                                    src={getImageUrl(sponsor.logo)}
                                     alt={sponsor.name}
                                     className="h-12 w-auto object-contain"
                                     title={sponsor.name}
