@@ -1,0 +1,10 @@
+{
+    "name": "lichtenberg-kamer-fc",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "install-all": "cd frontend && npm install && cd ../backend && npm install",
+        "build-frontend": "cd frontend && npm run build",
+        "start": "cd backend && npm start"
+    }
+}
