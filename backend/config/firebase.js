@@ -8,6 +8,11 @@ dotenv.config();
 try {
     const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
+    // Fix for private key newlines when coming from .env
+    if (serviceAccount.private_key) {
+        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    }
+
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
         storageBucket: `${serviceAccount.project_id}.appspot.com`
