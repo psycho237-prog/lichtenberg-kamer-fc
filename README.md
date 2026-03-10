@@ -1,67 +1,78 @@
-# Lichtenberg-Kamer FC Website
+# 🦁 Lichtenberg-Kamer FC Website
 
-A professional football club website for the Cameroonian community in Lichtenberg, Berlin (Germany).
+A professional football club website for the Cameroonian community in Berlin. A fully dynamic site with a custom CMS to manage players, matches, news, and sponsors.
 
-## Tech Stack
-- **Frontend**: React, Vite, Tailwind CSS, Framer Motion, i18next
+## 🛠 Tech Stack
+- **Frontend**: React (Vite), Tailwind CSS, Framer Motion, Axios
 - **Backend**: Node.js, Express, MongoDB
-- **CMS**: Custom built admin panel with Rich Text Editor
+- **CMS**: Custom Administration Dashboard
+- **I18n**: Support for French, English, and German
 
-## Getting Started
+---
 
-### Prerequisites
-- Node.js (v18+)
-- MongoDB (running locally or a remote URI)
+## 🔐 Environment Variables
 
-### Installation
+### Backend (`/backend/.env`)
+These variables are required for the server to run and connect to the database.
 
-1. Clone the repository:
+| Variable | Description | Example |
+| :--- | :--- | :--- |
+| `PORT` | Server port | `5000` |
+| `MONGODB_URI` | MongoDB connection string | `mongodb+srv://...` |
+| `JWT_SECRET` | Secret key for login tokens | `any_long_random_string` |
+| `ADMIN_EMAIL` | Email for CMS login | `admin@lichtenberg-kamer.de` |
+| `ADMIN_PASSWORD` | Password for CMS login | `your_secure_password` |
+| `NODE_ENV` | Environment mode | `production` or `development` |
+| `RENDER_EXTERNAL_URL` | Your site URL (for auto-ping) | `https://site.onrender.com` |
+
+### Frontend (`/frontend/.env`)
+Used for local development to point to the backend.
+
+| Variable | Description | Example |
+| :--- | :--- | :--- |
+| `VITE_API_URL` | Backend URL for development | `http://localhost:5000` |
+
+---
+
+## 📦 Deployment on Render (Recommended)
+
+Render is perfect for this project. Since we use a Node.js monorepo structure:
+
+1. **Connect your GitHub** to Render.
+2. **Environment**: Select `Node`.
+3. **Build Command**: `npm run install-all && npm run build-frontend`
+4. **Start Command**: `npm start`
+5. **Add Environment Variables**: Copy the variables from the "Backend" table above into the Render "Environment" tab.
+
+### ⚠️ A note on Image Storage
+Currently, images are stored in `backend/uploads/`.
+- **Render Free Tier**: The disk is temporary. Uploaded images (players/news) will disappear after a restart.
+- **Better Alternatives**:
+    - **Cloudinary**: Highly recommended. Free, stable, and optimizes images.
+    - **Firebase Storage**: Excellent choice for persistent file storage.
+    - **MongoDB**: **DON'T USE** for images. It's not efficient for binary files.
+
+---
+
+## 💻 Local Development
+
+1. **Install everything**:
    ```bash
-   git clone <repo-url>
-   cd football-club-website
+   npm run install-all
    ```
 
-2. Install dependencies:
+2. **Expose on Local Network**:
+   To view the site on your phone or other device on the same Wifi:
+   - Backend will listen on `0.0.0.0:5000`.
+   - Run frontend with: `cd frontend && npm run dev -- --host`
+
+3. **Database Seed**:
+   Fill the database with initial data:
    ```bash
-   # Backend
-   cd backend
-   npm install
-   
-   # Frontend
-   cd ../frontend
-   npm install
+   cd backend && npm run seed
    ```
 
-3. Environment Variables:
-   Create a `.env` in the `backend/` folder:
-   ```env
-   PORT=5000
-   MONGO_URI=your_mongo_uri
-   JWT_SECRET=your_secret
-   ADMIN_EMAIL=admin@example.com
-   ADMIN_PASSWORD=admin123
-   ```
-
-4. Seed the database:
+4. **Launch**:
    ```bash
-   cd backend
-   npm run seed
+   npm start
    ```
-
-5. Run the development servers:
-   ```bash
-   # Backend
-   cd backend
-   npm run dev
-   
-   # Frontend
-   cd ../frontend
-   npm run dev
-   ```
-
-## Admin Panel
-Access the CMS at `http://localhost:5173/admin/login` using your admin credentials.
-Note: The "Admin" button has been removed from the public navbar for security, but the route remains operational.
-
-## Deployment
-This project is containerized with Docker. Use `docker-compose up --build` for quick deployment.

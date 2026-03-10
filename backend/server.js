@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-    app.get('(.*)', (req, res) => {
+    app.get(/^(?!\/api|\/uploads).*$/, (req, res) => {
         if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
             res.sendFile(path.resolve(__dirname, '..', 'frontend', 'dist', 'index.html'));
         }
@@ -57,6 +57,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+    console.log(`Local network access: http://0.0.0.0:${PORT}`);
 });
