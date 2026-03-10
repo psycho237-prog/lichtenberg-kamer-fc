@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom';
 const Hero = ({ title, subtitle, seasonPeriod }) => {
     // Split title if it contains <br /> or custom marker if needed, 
     // or just use the first word for the big white part
-    const mainTitle = title ? title.split(' ').slice(0, -1).join(' ') : 'LICHTENBERG';
-    const highlightTitle = title ? title.split(' ').pop() : 'KAMER FC';
+    const mainTitle = title ? title.split(' ')[0] : 'LICHTENBERG';
+    const highlightTitle = title ? title.split(' ').slice(1).join(' ') : 'KAMER FC';
 
     return (
-        <div className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+        <div className="relative h-screen min-h-[600px] flex items-center overflow-hidden">
             {/* Background with Overlay */}
             <div
                 className="absolute inset-0 z-0"
@@ -32,10 +32,10 @@ const Hero = ({ title, subtitle, seasonPeriod }) => {
                     transition={{ duration: 0.8 }}
                     className="max-w-3xl"
                 >
-                    <span className="inline-block px-4 py-1 mb-6 border-l-4 border-primary-yellow bg-primary-blue/20 text-primary-yellow font-bold uppercase tracking-widest text-sm italic">
+                    <span className="inline-block px-4 py-1 mb-6 border-l-4 border-primary-yellow bg-primary-blue/20 text-primary-yellow font-bold uppercase tracking-widest text-xs sm:text-sm italic">
                         {seasonPeriod || 'Saison 2024 / 2025'}
                     </span>
-                    <h1 className="text-6xl md:text-8xl font-black italic text-white leading-none mb-8 uppercase italic">
+                    <h1 className="text-5xl sm:text-6xl md:text-8xl font-black italic text-white leading-[0.9] mb-8 uppercase italic tracking-tighter">
                         {mainTitle} <br />
                         <span className="text-primary-yellow">{highlightTitle}</span>
                     </h1>
