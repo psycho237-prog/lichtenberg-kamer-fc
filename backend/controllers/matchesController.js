@@ -1,8 +1,9 @@
-const Match = require('../models/Match');
+const { db } = require('../config/firebase');
 
 exports.getMatches = async (req, res) => {
     try {
-        const matches = await Match.find().sort({ date: -1 });
+        const snapshot = await db.collection('matches').orderBy('date', 'desc').get();
+        const matches = snapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() }));
         res.json(matches);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -11,8 +12,9 @@ exports.getMatches = async (req, res) => {
 
 exports.createMatch = async (req, res) => {
     try {
-        const match = await Match.create(req.body);
-        res.status(201).json(match);
+        const matchData = { ...req.body };
+        const docRef = await db.collection('matches').add(matchData);
+        res.status(201).json({ _id: docRef.id, ...matchData });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -20,8 +22,8 @@ exports.createMatch = async (req, res) => {
 
 exports.updateMatch = async (req, res) => {
     try {
-        const match = await Match.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(match);
+        await db.collection('matches').doc(req.params.id).update(req.body);
+        res.json({ _id: req.params.id, ...req.body });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -29,7 +31,7 @@ exports.updateMatch = async (req, res) => {
 
 exports.deleteMatch = async (req, res) => {
     try {
-        await Match.findByIdAndDelete(req.params.id);
+        await db.collection('matches').doc(req.params.id).delete();
         res.json({ message: 'Match deleted' });
     } catch (error) {
         res.status(500).json({ message: error.message });

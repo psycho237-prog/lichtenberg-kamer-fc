@@ -2,15 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
+const helmet = require('helmet');
 const dotenv = require('dotenv');
-const connectDB = require('./config/database');
+const { admin } = require('./config/firebase');
 const keepAlive = require('./utils/autoping');
 
 // Load env vars
 dotenv.config();
 
-// Connect to database
-connectDB();
 
 // Initialize self-ping for Render
 if (process.env.NODE_ENV === 'production') {

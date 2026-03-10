@@ -1,9 +1,10 @@
-const News = require('../models/News');
+const { db } = require('../config/firebase');
 
 // @desc    Get all news
 exports.getAllNews = async (req, res) => {
     try {
-        const news = await News.find().sort({ publishDate: -1 });
+        const snapshot = await db.collection('news').orderBy('publishDate', 'desc').get();
+        const news = snapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() }));
         res.json(news);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -13,9 +14,9 @@ exports.getAllNews = async (req, res) => {
 // @desc    Get single news by ID
 exports.getNewsById = async (req, res) => {
     try {
-        const news = await News.findById(req.params.id);
-        if (!news) return res.status(404).json({ message: 'Article not found' });
-        res.json(news);
+        const doc = await db.collection('news').doc(req.params.id).get();
+        if (!doc.exists) return res.status(404).json({ message: 'Article not found' });
+        res.json({ _id: doc.id, ...doc.data() });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -24,10 +25,14 @@ exports.getNewsById = async (req, res) => {
 // @desc    Create news article
 exports.createNews = async (req, res) => {
     try {
-        const newsData = { ...req.body };
+        const newsData = {
+            ...req.body,
+            publishDate: req.body.publishDate || new Date().toISOString()
+        };
         if (req.file) newsData.image = `/uploads/gallery/${req.file.filename}`;
-        const news = await News.create(newsData);
-        res.status(201).json(news);
+
+        const docRef = await db.collection('news').add(newsData);
+        res.status(201).json({ _id: docRef.id, ...newsData });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -36,14 +41,11 @@ exports.createNews = async (req, res) => {
 // @desc    Update news article
 exports.updateNews = async (req, res) => {
     try {
-        let news = await News.findById(req.params.id);
-        if (!news) return res.status(404).json({ message: 'Article not found' });
-
         const updateData = { ...req.body };
         if (req.file) updateData.image = `/uploads/gallery/${req.file.filename}`;
 
-        news = await News.findByIdAndUpdate(req.params.id, updateData, { new: true });
-        res.json(news);
+        await db.collection('news').doc(req.params.id).update(updateData);
+        res.json({ _id: req.params.id, ...updateData });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -52,7 +54,7 @@ exports.updateNews = async (req, res) => {
 // @desc    Delete news article
 exports.deleteNews = async (req, res) => {
     try {
-        await News.findByIdAndDelete(req.params.id);
+        await db.collection('news').doc(req.params.id).delete();
         res.json({ message: 'Article deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });

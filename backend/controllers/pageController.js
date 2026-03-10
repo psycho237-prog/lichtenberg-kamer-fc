@@ -1,13 +1,13 @@
-const Page = require('../models/Page');
+const { db } = require('../config/firebase');
 
 // @desc    Get page content by slug
 exports.getPageBySlug = async (req, res) => {
     try {
-        const page = await Page.findOne({ slug: req.params.slug });
-        if (!page) {
+        const doc = await db.collection('pages').doc(req.params.slug).get();
+        if (!doc.exists) {
             return res.status(404).json({ message: 'Page not found' });
         }
-        res.json(page);
+        res.json({ id: doc.id, ...doc.data() });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -19,23 +19,15 @@ exports.updatePageContent = async (req, res) => {
         const { slug } = req.params;
         const { title, content } = req.body;
 
-        let page = await Page.findOne({ slug });
+        const updateData = {
+            title,
+            content,
+            lastUpdatedBy: req.user._id,
+            updatedAt: new Date()
+        };
 
-        if (page) {
-            page.title = title || page.title;
-            page.content = content || page.content;
-            page.lastUpdatedBy = req.user._id;
-            await page.save();
-        } else {
-            page = await Page.create({
-                slug,
-                title,
-                content,
-                lastUpdatedBy: req.user._id
-            });
-        }
-
-        res.json(page);
+        await db.collection('pages').doc(slug).set(updateData, { merge: true });
+        res.json({ slug, ...updateData });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

@@ -1,9 +1,10 @@
-const Sponsor = require('../models/Sponsor');
+const { db } = require('../config/firebase');
 
 // @desc    Get all sponsors
 exports.getSponsors = async (req, res) => {
     try {
-        const sponsors = await Sponsor.find().sort({ createdAt: -1 });
+        const snapshot = await db.collection('sponsors').orderBy('name', 'asc').get();
+        const sponsors = snapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() }));
         res.json(sponsors);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -19,13 +20,16 @@ exports.createSponsor = async (req, res) => {
             logo = `/uploads/sponsors/${req.file.filename}`;
         }
 
-        const sponsor = await Sponsor.create({
+        const sponsorData = {
             name,
             website,
             tier,
-            logo
-        });
-        res.status(201).json(sponsor);
+            logo,
+            createdAt: new Date()
+        };
+
+        const docRef = await db.collection('sponsors').add(sponsorData);
+        res.status(201).json({ _id: docRef.id, ...sponsorData });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -34,16 +38,13 @@ exports.createSponsor = async (req, res) => {
 // @desc    Update sponsor
 exports.updateSponsor = async (req, res) => {
     try {
-        let sponsor = await Sponsor.findById(req.params.id);
-        if (!sponsor) return res.status(404).json({ message: 'Sponsor not found' });
-
         const updateData = { ...req.body };
         if (req.file) {
             updateData.logo = `/uploads/sponsors/${req.file.filename}`;
         }
 
-        sponsor = await Sponsor.findByIdAndUpdate(req.params.id, updateData, { new: true });
-        res.json(sponsor);
+        await db.collection('sponsors').doc(req.params.id).update(updateData);
+        res.json({ _id: req.params.id, ...updateData });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -52,7 +53,7 @@ exports.updateSponsor = async (req, res) => {
 // @desc    Delete sponsor
 exports.deleteSponsor = async (req, res) => {
     try {
-        await Sponsor.findByIdAndDelete(req.params.id);
+        await db.collection('sponsors').doc(req.params.id).delete();
         res.json({ message: 'Sponsor removed' });
     } catch (error) {
         res.status(500).json({ message: error.message });
