@@ -32,7 +32,7 @@ const Matches = () => {
             <PageHero
                 title="CALENDRIER & RÉSULTATS"
                 subtitle="Suivez le parcours du Lichtenberg-Kamer FC. Ne manquez aucune rencontre."
-                bgImage="https://images.unsplash.com/photo-1518605338461-897368d18b2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+                bgImage="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
             />
 
             <div className="max-w-5xl mx-auto px-4 mt-16">
