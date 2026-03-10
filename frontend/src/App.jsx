@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import AppRoutes from './routes/AppRoutes';
 import { Toaster } from 'react-hot-toast';
+import LoadingScreen from './components/Shared/LoadingScreen';
 
 const Layout = () => {
   const location = useLocation();
@@ -22,9 +23,12 @@ const Layout = () => {
 };
 
 function App() {
+  const [appLoading, setAppLoading] = React.useState(true);
+
   return (
     <Router>
-      <Layout />
+      <LoadingScreen onComplete={() => setAppLoading(false)} />
+      {!appLoading && <Layout />}
     </Router>
   );
 }

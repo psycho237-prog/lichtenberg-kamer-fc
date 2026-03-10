@@ -20,6 +20,7 @@ import AdminHome from '../admin/AdminHome';
 import AdminSponsors from '../admin/AdminSponsors';
 import AdminContact from '../admin/AdminContact';
 import AdminTickets from '../admin/AdminTickets';
+import AdminSettings from '../admin/AdminSettings';
 import { useAuth } from '../context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
@@ -85,6 +86,11 @@ const AppRoutes = () => {
             <Route path="/admin/sponsors" element={
                 <PrivateRoute>
                     <AdminSponsors />
+                </PrivateRoute>
+            } />
+            <Route path="/admin/settings" element={
+                <PrivateRoute>
+                    <AdminSettings />
                 </PrivateRoute>
             } />
 

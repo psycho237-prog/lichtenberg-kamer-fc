@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import PageHero from '../../components/Shared/PageHero';
 
 const Gallery = () => {
     const [photos, setPhotos] = useState([]);
@@ -27,13 +28,14 @@ const Gallery = () => {
     );
 
     return (
-        <div className="min-h-screen bg-dark-bg pt-32 pb-20 px-4">
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-12">
-                    <h1 className="text-5xl font-black italic text-white uppercase italic">Galerie</h1>
-                    <p className="text-gray-500 font-bold uppercase tracking-widest text-sm mt-2">Moments forts en images et vidéos</p>
-                </div>
+        <div className="min-h-screen bg-dark-bg pb-20">
+            <PageHero
+                title="GALERIE MÉDIA"
+                subtitle="Revivez les moments forts, les célébrations et la passion de notre club en images et vidéos."
+                bgImage="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+            />
 
+            <div className="max-w-7xl mx-auto px-4 mt-16">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {photos.map((photo, index) => (
                         <motion.div

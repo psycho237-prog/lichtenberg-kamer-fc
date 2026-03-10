@@ -2,22 +2,28 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaWhatsapp, FaTwitter, FaInstagram, FaFacebook, FaPaperPlane } from 'react-icons/fa';
+import PageHero from '../../components/Shared/PageHero';
 
 const Contact = () => {
     const [pageData, setPageData] = useState(null);
+    const [settings, setSettings] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchPage = async () => {
+        const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/pages/contact');
-                setPageData(res.data.content);
+                const [pageRes, settingsRes] = await Promise.all([
+                    axios.get('http://localhost:5000/api/pages/contact'),
+                    axios.get('http://localhost:5000/api/pages/settings')
+                ]);
+                setPageData(pageRes.data.content);
+                if (settingsRes.data && settingsRes.data.content) setSettings(settingsRes.data.content);
                 setLoading(false);
             } catch (err) {
                 setLoading(false);
             }
         };
-        fetchPage();
+        fetchData();
     }, []);
 
     const contactInfo = [
@@ -29,24 +35,14 @@ const Contact = () => {
     if (loading) return null;
 
     return (
-        <div className="bg-dark-bg min-h-screen pt-32 pb-20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <header className="mb-20 text-center">
-                    <h1 className="text-6xl md:text-8xl font-black italic text-white uppercase tracking-tighter mb-4 italic">
-                        CONTACTEZ-<span className="text-primary-yellow">NOUS</span>
-                    </h1>
-                    {pageData?.infoContent ? (
-                        <div
-                            className="text-gray-400 text-lg max-w-2xl mx-auto font-semibold ql-editor !p-0"
-                            dangerouslySetInnerHTML={{ __html: pageData.infoContent }}
-                        />
-                    ) : (
-                        <p className="text-gray-400 text-lg max-w-2xl mx-auto font-semibold uppercase italic tracking-widest">
-                            Une question sur la billetterie, l'académie ou le club ? Nos équipes sont à votre entière disposition.
-                        </p>
-                    )}
-                </header>
+        <div className="bg-dark-bg min-h-screen pb-20">
+            <PageHero
+                title="CONTACTEZ-NOUS"
+                subtitle={pageData?.infoContent ? pageData.infoContent.replace(/<[^>]+>/g, '') : "Une question sur la billetterie, l'académie ou le club ? Nos équipes sont à votre entière disposition."}
+                bgImage="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+            />
 
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     {/* Contact Form */}
                     <div className="lg:col-span-2">
@@ -99,33 +95,47 @@ const Contact = () => {
                             ))}
                         </div>
 
-                        {/* Real Google Map */}
+                        {/* Map from CMS */}
                         <div className="relative rounded-xl overflow-hidden h-96 grayscale contrast-125 border border-white/10 group">
-                            <iframe
-                                title="Lichtenberg Berlin Map"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m13!1d155355.2223783935!2d13.4357!3d52.516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84ec0c2734103%3A0xe67c944439c0d38c!2sLichtenberg%2C%20Berlin!5e0!3m2!1sen!2sde!4v1709569741000!5m2!1sen!2sde"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen=""
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                className="opacity-60 group-hover:opacity-100 transition-opacity duration-700"
-                            ></iframe>
-                            <div className="absolute bottom-4 left-4 right-4 bg-dark-bg/80 backdrop-blur p-3 rounded-xl border border-white/10 text-[10px] text-center text-white font-black uppercase tracking-widest italic group-hover:translate-y-20 transition-transform duration-500">
-                                Lichtenberg, Berlin, Germany
+                            {pageData?.mapIframe ? (
+                                <div
+                                    className="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-700 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0"
+                                    dangerouslySetInnerHTML={{ __html: pageData.mapIframe }}
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-white/5 flex items-center justify-center text-gray-500 font-bold italic uppercase tracking-widest">
+                                    Carte indisponible
+                                </div>
+                            )}
+                            <div className="absolute bottom-4 left-4 right-4 bg-dark-bg/80 backdrop-blur p-3 rounded-xl border border-white/10 text-[10px] text-center text-white font-black uppercase tracking-widest italic group-hover:translate-y-20 transition-transform duration-500 pointer-events-none">
+                                {pageData?.address || "Lichtenberg, Berlin, Germany"}
                             </div>
                         </div>
 
-                        {/* Social Follow */}
+                        {/* Social Follow from Settings */}
                         <div className="card-gradient p-6 rounded-xl border border-white/5">
                             <h4 className="text-white font-black italic uppercase text-sm mb-6 text-center">Suivez le club</h4>
                             <div className="flex justify-center space-x-4">
-                                {[<FaFacebook />, <FaTwitter />, <FaInstagram />, <FaWhatsapp />].map((icon, i) => (
-                                    <button key={i} className="bg-white/5 p-4 rounded-lg text-white hover:bg-primary-blue transition-colors text-xl">
-                                        {icon}
-                                    </button>
-                                ))}
+                                {settings?.facebook && (
+                                    <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-lg text-white hover:bg-primary-blue transition-colors text-xl">
+                                        <FaFacebook />
+                                    </a>
+                                )}
+                                {settings?.twitter && (
+                                    <a href={settings.twitter} target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-lg text-white hover:bg-blue-400 transition-colors text-xl">
+                                        <FaTwitter />
+                                    </a>
+                                )}
+                                {settings?.instagram && (
+                                    <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-lg text-white hover:bg-pink-500 transition-colors text-xl">
+                                        <FaInstagram />
+                                    </a>
+                                )}
+                                {settings?.whatsapp && (
+                                    <a href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(settings.contactWhatsAppMessage || '')}`} target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-lg text-white hover:bg-green-500 transition-colors text-xl">
+                                        <FaWhatsapp />
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </div>

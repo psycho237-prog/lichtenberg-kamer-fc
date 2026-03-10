@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import PageHero from '../../components/Shared/PageHero';
 
 const Matches = () => {
     const [matches, setMatches] = useState([]);
@@ -27,12 +28,14 @@ const Matches = () => {
     );
 
     return (
-        <div className="min-h-screen bg-dark-bg pt-32 pb-20 px-4">
-            <div className="max-w-5xl mx-auto">
-                <div className="mb-12">
-                    <h1 className="text-5xl font-black italic text-white uppercase italic">Calendrier & Résultats</h1>
-                    <p className="text-gray-500 font-bold uppercase tracking-widest text-sm mt-2">Suivez le parcours du Lichtenberg-Kamer FC</p>
-                </div>
+        <div className="min-h-screen bg-dark-bg pb-20">
+            <PageHero
+                title="CALENDRIER & RÉSULTATS"
+                subtitle="Suivez le parcours du Lichtenberg-Kamer FC. Ne manquez aucune rencontre."
+                bgImage="https://images.unsplash.com/photo-1518605338461-897368d18b2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+            />
+
+            <div className="max-w-5xl mx-auto px-4 mt-16">
 
                 <div className="space-y-6">
                     {matches.map((match, index) => (
@@ -79,7 +82,7 @@ const Matches = () => {
 
                             <div className="mt-8 md:mt-0">
                                 <span className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg italic ${match.status === 'finished' ? 'bg-gray-500/10 text-gray-400' :
-                                        match.status === 'ongoing' ? 'bg-red-500 text-white animate-pulse' : 'bg-primary-blue text-white'
+                                    match.status === 'ongoing' ? 'bg-red-500 text-white animate-pulse' : 'bg-primary-blue text-white'
                                     }`}>
                                     {match.status === 'finished' ? 'Terminé' : match.status === 'ongoing' ? 'En Direct' : 'À Venir'}
                                 </span>

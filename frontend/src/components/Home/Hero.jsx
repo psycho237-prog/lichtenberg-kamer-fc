@@ -2,7 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaPlay, FaTicketAlt } from 'react-icons/fa';
 
-const Hero = ({ title, subtitle }) => {
+import { Link } from 'react-router-dom';
+
+const Hero = ({ title, subtitle, seasonPeriod }) => {
     // Split title if it contains <br /> or custom marker if needed, 
     // or just use the first word for the big white part
     const mainTitle = title ? title.split(' ').slice(0, -1).join(' ') : 'LICHTENBERG';
@@ -31,7 +33,7 @@ const Hero = ({ title, subtitle }) => {
                     className="max-w-3xl"
                 >
                     <span className="inline-block px-4 py-1 mb-6 border-l-4 border-primary-yellow bg-primary-blue/20 text-primary-yellow font-bold uppercase tracking-widest text-sm italic">
-                        Saison 2024 / 2025
+                        {seasonPeriod || 'Saison 2024 / 2025'}
                     </span>
                     <h1 className="text-6xl md:text-8xl font-black italic text-white leading-none mb-8 uppercase italic">
                         {mainTitle} <br />
@@ -42,12 +44,12 @@ const Hero = ({ title, subtitle }) => {
                     </p>
 
                     <div className="flex flex-wrap gap-4">
-                        <button className="btn-primary px-8 py-4 text-lg">
-                            <FaTicketAlt className="mr-3" /> Acheter Billets
-                        </button>
-                        <button className="btn-outline px-8 py-4 text-lg bg-white/5 border-white/20 hover:border-primary-blue">
-                            <FaPlay className="mr-3 text-sm" /> Voir Highlights
-                        </button>
+                        <Link to="/tickets" className="btn-primary px-8 py-4 text-lg inline-flex items-center group">
+                            <FaTicketAlt className="mr-3 group-hover:scale-110 transition-transform" /> Acheter Billets
+                        </Link>
+                        <Link to="/gallery" className="btn-outline px-8 py-4 text-lg bg-white/5 border-white/20 hover:border-primary-blue inline-flex items-center group">
+                            <FaPlay className="mr-3 text-sm group-hover:text-primary-blue transition-colors" /> Voir Highlights
+                        </Link>
                     </div>
                 </motion.div>
             </div>

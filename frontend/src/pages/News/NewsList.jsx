@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { stripHtml } from '../../utils/textUtils';
+import PageHero from '../../components/Shared/PageHero';
 
 const NewsList = () => {
     const [news, setNews] = useState([]);
@@ -29,13 +30,14 @@ const NewsList = () => {
     );
 
     return (
-        <div className="min-h-screen bg-dark-bg pt-32 pb-20 px-4">
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-12">
-                    <h1 className="text-5xl font-black italic text-white uppercase italic">Actualités</h1>
-                    <p className="text-gray-500 font-bold uppercase tracking-widest text-sm mt-2">Dernières nouvelles du Lichtenberg-Kamer FC</p>
-                </div>
+        <div className="min-h-screen bg-dark-bg pb-20">
+            <PageHero
+                title="ACTUALITÉS DU CLUB"
+                subtitle="Dernières nouvelles, résultats et coulisses du Lichtenberg-Kamer FC."
+                bgImage="https://images.unsplash.com/photo-1551280857-2b9ebf262c1c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+            />
 
+            <div className="max-w-7xl mx-auto px-4 mt-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {news.map((item, index) => (
                         <motion.div

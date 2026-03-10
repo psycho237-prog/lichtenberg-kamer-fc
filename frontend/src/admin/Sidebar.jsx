@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaTachometerAlt, FaUsers, FaCalendarAlt, FaNewspaper, FaImages, FaHandshake, FaSignOutAlt } from 'react-icons/fa';
+import { FaTachometerAlt, FaUsers, FaCalendarAlt, FaNewspaper, FaImages, FaHandshake, FaSignOutAlt, FaCog } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
@@ -17,6 +17,7 @@ const Sidebar = () => {
         { name: 'CMS Tickets', icon: <FaNewspaper />, path: '/admin/tickets-page' },
         { name: 'Sponsors', icon: <FaHandshake />, path: '/admin/sponsors' },
         { name: 'Galerie', icon: <FaImages />, path: '/admin/gallery' },
+        { name: 'Paramètres', icon: <FaCog />, path: '/admin/settings' },
     ];
 
     return (

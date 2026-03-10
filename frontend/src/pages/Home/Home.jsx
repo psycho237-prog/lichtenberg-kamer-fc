@@ -11,19 +11,25 @@ const Home = () => {
     const [news, setNews] = useState([]);
     const [sponsors, setSponsors] = useState([]);
     const [pageData, setPageData] = useState(null);
+    const [nextMatch, setNextMatch] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [newsRes, pageRes, sponsorRes] = await Promise.all([
+                const [newsRes, pageRes, sponsorRes, matchesRes] = await Promise.all([
                     axios.get('http://localhost:5000/api/news'),
                     axios.get('http://localhost:5000/api/pages/home'),
-                    axios.get('http://localhost:5000/api/sponsors')
+                    axios.get('http://localhost:5000/api/sponsors'),
+                    axios.get('http://localhost:5000/api/matches')
                 ]);
                 setNews(newsRes.data.slice(0, 3));
                 setPageData(pageRes.data.content);
                 setSponsors(sponsorRes.data);
+
+                const upcoming = matchesRes.data.filter(m => m.status === 'upcoming' || m.status === 'ongoing')
+                    .sort((a, b) => new Date(a.date) - new Date(b.date));
+                setNextMatch(upcoming.length > 0 ? upcoming[0] : matchesRes.data[0]);
                 setLoading(false);
             } catch (err) {
                 console.error(err);
@@ -40,8 +46,9 @@ const Home = () => {
             <Hero
                 title={pageData?.heroTitle}
                 subtitle={pageData?.heroSubtitle}
+                seasonPeriod={pageData?.seasonPeriod}
             />
-            <NextMatch />
+            <NextMatch match={nextMatch} />
 
             {/* About Section from CMS */}
             {pageData?.aboutContent && (

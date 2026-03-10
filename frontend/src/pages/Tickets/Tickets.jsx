@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FaTicketAlt, FaInfoCircle, FaMapMarkerAlt } from 'react-icons/fa';
+import PageHero from '../../components/Shared/PageHero';
 
 const Tickets = () => {
     const [pageData, setPageData] = useState(null);
@@ -23,17 +24,15 @@ const Tickets = () => {
     if (loading) return null;
 
     return (
-        <div className="bg-dark-bg min-h-screen pt-32 pb-20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <header className="mb-20 text-center">
-                    <h1 className="text-6xl md:text-8xl font-black italic text-white uppercase tracking-tighter mb-4 italic">
-                        {pageData?.headerTitle || 'BILLETTERIE'} <span className="text-primary-yellow">OFFICIELLE</span>
-                    </h1>
-                    <p className="text-gray-400 text-lg max-w-2xl mx-auto font-semibold uppercase italic tracking-widest">
-                        {pageData?.headerSubtitle || 'Réservez vos places pour les prochains matchs de Lichtenberg-Kamer FC.'}
-                    </p>
-                </header>
+    return (
+        <div className="bg-dark-bg min-h-screen pb-20">
+            <PageHero
+                title={`${pageData?.headerTitle || 'BILLETTERIE'} ${pageData?.headerSubtitle ? '' : 'OFFICIELLE'}`}
+                subtitle={pageData?.headerSubtitle || 'Réservez vos places pour les prochains matchs de Lichtenberg-Kamer FC.'}
+                bgImage="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+            />
 
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Ticketing Info */}
                     <motion.div

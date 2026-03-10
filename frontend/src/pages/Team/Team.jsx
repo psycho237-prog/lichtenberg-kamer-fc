@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PlayerCard from '../../components/PlayerCard/PlayerCard';
+import PageHero from '../../components/Shared/PageHero';
 import API from '../../services/api';
 
 const Team = () => {
@@ -30,16 +31,14 @@ const Team = () => {
     const positions = ['Gardiens', 'Défenseurs', 'Milieux', 'Attaquants'];
 
     return (
-        <div className="bg-dark-bg min-h-screen pt-32 pb-20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <header className="mb-16 border-l-4 border-primary-yellow pl-8">
-                    <h1 className="text-5xl md:text-7xl font-black italic text-white leading-none uppercase tracking-tighter">
-                        L'EFFECTIF
-                    </h1>
-                    <p className="mt-4 text-gray-400 text-lg max-w-2xl font-semibold">
-                        Découvrez les visages qui forgent la légende de Lichtenberg-Kamer FC. Une équipe unie, prête pour la victoire.
-                    </p>
-                </header>
+        <div className="bg-dark-bg min-h-screen pb-20">
+            <PageHero
+                title="NOTRE ÉQUIPE"
+                subtitle="Découvrez les visages qui forgent la légende de Lichtenberg-Kamer FC. Une équipe unie, prête pour la victoire."
+                bgImage="https://images.unsplash.com/photo-1575361204480-aadea25e6e68?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+            />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
 
                 {positions.map((pos) => {
                     const categoryPlayers = players.filter(p => p.position === pos);

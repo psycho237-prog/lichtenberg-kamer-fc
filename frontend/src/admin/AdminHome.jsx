@@ -10,6 +10,7 @@ const AdminHome = () => {
     const [content, setContent] = useState({
         heroTitle: '',
         heroSubtitle: '',
+        seasonPeriod: '',
         aboutContent: '',
         visionContent: '',
         philosophyContent: ''
@@ -63,7 +64,7 @@ const AdminHome = () => {
             <div className="flex-grow ml-64 p-10">
                 <div className="flex justify-between items-center mb-10">
                     <div>
-                        <h1 className="text-4xl font-black italic text-white uppercase italic">Gestion Accueil</h1>
+                        <h1 className="text-4xl font-black italic text-white uppercase italic tracking-tighter">Gestion Accueil</h1>
                         <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-1">Gérer le contenu de la page principale</p>
                     </div>
                 </div>
@@ -76,6 +77,14 @@ const AdminHome = () => {
                     <form onSubmit={handleSave} className="space-y-8 max-w-4xl">
                         <div className="card-gradient rounded-3xl p-8 border border-white/5 space-y-6">
                             <h3 className="text-primary-blue font-black italic uppercase text-lg mb-4 italic tracking-widest">Section Hero</h3>
+                            <div>
+                                <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Saison / Période</label>
+                                <input
+                                    type="text" value={content.seasonPeriod || ''} onChange={(e) => handleChange('seasonPeriod', e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold uppercase mb-4"
+                                    placeholder="Ex: 2024/2025"
+                                />
+                            </div>
                             <div>
                                 <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Titre Principal</label>
                                 <input
