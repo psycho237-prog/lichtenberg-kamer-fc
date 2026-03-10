@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-    app.get('*', (req, res) => {
+    app.get('(.*)', (req, res) => {
         if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
             res.sendFile(path.resolve(__dirname, '..', 'frontend', 'dist', 'index.html'));
         }
