@@ -39,12 +39,12 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Serve Static Assets in production
 if (process.env.NODE_ENV === 'production') {
-    // Set static folder
-    app.use(express.static(path.join(__dirname, '../frontend/dist')));
+    const distPath = path.join(__dirname, '..', 'frontend', 'dist');
+    app.use(express.static(distPath));
 
-    app.get(/^(?!\/api|\/uploads).*$/, (req, res) => {
+    app.get('*', (req, res) => {
         if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
-            res.sendFile(path.resolve(__dirname, '..', 'frontend', 'dist', 'index.html'));
+            res.sendFile(path.join(distPath, 'index.html'));
         }
     });
 } else {
