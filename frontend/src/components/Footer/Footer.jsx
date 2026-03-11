@@ -108,12 +108,15 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                <div className="border-t border-white/5 pt-8 flex flex-col items-center justify-center text-gray-500 text-sm space-y-4">
                     <p>© 2024 LICHTENBERG-KAMER e.V. TOUS DROITS RÉSERVÉS.</p>
-                    <div className="flex space-x-6 mt-4 md:mt-0">
+                    <div className="flex space-x-6">
                         <a href="#" className="hover:text-white transition-colors">Politique de Confidentialité</a>
                         <a href="#" className="hover:text-white transition-colors">Mentions Légales</a>
                     </div>
+                    <p className="text-[10px] text-gray-600 mt-4 tracking-widest uppercase">
+                        Développé par <a href="https://xyberclan.dev" target="_blank" rel="noopener noreferrer" className="text-primary-blue hover:text-white transition-colors font-bold">XyberClan</a>
+                    </p>
                 </div>
             </div>
 
