@@ -4,6 +4,8 @@ import { HiMenu, HiX } from 'react-icons/hi';
 import { FaGlobe } from 'react-icons/fa';
 
 const Navbar = () => {
+    const [showLang, setShowLang] = useState(false);
+    const [currentLang, setCurrentLang] = useState('FR');
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
@@ -13,8 +15,31 @@ const Navbar = () => {
             setScrolled(window.scrollY > 50);
         };
         window.addEventListener('scroll', handleScroll);
+
+        const match = document.cookie.match(/googtrans=\/fr\/([a-z]{2})/);
+        if (match) {
+            setCurrentLang(match[1].toUpperCase());
+        }
+
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const languages = [
+        { code: 'fr', name: 'FR', flag: '🇫🇷' },
+        { code: 'en', name: 'EN', flag: '🇺🇸' },
+        { code: 'de', name: 'DE', flag: '🇩🇪' },
+    ];
+
+    const changeLanguage = (lng) => {
+        if (lng === 'fr') {
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${window.location.hostname}; path=/;`;
+        } else {
+            document.cookie = `googtrans=/fr/${lng}; path=/`;
+            document.cookie = `googtrans=/fr/${lng}; domain=.${window.location.hostname}; path=/`;
+        }
+        window.location.reload();
+    };
 
     const navLinks = [
         { name: 'Accueil', path: '/' },
@@ -48,6 +73,32 @@ const Navbar = () => {
                                 {link.name}
                             </Link>
                         ))}
+
+                        {/* Language Selector */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowLang(!showLang)}
+                                className="flex items-center space-x-1 text-white hover:text-primary-yellow transition-colors font-bold text-xs uppercase"
+                            >
+                                <FaGlobe className="text-sm" />
+                                <span>{currentLang}</span>
+                            </button>
+
+                            {showLang && (
+                                <div className="absolute right-0 mt-2 w-32 bg-card-bg border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+                                    {languages.map((lang) => (
+                                        <button
+                                            key={lang.code}
+                                            onClick={() => changeLanguage(lang.code)}
+                                            className="w-full text-left px-4 py-3 text-xs font-bold text-white hover:bg-primary-blue transition-colors flex items-center justify-between"
+                                        >
+                                            <span>{lang.name}</span>
+                                            <span>{lang.flag}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Mobile menu button */}
@@ -75,6 +126,17 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
+                    <div className="flex justify-center space-x-6 py-4 mt-2">
+                        {languages.map((lang) => (
+                            <button
+                                key={lang.code}
+                                onClick={() => changeLanguage(lang.code)}
+                                className={`text-xl p-2 rounded-lg ${currentLang === lang.code.toUpperCase() ? 'bg-primary-blue' : 'bg-white/5'}`}
+                            >
+                                {lang.flag}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
         </nav>

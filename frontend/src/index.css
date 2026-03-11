@@ -111,3 +111,19 @@
 .ql-editor.ql-blank::before {
   @apply !text-gray-600;
 }
+
+/* Google Translate overrides */
+body {
+  top: 0 !important;
+}
+.skiptranslate iframe,
+.goog-te-banner-frame {
+  display: none !important;
+}
+#google_translate_element {
+  display: none !important;
+}
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
