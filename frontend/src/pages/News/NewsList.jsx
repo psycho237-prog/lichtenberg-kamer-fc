@@ -34,7 +34,7 @@ const NewsList = () => {
         <div className="min-h-screen bg-dark-bg pb-20">
             <PageHero
                 title="ACTUALITÉS DU CLUB"
-                subtitle="Dernières nouvelles, résultats et coulisses du Lichtenberg-Kamer FC."
+                subtitle="Dernières nouvelles, résultats et coulisses du Lichtenberg-Kamer e.V."
                 bgImage="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
             />
 

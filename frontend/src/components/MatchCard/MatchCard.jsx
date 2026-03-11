@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaTicketAlt, FaPlay } from 'react-icons/fa';
+import { FaPlay, FaCalendar } from 'react-icons/fa';
 
 const MatchCard = ({ match, isResult = false }) => {
     return (
@@ -16,7 +16,7 @@ const MatchCard = ({ match, isResult = false }) => {
                         <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center p-3 mb-2">
                             <img src="/images/logo.png" alt="LK FC" className="w-full h-auto" />
                         </div>
-                        <p className="text-xs font-black italic text-white uppercase tracking-tighter">LICHTENBERG FC</p>
+                        <p className="text-xs font-black italic text-white uppercase tracking-tighter">LICHTENBERG-KAMER e.V</p>
                     </div>
 
                     <div className="text-center">
@@ -48,7 +48,7 @@ const MatchCard = ({ match, isResult = false }) => {
                         {isResult ? (
                             <><FaPlay /> <span>Résumé Match</span></>
                         ) : (
-                            <><FaTicketAlt /> <span>Acheter Billets</span></>
+                            <><FaCalendar /> <span>Détails</span></>
                         )}
                     </button>
                 </div>

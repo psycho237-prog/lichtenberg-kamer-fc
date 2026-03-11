@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { FaGlobe } from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
-    const { t, i18n } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [showLang, setShowLang] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -20,23 +17,12 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: t('Home'), path: '/' },
-        { name: t('Équipe'), path: '/team' },
-        { name: t('Matchs'), path: '/matches' },
-        { name: t('Actualités'), path: '/news' },
-        { name: t('Galerie'), path: '/gallery' },
-        { name: t('Contact'), path: '/contact' },
-    ];
-
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-        setShowLang(false);
-    };
-
-    const languages = [
-        { code: 'fr', name: 'FR', flag: '🇫🇷' },
-        { code: 'en', name: 'EN', flag: '🇺🇸' },
-        { code: 'de', name: 'DE', flag: '🇩🇪' },
+        { name: 'Accueil', path: '/' },
+        { name: 'Équipe', path: '/team' },
+        { name: 'Matchs', path: '/matches' },
+        { name: 'Actualités', path: '/news' },
+        { name: 'Galerie', path: '/gallery' },
+        { name: 'Contact', path: '/contact' },
     ];
 
     return (
@@ -47,7 +33,7 @@ const Navbar = () => {
                     <Link to="/" className="flex items-center space-x-2">
                         <img src="/images/logo.png" alt="LK Logo" className="h-12 w-auto" />
                         <span className="text-xl font-bold italic text-white hidden sm:block">
-                            LICHTENBERG-<span className="text-primary-yellow">KAMER</span>
+                            LICHTENBERG-<span className="text-primary-yellow">KAMER e.V</span>
                         </span>
                     </Link>
 
@@ -62,36 +48,6 @@ const Navbar = () => {
                                 {link.name}
                             </Link>
                         ))}
-
-                        {/* Language Selector */}
-                        <div className="relative">
-                            <button
-                                onClick={() => setShowLang(!showLang)}
-                                className="flex items-center space-x-1 text-white hover:text-primary-yellow transition-colors font-bold text-xs uppercase"
-                            >
-                                <FaGlobe className="text-sm" />
-                                <span>{i18n.language?.split('-')[0].toUpperCase()}</span>
-                            </button>
-
-                            {showLang && (
-                                <div className="absolute right-0 mt-2 w-32 bg-card-bg border border-white/10 rounded-xl overflow-hidden shadow-2xl">
-                                    {languages.map((lang) => (
-                                        <button
-                                            key={lang.code}
-                                            onClick={() => changeLanguage(lang.code)}
-                                            className="w-full text-left px-4 py-3 text-xs font-bold text-white hover:bg-primary-blue transition-colors flex items-center justify-between"
-                                        >
-                                            <span>{lang.name}</span>
-                                            <span>{lang.flag}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <Link to="/tickets" className="btn-primary">
-                            {t('Tickets')}
-                        </Link>
                     </div>
 
                     {/* Mobile menu button */}
@@ -119,22 +75,6 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-                    <div className="pt-4 space-y-2">
-                        <Link to="/tickets" className="btn-primary w-full justify-center">
-                            {t('Tickets')}
-                        </Link>
-                        <div className="flex justify-center space-x-6 py-4 border-t border-white/5 mt-4">
-                            {languages.map((lang) => (
-                                <button
-                                    key={lang.code}
-                                    onClick={() => changeLanguage(lang.code)}
-                                    className={`text-xl p-2 rounded-lg ${i18n.language === lang.code ? 'bg-primary-blue' : 'bg-white/5'}`}
-                                >
-                                    {lang.flag}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
                 </div>
             )}
         </nav>

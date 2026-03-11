@@ -8,16 +8,15 @@ const Sidebar = () => {
     const { logout } = useAuth();
 
     const menuItems = [
-        { name: 'Dashboard', icon: <FaTachometerAlt />, path: '/admin/dashboard' },
-        { name: 'CMS Accueil', icon: <FaNewspaper />, path: '/admin/home-page' },
-        { name: 'Actualités', icon: <FaNewspaper />, path: '/admin/news' },
-        { name: 'Joueurs', icon: <FaUsers />, path: '/admin/players' },
-        { name: 'Calendrier', icon: <FaCalendarAlt />, path: '/admin/matches' },
-        { name: 'CMS Contact', icon: <FaUsers />, path: '/admin/contact-page' },
-        { name: 'CMS Tickets', icon: <FaNewspaper />, path: '/admin/tickets-page' },
-        { name: 'Sponsors', icon: <FaHandshake />, path: '/admin/sponsors' },
-        { name: 'Galerie', icon: <FaImages />, path: '/admin/gallery' },
-        { name: 'Paramètres', icon: <FaCog />, path: '/admin/settings' },
+        { name: 'Dashboard', icon: <FaTachometerAlt />, path: '/lkev-admin/dashboard' },
+        { name: 'CMS Accueil', icon: <FaNewspaper />, path: '/lkev-admin/home-page' },
+        { name: 'Actualités', icon: <FaNewspaper />, path: '/lkev-admin/news' },
+        { name: 'Joueurs', icon: <FaUsers />, path: '/lkev-admin/players' },
+        { name: 'Calendrier', icon: <FaCalendarAlt />, path: '/lkev-admin/matches' },
+        { name: 'CMS Contact', icon: <FaUsers />, path: '/lkev-admin/contact-page' },
+        { name: 'Sponsors', icon: <FaHandshake />, path: '/lkev-admin/sponsors' },
+        { name: 'Galerie', icon: <FaImages />, path: '/lkev-admin/gallery' },
+        { name: 'Paramètres', icon: <FaCog />, path: '/lkev-admin/settings' },
     ];
 
     return (

@@ -17,7 +17,7 @@ const NextMatch = ({ match }) => {
                         <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center p-4 border border-white/10">
                             <img src="/images/logo.png" alt="LK FC" className="w-full h-auto" />
                         </div>
-                        <h3 className="text-xl font-bold italic text-white text-center">LICHTENBERG FC</h3>
+                        <h3 className="text-xl font-bold italic text-white text-center">LICHTENBERG-KAMER e.V</h3>
                     </div>
 
                     {/* Match Info */}
@@ -32,7 +32,7 @@ const NextMatch = ({ match }) => {
                         </div>
                         <button className="mt-6 px-6 py-2 bg-primary-yellow text-black font-black italic uppercase text-xs rounded hover:bg-yellow-400 transition-colors shadow-[0_0_15px_rgba(255,200,0,0.3)]">
                             <span className={match.status === 'ongoing' ? 'animate-pulse text-red-600 font-extrabold' : ''}>
-                                {match.status === 'ongoing' ? 'EN DIRECT' : 'TICKETS DISPONIBLES'}
+                                {match.status === 'ongoing' ? 'EN DIRECT' : 'À VENIR'}
                             </span>
                         </button>
                     </div>

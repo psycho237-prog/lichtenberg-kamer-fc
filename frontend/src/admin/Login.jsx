@@ -15,7 +15,7 @@ const AdminLogin = () => {
         try {
             await login(email, password);
             toast.success('Bienvenue, Admin!');
-            navigate('/admin/dashboard');
+            navigate('/lkev-admin/dashboard');
         } catch (error) {
             toast.error('Identifiants invalides');
         }

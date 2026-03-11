@@ -79,7 +79,7 @@ const NewsDetail = () => {
                             </div>
                             <div className="flex items-center space-x-2">
                                 <FaUser className="text-primary-blue text-sm" />
-                                <span>Par {article.author || 'Lichtenberg-Kamer FC'}</span>
+                                <span>Par {article.author || 'Lichtenberg-Kamer e.V'}</span>
                             </div>
                         </motion.div>
                     </div>

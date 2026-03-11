@@ -35,7 +35,7 @@ const Team = () => {
         <div className="bg-dark-bg min-h-screen pb-20">
             <PageHero
                 title="NOTRE ÉQUIPE"
-                subtitle="Découvrez les visages qui forgent la légende de Lichtenberg-Kamer FC. Une équipe unie, prête pour la victoire."
+                subtitle="Découvrez les visages qui forgent la légende de Lichtenberg-Kamer e.V. Une équipe unie, prête pour la victoire."
                 bgImage="https://images.unsplash.com/photo-1575361204480-aadea25e6e68?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
             />
 

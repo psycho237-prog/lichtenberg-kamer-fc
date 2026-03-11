@@ -7,7 +7,6 @@ import NewsList from '../pages/News/NewsList';
 import NewsDetail from '../pages/News/NewsDetail';
 import Gallery from '../pages/Gallery/Gallery';
 import Contact from '../pages/Contact/Contact';
-import Tickets from '../pages/Tickets/Tickets';
 
 // Admin components
 import AdminLogin from '../admin/Login';
@@ -19,14 +18,13 @@ import AdminGallery from '../admin/AdminGallery';
 import AdminHome from '../admin/AdminHome';
 import AdminSponsors from '../admin/AdminSponsors';
 import AdminContact from '../admin/AdminContact';
-import AdminTickets from '../admin/AdminTickets';
 import AdminSettings from '../admin/AdminSettings';
 import { useAuth } from '../context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
     if (loading) return null;
-    return user ? children : <Navigate to="/admin/login" />;
+    return user ? children : <Navigate to="/lkev-admin/login" />;
 };
 
 const AppRoutes = () => {
@@ -39,56 +37,50 @@ const AppRoutes = () => {
             <Route path="/news/:id" element={<NewsDetail />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/tickets" element={<Tickets />} />
 
             {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={
+            <Route path="/lkev-admin/login" element={<AdminLogin />} />
+            <Route path="/lkev-admin/dashboard" element={
                 <PrivateRoute>
                     <Dashboard />
                 </PrivateRoute>
             } />
-            <Route path="/admin/players" element={
+            <Route path="/lkev-admin/players" element={
                 <PrivateRoute>
                     <AdminPlayers />
                 </PrivateRoute>
             } />
-            <Route path="/admin/news" element={
+            <Route path="/lkev-admin/news" element={
                 <PrivateRoute>
                     <AdminNews />
                 </PrivateRoute>
             } />
-            <Route path="/admin/matches" element={
+            <Route path="/lkev-admin/matches" element={
                 <PrivateRoute>
                     <AdminMatches />
                 </PrivateRoute>
             } />
-            <Route path="/admin/gallery" element={
+            <Route path="/lkev-admin/gallery" element={
                 <PrivateRoute>
                     <AdminGallery />
                 </PrivateRoute>
             } />
-            <Route path="/admin/home-page" element={
+            <Route path="/lkev-admin/home-page" element={
                 <PrivateRoute>
                     <AdminHome />
                 </PrivateRoute>
             } />
-            <Route path="/admin/contact-page" element={
+            <Route path="/lkev-admin/contact-page" element={
                 <PrivateRoute>
                     <AdminContact />
                 </PrivateRoute>
             } />
-            <Route path="/admin/tickets-page" element={
-                <PrivateRoute>
-                    <AdminTickets />
-                </PrivateRoute>
-            } />
-            <Route path="/admin/sponsors" element={
+            <Route path="/lkev-admin/sponsors" element={
                 <PrivateRoute>
                     <AdminSponsors />
                 </PrivateRoute>
             } />
-            <Route path="/admin/settings" element={
+            <Route path="/lkev-admin/settings" element={
                 <PrivateRoute>
                     <AdminSettings />
                 </PrivateRoute>

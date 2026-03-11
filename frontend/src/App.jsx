@@ -8,7 +8,7 @@ import LoadingScreen from './components/Shared/LoadingScreen';
 
 const Layout = () => {
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
+  const isAdmin = location.pathname.startsWith('/lkev-admin');
 
   return (
     <div className="flex flex-col min-h-screen">

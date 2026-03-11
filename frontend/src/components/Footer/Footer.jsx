@@ -109,7 +109,7 @@ const Footer = () => {
 
                 {/* Bottom Bar */}
                 <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
-                    <p>© 2024 LICHTENBERG-KAMER FC. TOUS DROITS RÉSERVÉS.</p>
+                    <p>© 2024 LICHTENBERG-KAMER e.V. TOUS DROITS RÉSERVÉS.</p>
                     <div className="flex space-x-6 mt-4 md:mt-0">
                         <a href="#" className="hover:text-white transition-colors">Politique de Confidentialité</a>
                         <a href="#" className="hover:text-white transition-colors">Mentions Légales</a>

@@ -1,4 +1,4 @@
-# 🦁 Lichtenberg-Kamer FC Website
+# 🦁 Lichtenberg-Kamer e.V Website
 
 A professional football club website for the Cameroonian community in Berlin. A fully dynamic site with a custom CMS to manage players, matches, news, and sponsors.
 

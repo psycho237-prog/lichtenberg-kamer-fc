@@ -28,10 +28,10 @@ const seedData = async () => {
                 slug: 'home',
                 title: 'Home Page',
                 content: {
-                    heroTitle: 'LICHTENBERG KAMER FC',
+                    heroTitle: 'LICHTENBERG KAMER e.V',
                     heroSubtitle: "L'ascension d'un club, la passion d'un peuple. Ensemble, vers les sommets du football camerounais.",
                     seasonPeriod: '2024/2025',
-                    aboutContent: '<h2>NOTRE HISTOIRE</h2><p>Lichtenberg-Kamer FC est bien plus qu\'un club de football. Fondé par la communauté camerounaise de Berlin (Lichtenberg), nous représentons les valeurs d\'excellence, d\'intégration et de solidarité.</p>',
+                    aboutContent: '<h2>NOTRE HISTOIRE</h2><p>Lichtenberg-Kamer e.V est bien plus qu\'un club de football. Fondé par la communauté camerounaise de Berlin (Lichtenberg), nous représentons les valeurs d\'excellence, d\'intégration et de solidarité.</p>',
                     visionContent: '<p>Devenir une référence du football communautaire en Allemagne et servir de pont entre les cultures à travers le sport.</p>',
                     philosophyContent: '<p>Discipline, Travail, et Fair-play sont les piliers qui guident chacun de nos joueurs, du centre de formation à l\'équipe première.</p>'
                 }
