@@ -38,8 +38,10 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Serve Static Assets in production
+console.log('Environment:', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
     const distPath = path.join(__dirname, '..', 'frontend', 'dist');
+    console.log('Serving static files from:', distPath);
     app.use(express.static(distPath));
 
     app.get('*', (req, res) => {
@@ -48,6 +50,9 @@ if (process.env.NODE_ENV === 'production') {
         }
     });
 } else {
+    app.get('/', (req, res) => {
+        res.send(`Server is running in ${process.env.NODE_ENV || 'development'} mode. To see the website, set NODE_ENV to production.`);
+    });
 }
 
 const PORT = process.env.PORT || 5000;
