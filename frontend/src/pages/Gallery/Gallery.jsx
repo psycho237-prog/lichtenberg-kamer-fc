@@ -48,8 +48,29 @@ const Gallery = () => {
                             className="relative group aspect-square rounded-3xl overflow-hidden cursor-pointer border border-white/5"
                         >
                             {photo.isVideo ? (
-                                <div className="w-full h-full bg-white/5 flex items-center justify-center">
-                                    <div className="w-20 h-20 rounded-full bg-primary-blue flex items-center justify-center text-white text-2xl shadow-2xl transform group-hover:scale-110 transition-transform">▶</div>
+                                <div className="w-full h-full bg-black relative flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                                    {(photo.url || photo.videoUrl)?.includes('youtube.com') || (photo.url || photo.videoUrl)?.includes('youtu.be') ? (
+                                        <iframe
+                                            src={`https://www.youtube.com/embed/${(photo.url || photo.videoUrl).split('v=')[1] || (photo.url || photo.videoUrl).split('/').pop()}`}
+                                            className="w-full h-full"
+                                            title={photo.title}
+                                            frameBorder="0"
+                                            allowFullScreen
+                                        ></iframe>
+                                    ) : (
+                                        <video
+                                            src={getImageUrl(photo.url || photo.videoUrl)}
+                                            className="w-full h-full object-cover"
+                                            controls={false}
+                                            muted
+                                            playsInline
+                                            onMouseOver={(e) => e.target.play()}
+                                            onMouseOut={(e) => e.target.pause()}
+                                        />
+                                    )}
+                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:opacity-0 transition-opacity">
+                                        <div className="w-16 h-16 rounded-full bg-primary-blue/80 flex items-center justify-center text-white text-xl">▶</div>
+                                    </div>
                                 </div>
                             ) : (
                                 <img

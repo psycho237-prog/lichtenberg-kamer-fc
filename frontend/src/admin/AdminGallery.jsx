@@ -194,25 +194,24 @@ const AdminGallery = () => {
                                     </div>
                                 </div>
 
-                                {formData.isVideo ? (
-                                    <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">URL Vidéo (YouTube/Vimeo)</label>
+                                <div>
+                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">
+                                        {formData.isVideo ? "Fichier Vidéo (MP4, etc.)" : "Fichier Image (JPG, PNG, WebP)"}
+                                    </label>
+                                    <input
+                                        type="file" name="photo" onChange={handleChange}
+                                        className="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-primary-blue/20 file:text-primary-blue hover:file:bg-primary-blue/30 cursor-pointer"
+                                        required={!formData.videoUrl}
+                                    />
+                                    <div className="mt-4">
+                                        <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">OU URL Externe (YouTube, Vimeo ou lien direct)</label>
                                         <input
                                             type="text" name="videoUrl" value={formData.videoUrl} onChange={handleChange}
                                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold"
-                                            required
+                                            placeholder="https://..."
                                         />
                                     </div>
-                                ) : (
-                                    <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Image</label>
-                                        <input
-                                            type="file" name="photo" onChange={handleChange}
-                                            className="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-primary-blue/20 file:text-primary-blue hover:file:bg-primary-blue/30 cursor-pointer"
-                                            required={!formData.isVideo}
-                                        />
-                                    </div>
-                                )}
+                                </div>
 
                                 <button type="submit" className="btn-primary w-full justify-center py-4 text-sm mt-4 uppercase">
                                     Ajouter à la Galerie

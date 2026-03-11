@@ -14,8 +14,8 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'lichtenberg-kamer-fc',
-        allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
-        transformation: [{ width: 1000, height: 1000, crop: 'limit' }],
+        resource_type: 'auto', // Detects if it's image or video automatically
+        // No allowed_formats restriction here to be more flexible
     },
 });
 
