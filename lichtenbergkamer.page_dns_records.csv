@@ -1,0 +1,3 @@
+Type,Host,Answer,TTL,Priority
+A,lichtenbergkamer.page,216.24.57.1,300,
+CNAME,www.lichtenbergkamer.page,lichtenberg-kamer-fc-1.onrender.com,300,

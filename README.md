@@ -2,28 +2,35 @@
 
 A professional football club website for the Cameroonian community in Berlin. A fully dynamic site with a custom CMS to manage players, matches, news, and sponsors.
 
+- **Official Domain**: [https://lichtenbergkamer.page](https://lichtenbergkamer.page)
+- **Admin Panel**: `/lkev-admin/login`
+
 ## 🛠 Tech Stack
 - **Frontend**: React (Vite), Tailwind CSS, Framer Motion, Axios
-- **Backend**: Node.js, Express, MongoDB
-- **CMS**: Custom Administration Dashboard
-- **I18n**: Support for French, English, and German
+- **Backend**: Node.js, Express (Express 5)
+- **Database**: Firebase (Firestore)
+- **Media Storage**: Cloudinary (Images & Videos)
+- **CMS**: Custom Administration Dashboard with Google Translate integration
 
 ---
 
 ## 🔐 Environment Variables
 
 ### Backend (`/backend/.env`)
-These variables are required for the server to run and connect to the database.
+These variables are required for the server to run and connect to the database/storage.
 
 | Variable | Description | Example |
 | :--- | :--- | :--- |
 | `PORT` | Server port | `5000` |
-| `MONGODB_URI` | MongoDB connection string | `mongodb+srv://...` |
+| `FIREBASE_SERVICE_ACCOUNT` | Firebase admin SDK JSON string | `{"type": "service_account", ...}` |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary name | `your_name` |
+| `CLOUDINARY_API_KEY` | Cloudinary key | `your_key` |
+| `CLOUDINARY_API_SECRET` | Cloudinary secret | `your_secret` |
 | `JWT_SECRET` | Secret key for login tokens | `any_long_random_string` |
 | `ADMIN_EMAIL` | Email for CMS login | `admin@lichtenberg-kamer.de` |
 | `ADMIN_PASSWORD` | Password for CMS login | `your_secure_password` |
 | `NODE_ENV` | Environment mode | `production` or `development` |
-| `RENDER_EXTERNAL_URL` | Your site URL (for auto-ping) | `https://site.onrender.com` |
+| `RENDER_EXTERNAL_URL` | Your site URL (for auto-ping) | `https://lichtenbergkamer.page` |
 
 ### Frontend (`/frontend/.env`)
 Used for local development to point to the backend.
@@ -40,17 +47,9 @@ Render is perfect for this project. Since we use a Node.js monorepo structure:
 
 1. **Connect your GitHub** to Render.
 2. **Environment**: Select `Node`.
-3. **Build Command**: `npm run install-all && npm run build-frontend`
-4. **Start Command**: `npm start`
+3. **Build Command**: `cd frontend && npm install && npm run build && cd ../backend && npm install`
+4. **Start Command**: `node backend/server.js` (or use the root `npm start` if configured)
 5. **Add Environment Variables**: Copy the variables from the "Backend" table above into the Render "Environment" tab.
-
-### ⚠️ A note on Image Storage
-Currently, images are stored in `backend/uploads/`.
-- **Render Free Tier**: The disk is temporary. Uploaded images (players/news) will disappear after a restart.
-- **Better Alternatives**:
-    - **Cloudinary**: Highly recommended. Free, stable, and optimizes images.
-    - **Firebase Storage**: Excellent choice for persistent file storage.
-    - **MongoDB**: **DON'T USE** for images. It's not efficient for binary files.
 
 ---
 
@@ -67,7 +66,7 @@ Currently, images are stored in `backend/uploads/`.
    - Run frontend with: `cd frontend && npm run dev -- --host`
 
 3. **Database Seed**:
-   Fill the database with initial data:
+   Fill the database with initial data (requires Firebase credentials):
    ```bash
    cd backend && npm run seed
    ```
