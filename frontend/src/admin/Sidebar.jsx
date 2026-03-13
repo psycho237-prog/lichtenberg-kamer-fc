@@ -12,6 +12,7 @@ const Sidebar = () => {
         { name: 'CMS Accueil', icon: <FaNewspaper />, path: '/lkev-admin/home-page' },
         { name: 'Actualités', icon: <FaNewspaper />, path: '/lkev-admin/news' },
         { name: 'Joueurs', icon: <FaUsers />, path: '/lkev-admin/players' },
+        { name: 'Stats Joueurs', icon: <FaTachometerAlt />, path: '/lkev-admin/stats' },
         { name: 'Calendrier', icon: <FaCalendarAlt />, path: '/lkev-admin/matches' },
         { name: 'CMS Contact', icon: <FaUsers />, path: '/lkev-admin/contact-page' },
         { name: 'Sponsors', icon: <FaHandshake />, path: '/lkev-admin/sponsors' },

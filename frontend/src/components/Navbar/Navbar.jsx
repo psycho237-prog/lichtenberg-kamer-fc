@@ -45,6 +45,7 @@ const Navbar = () => {
         { name: 'Accueil', path: '/' },
         { name: 'Équipe', path: '/team' },
         { name: 'Matchs', path: '/matches' },
+        { name: 'Stats', path: '/stats' },
         { name: 'Actualités', path: '/news' },
         { name: 'Galerie', path: '/gallery' },
         { name: 'Contact', path: '/contact' },

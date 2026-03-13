@@ -7,6 +7,7 @@ import NewsList from '../pages/News/NewsList';
 import NewsDetail from '../pages/News/NewsDetail';
 import Gallery from '../pages/Gallery/Gallery';
 import Contact from '../pages/Contact/Contact';
+import TopScorers from '../pages/TopScorers/TopScorers';
 
 // Admin components
 import AdminLogin from '../admin/Login';
@@ -19,6 +20,7 @@ import AdminHome from '../admin/AdminHome';
 import AdminSponsors from '../admin/AdminSponsors';
 import AdminContact from '../admin/AdminContact';
 import AdminSettings from '../admin/AdminSettings';
+import AdminPlayerStats from '../admin/AdminPlayerStats';
 import { useAuth } from '../context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
@@ -37,6 +39,7 @@ const AppRoutes = () => {
             <Route path="/news/:id" element={<NewsDetail />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/stats" element={<TopScorers />} />
 
             {/* Admin Routes */}
             <Route path="/lkev-admin/login" element={<AdminLogin />} />
@@ -48,6 +51,11 @@ const AppRoutes = () => {
             <Route path="/lkev-admin/players" element={
                 <PrivateRoute>
                     <AdminPlayers />
+                </PrivateRoute>
+            } />
+            <Route path="/lkev-admin/stats" element={
+                <PrivateRoute>
+                    <AdminPlayerStats />
                 </PrivateRoute>
             } />
             <Route path="/lkev-admin/news" element={
