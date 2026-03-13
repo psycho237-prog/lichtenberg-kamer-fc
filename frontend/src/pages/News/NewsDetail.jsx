@@ -110,32 +110,25 @@ const NewsDetail = () => {
 
                         <div className="flex items-center space-x-3">
                             <span className="text-gray-500 font-black uppercase text-[10px] tracking-widest hidden sm:block">Partager :</span>
-                            <div className="flex space-x-2">
-                                <button
-                                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + window.location.href)}`, '_blank')}
-                                    className="p-2 bg-white/5 hover:bg-green-600 text-white rounded-lg transition-all"
-                                    title="Partager sur WhatsApp"
-                                >
-                                    <FaShareAlt />
-                                </button>
-                                <button
-                                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
-                                    className="p-2 bg-white/5 hover:bg-blue-600 text-white rounded-lg transition-all"
-                                    title="Partager sur Facebook"
-                                >
-                                    <FaShareAlt />
-                                </button>
-                                <button
-                                    onClick={() => {
+                            <button
+                                onClick={() => {
+                                    if (navigator.share) {
+                                        navigator.share({
+                                            title: article.title,
+                                            text: `Découvrez cet article sur Lichtenberg-Kamer e.V : ${article.title}`,
+                                            url: window.location.href,
+                                        }).catch(err => console.log('Erreur de partage:', err));
+                                    } else {
                                         navigator.clipboard.writeText(window.location.href);
                                         alert('Lien copié dans le presse-papier !');
-                                    }}
-                                    className="p-2 bg-white/5 hover:bg-primary-blue text-white rounded-lg transition-all"
-                                    title="Copier le lien"
-                                >
-                                    <FaShareAlt />
-                                </button>
-                            </div>
+                                    }
+                                }}
+                                className="p-3 bg-white/5 hover:bg-primary-blue text-white rounded-xl transition-all flex items-center space-x-2 group border border-white/5"
+                                title="Partager l'article"
+                            >
+                                <FaShareAlt className="group-hover:rotate-12 transition-transform" />
+                                <span className="text-[10px] font-black uppercase tracking-widest">Partager</span>
+                            </button>
                         </div>
                     </div>
                 </motion.div>
