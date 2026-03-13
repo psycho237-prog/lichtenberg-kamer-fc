@@ -57,24 +57,59 @@ if (process.env.NODE_ENV === 'production') {
             // Read index.html
             let indexHtml = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
 
-            // Fetch dynamic about content from Firestore
-            const homeDoc = await db.collection('pages').doc('home').get();
+            // Fetch dynamic content based on path
+            const isNews = req.path.startsWith('/news/');
+            let title = "Lichtenberg-Kamer e.V";
             let description = "Lichtenberg-Kamer e.V - Club de football communautaire à Berlin.";
+            let image = "https://lichtenbergkamer.page/images/logo.png";
+            let url = "https://lichtenbergkamer.page" + req.path;
 
-            if (homeDoc.exists) {
-                const data = homeDoc.data();
-                if (data.content && data.content.aboutContent) {
-                    // Strip HTML tags and limit length
-                    description = data.content.aboutContent
-                        .replace(/<[^>]*>/g, '') // Remove HTML tags
-                        .replace(/\s+/g, ' ')    // Clean whitespaces
-                        .trim()
-                        .substring(0, 160);      // SEO limit
+            if (isNews) {
+                const articleId = req.path.split('/')[2];
+                try {
+                    const newsDoc = await db.collection('news').doc(articleId).get();
+                    if (newsDoc.exists) {
+                        const data = newsDoc.data();
+                        title = data.title + " | Lichtenberg-Kamer e.V";
+                        image = data.image ? data.image : image;
+                        if (data.content) {
+                            description = data.content
+                                .replace(/<[^>]*>/g, '')
+                                .replace(/\s+/g, ' ')
+                                .trim()
+                                .substring(0, 160);
+                        }
+                    }
+                } catch (e) {
+                    console.error("News Fetch Error:", e);
+                }
+            } else {
+                // Fetch dynamic about content for home or other pages
+                try {
+                    const homeDoc = await db.collection('pages').doc('home').get();
+                    if (homeDoc.exists) {
+                        const data = homeDoc.data();
+                        if (data.content && data.content.aboutContent) {
+                            description = data.content.aboutContent
+                                .replace(/<[^>]*>/g, '')
+                                .replace(/\s+/g, ' ')
+                                .trim()
+                                .substring(0, 160);
+                        }
+                    }
+                } catch (e) {
+                    console.error("Home Fetch Error:", e);
                 }
             }
 
-            // Inject into HTML placeholder
-            indexHtml = indexHtml.replace('__META_DESCRIPTION__', description);
+            // Inject into HTML placeholders
+            indexHtml = indexHtml
+                .replace('__META_DESCRIPTION__', description)
+                .replace(/__OG_TITLE__/g, title)
+                .replace(/__OG_DESCRIPTION__/g, description)
+                .replace(/__OG_IMAGE__/g, image)
+                .replace(/__OG_URL__/g, url)
+                .replace('<title>Lichtenberg-Kamer e.V</title>', `<title>${title}</title>`);
 
             res.send(indexHtml);
         } catch (err) {

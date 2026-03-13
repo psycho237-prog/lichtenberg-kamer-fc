@@ -108,9 +108,34 @@ const NewsDetail = () => {
                             <span>Retour aux articles</span>
                         </Link>
 
-                        <div className="flex items-center space-x-4">
-                            <span className="text-gray-500 font-black uppercase text-[10px] tracking-widest">Partager :</span>
-                            <button className="text-gray-400 hover:text-white transition-colors text-lg"><FaShareAlt /></button>
+                        <div className="flex items-center space-x-3">
+                            <span className="text-gray-500 font-black uppercase text-[10px] tracking-widest hidden sm:block">Partager :</span>
+                            <div className="flex space-x-2">
+                                <button
+                                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + window.location.href)}`, '_blank')}
+                                    className="p-2 bg-white/5 hover:bg-green-600 text-white rounded-lg transition-all"
+                                    title="Partager sur WhatsApp"
+                                >
+                                    <FaShareAlt />
+                                </button>
+                                <button
+                                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                                    className="p-2 bg-white/5 hover:bg-blue-600 text-white rounded-lg transition-all"
+                                    title="Partager sur Facebook"
+                                >
+                                    <FaShareAlt />
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(window.location.href);
+                                        alert('Lien copié dans le presse-papier !');
+                                    }}
+                                    className="p-2 bg-white/5 hover:bg-primary-blue text-white rounded-lg transition-all"
+                                    title="Copier le lien"
+                                >
+                                    <FaShareAlt />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
