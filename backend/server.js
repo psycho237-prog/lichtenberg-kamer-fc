@@ -4,7 +4,7 @@ const path = require('path');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
-const { admin } = require('./config/firebase');
+const { admin, db } = require('./config/firebase');
 const keepAlive = require('./utils/autoping');
 
 // Load env vars
@@ -39,14 +39,46 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Serve Static Assets in production
-console.log('Environment:', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
     const distPath = path.join(__dirname, '..', 'frontend', 'dist');
-    console.log('Serving static files from:', distPath);
-    app.use(express.static(distPath));
+    const fs = require('fs');
 
-    app.get(/.*/, (req, res) => {
-        if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+    // 1. Serve static assets first (CSS, JS, Images)
+    app.use(express.static(distPath, { index: false })); // index: false prevents serving index.html statically
+
+    // 2. Dynamic route for index.html injection
+    app.get(/.*/, async (req, res) => {
+        // Skip API, uploads, and files with extensions (assets)
+        if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || path.extname(req.path)) {
+            return res.sendFile(path.join(distPath, req.path));
+        }
+
+        try {
+            // Read index.html
+            let indexHtml = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
+
+            // Fetch dynamic about content from Firestore
+            const homeDoc = await db.collection('pages').doc('home').get();
+            let description = "Lichtenberg-Kamer e.V - Club de football communautaire à Berlin.";
+
+            if (homeDoc.exists) {
+                const data = homeDoc.data();
+                if (data.content && data.content.aboutContent) {
+                    // Strip HTML tags and limit length
+                    description = data.content.aboutContent
+                        .replace(/<[^>]*>/g, '') // Remove HTML tags
+                        .replace(/\s+/g, ' ')    // Clean whitespaces
+                        .trim()
+                        .substring(0, 160);      // SEO limit
+                }
+            }
+
+            // Inject into HTML placeholder
+            indexHtml = indexHtml.replace('__META_DESCRIPTION__', description);
+
+            res.send(indexHtml);
+        } catch (err) {
+            console.error('SEO Injection Error:', err);
             res.sendFile(path.join(distPath, 'index.html'));
         }
     });
