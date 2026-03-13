@@ -81,6 +81,7 @@ const Home = () => {
                                 src={pageData.aboutImage ? getImageUrl(pageData.aboutImage) : '/images/hero.png'}
                                 className="w-full h-full object-cover"
                                 alt="Club"
+                                loading="lazy"
                             />
                             <div className="absolute inset-0 bg-primary-blue/20 mix-blend-overlay"></div>
                         </motion.div>
@@ -159,6 +160,7 @@ const Home = () => {
                                         src={item.image ? getImageUrl(item.image) : '/images/hero.png'}
                                         alt={item.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                        loading="lazy"
                                     />
                                     <div className="absolute top-4 left-4 bg-primary-blue text-white text-[10px] font-black italic px-3 py-1.5 rounded-full uppercase tracking-widest">
                                         {item.category}

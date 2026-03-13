@@ -116,14 +116,27 @@
 body {
   top: 0 !important;
 }
+
 .skiptranslate iframe,
 .goog-te-banner-frame {
   display: none !important;
 }
+
 #google_translate_element {
   display: none !important;
 }
+
 .goog-text-highlight {
   background: none !important;
   box-shadow: none !important;
+}
+
+/* Utils */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

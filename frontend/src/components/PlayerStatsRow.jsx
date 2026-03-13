@@ -14,6 +14,7 @@ const PlayerStatsRow = ({ rank, playerPhoto, playerName, matchesPlayed, goals, a
                             src={playerPhoto || '/images/default-player.png'}
                             alt={playerName}
                             className={`w-12 h-12 rounded-full object-cover border-2 ${isTopScorer ? 'border-primary-yellow shadow-[0_0_10px_rgba(245,197,24,0.3)]' : 'border-white/10'}`}
+                            loading="lazy"
                         />
                         {isTopScorer && (
                             <div className="absolute -top-1 -right-1 bg-primary-yellow text-black rounded-full p-1 text-[8px]">

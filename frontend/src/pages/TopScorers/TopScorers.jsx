@@ -44,14 +44,14 @@ const TopScorers = () => {
 
             <div className="max-w-4xl mx-auto px-4 -mt-10 relative z-10">
                 {/* Filter Bar */}
-                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-8 bg-card-bg/50 p-2 rounded-2xl backdrop-blur-md border border-white/5 shadow-2xl">
+                <div className="flex flex-nowrap items-center justify-start md:justify-center gap-2 mb-8 bg-card-bg/50 p-2 rounded-2xl backdrop-blur-md border border-white/5 shadow-2xl overflow-x-auto no-scrollbar">
                     {filters.map((filter) => (
                         <button
                             key={filter}
                             onClick={() => setActiveFilter(filter)}
-                            className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-300 ${activeFilter === filter
-                                    ? 'bg-primary-yellow text-black shadow-[0_0_15px_rgba(245,197,24,0.4)]'
-                                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                            className={`px-6 py-2 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all duration-300 whitespace-nowrap ${activeFilter === filter
+                                ? 'bg-primary-yellow text-black shadow-[0_0_15px_rgba(245,197,24,0.4)]'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             {filter}
