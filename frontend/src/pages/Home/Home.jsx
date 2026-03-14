@@ -226,7 +226,7 @@ const Home = () => {
                                     <img
                                         src={getImageUrl(sponsor.logo)}
                                         alt={sponsor.name}
-                                        className="h-16 md:h-24 w-auto object-contain"
+                                        className="h-24 md:h-36 w-auto object-contain"
                                         title={sponsor.name}
                                     />
                                 </div>
