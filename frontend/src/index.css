@@ -70,6 +70,14 @@
 /* CMS Content Styles */
 .ql-editor {
   @apply font-sport text-[15px];
+  white-space: normal !important;
+  word-break: keep-all !important;
+  overflow-wrap: anywhere !important;
+}
+
+.ql-editor * {
+  word-break: keep-all !important;
+  overflow-wrap: anywhere !important;
 }
 
 @media (min-width: 768px) {
@@ -109,7 +117,10 @@
 }
 
 .ql-editor p {
-  @apply !text-gray-400 !mb-4 !font-medium leading-[1.6] break-normal overflow-wrap-normal;
+  @apply !text-gray-400 !mb-4 !font-medium leading-[1.6];
+  white-space: normal !important;
+  word-break: keep-all !important;
+  overflow-wrap: anywhere !important;
 }
 
 @media (min-width: 768px) {
