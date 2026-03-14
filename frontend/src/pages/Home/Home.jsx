@@ -144,7 +144,7 @@ const Home = () => {
                     </Link>
                 </div>
 
-                <div className="flex md:grid flex-nowrap md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8 md:pb-0">
+                <div className="flex md:grid flex-nowrap md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
                     {news.map((item, index) => (
                         <motion.div
                             key={item._id}
@@ -152,31 +152,31 @@ const Home = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="card-gradient rounded-3xl overflow-hidden group border border-white/5 min-w-[85vw] md:min-w-0 snap-center shrink-0"
+                            className="card-gradient rounded-2xl md:rounded-3xl overflow-hidden group border border-white/5 w-[85vw] md:w-auto shrink-0 snap-center flex flex-col"
                         >
-                            <Link to={`/news/${item._id}`}>
-                                <div className="relative h-64 overflow-hidden">
+                            <Link to={`/news/${item._id}`} className="flex flex-col h-full">
+                                <div className="relative h-48 md:h-64 overflow-hidden shrink-0">
                                     <img
                                         src={item.image ? getImageUrl(item.image) : '/images/hero.png'}
                                         alt={item.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                         loading="lazy"
                                     />
-                                    <div className="absolute top-4 left-4 bg-primary-blue text-white text-[10px] font-black italic px-3 py-1.5 rounded-full uppercase tracking-widest">
+                                    <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-primary-blue text-white text-[10px] font-black italic px-3 py-1.5 rounded-full uppercase tracking-widest">
                                         {item.category}
                                     </div>
                                 </div>
-                                <div className="p-8">
-                                    <span className="text-gray-500 text-[10px] font-bold uppercase tracking-widest block mb-4 italic">
+                                <div className="p-5 md:p-8 flex flex-col flex-1">
+                                    <span className="text-gray-500 text-[10px] font-bold uppercase tracking-widest block mb-3 md:mb-4 italic">
                                         {new Date(item.publishDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                                     </span>
-                                    <h3 className="text-2xl font-black italic text-white group-hover:text-primary-blue transition-colors leading-tight mb-4 uppercase">
+                                    <h3 className="text-xl md:text-2xl font-black italic text-white group-hover:text-primary-blue transition-colors leading-tight mb-3 md:mb-4 uppercase break-words line-clamp-2 md:line-clamp-none">
                                         {item.title}
                                     </h3>
-                                    <p className="text-gray-400 text-sm line-clamp-3 mb-6">
+                                    <p className="text-gray-400 text-xs md:text-sm line-clamp-3 mb-4 md:mb-6 flex-1">
                                         {stripHtml(item.content)}
                                     </p>
-                                    <div className="mt-auto pt-6 border-t border-white/5 flex items-center text-white font-black italic text-xs uppercase group-hover:text-primary-blue transition-all">
+                                    <div className="mt-auto pt-4 md:pt-6 border-t border-white/5 flex items-center text-white font-black italic text-xs uppercase group-hover:text-primary-blue transition-all">
                                         <span>Lire Plus</span>
                                         <FaArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
                                     </div>
