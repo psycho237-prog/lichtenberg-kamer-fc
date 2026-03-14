@@ -39,7 +39,7 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
                 <div className="absolute inset-0 bg-black/40"></div>
             </div>
 
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 flex flex-col items-start text-left">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
                         {subtitle || "L'ascension d'un club, la passion d'un peuple. Ensemble, vers les sommets du football camerounais."}
                     </p>
 
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex w-full justify-center md:justify-start">
                         <Link to="/gallery" className="btn-outline px-8 py-4 text-lg bg-white/5 border-white/20 hover:border-primary-blue inline-flex items-center group">
                             <FaPlay className="mr-3 text-sm group-hover:text-primary-blue transition-colors" /> Voir Highlights
                         </Link>
