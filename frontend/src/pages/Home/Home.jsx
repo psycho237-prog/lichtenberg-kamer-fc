@@ -214,17 +214,22 @@ const Home = () => {
 
             {/* Sponsors Section */}
             {sponsors && sponsors.length > 0 && (
-                <section className="bg-clear py-12 md:py-20 mt-16 md:mt-32 border-y border-white/5">
+                <section className="bg-clear py-16 md:py-24 mt-16 md:mt-32 border-y border-white/5">
                     <div className="max-w-7xl mx-auto px-4">
-                        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+                        <div className="text-center mb-12 md:mb-16">
+                            <span className="text-primary-blue font-black uppercase tracking-widest text-[10px] md:text-xs italic">Ils nous soutiennent</span>
+                            <h2 className="text-3xl md:text-5xl font-black italic text-white mt-2 uppercase">Nos Partenaires & <span className="text-primary-yellow">Sponsors</span></h2>
+                        </div>
+                        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24">
                             {sponsors.map(sponsor => (
-                                <img
-                                    key={sponsor._id}
-                                    src={getImageUrl(sponsor.logo)}
-                                    alt={sponsor.name}
-                                    className="h-12 w-auto object-contain"
-                                    title={sponsor.name}
-                                />
+                                <div key={sponsor._id} className="group transition-all duration-500 hover:scale-110">
+                                    <img
+                                        src={getImageUrl(sponsor.logo)}
+                                        alt={sponsor.name}
+                                        className="h-16 md:h-24 w-auto object-contain"
+                                        title={sponsor.name}
+                                    />
+                                </div>
                             ))}
                         </div>
                     </div>
