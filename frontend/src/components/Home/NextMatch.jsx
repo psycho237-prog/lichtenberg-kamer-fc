@@ -6,9 +6,10 @@ const NextMatch = ({ match }) => {
     return (
         <div className="relative z-20 -mt-24 max-w-5xl mx-auto px-4">
             <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, scale: 0.85, y: 80 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+                viewport={{ once: true, margin: "-50px" }}
                 className="bg-card-bg border border-white/10 rounded-xl overflow-hidden shadow-2xl shadow-black/50"
             >
                 <div className="flex flex-row items-center justify-between w-full">

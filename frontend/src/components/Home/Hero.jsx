@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaPlay } from 'react-icons/fa';
+import { FaPlay, FaChevronDown } from 'react-icons/fa';
 
 import { Link } from 'react-router-dom';
 
@@ -55,6 +55,23 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
             <div className="absolute bottom-0 right-0 w-1/3 h-full pointer-events-none hidden lg:block">
                 <div className="h-full w-full bg-gradient-to-l from-primary-blue/10 to-transparent"></div>
             </div>
+
+            {/* Scroll Indicator */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 1 }}
+                className="absolute bottom-28 md:bottom-32 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center cursor-pointer pointer-events-auto"
+                onClick={() => window.scrollTo({ top: window.innerHeight - 100, behavior: 'smooth' })}
+            >
+                <span className="text-white/50 text-[10px] md:text-xs uppercase tracking-widest font-bold mb-2">Découvrir</span>
+                <motion.div
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                >
+                    <FaChevronDown className="text-primary-yellow text-xl md:text-2xl" />
+                </motion.div>
+            </motion.div>
         </div>
     );
 };
