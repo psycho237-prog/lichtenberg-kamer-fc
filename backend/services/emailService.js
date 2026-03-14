@@ -4,6 +4,8 @@ const { db } = require('../config/firebase');
 // Initialize Resend safely
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
+const FROM_EMAIL = 'Lichtenberg-Kamer <info@lichtenbergkamer.page>';
+
 const getSubscribers = async () => {
     const snapshot = await db.collection('subscribers').get();
     return snapshot.docs.map(doc => doc.data().email);
@@ -14,7 +16,7 @@ exports.sendWelcomeEmail = async (email) => {
         if (!resend) return;
 
         await resend.emails.send({
-            from: 'Lichtenberg-Kamer <news@resend.dev>',
+            from: FROM_EMAIL,
             to: [email],
             subject: 'Bienvenue chez Lichtenberg-Kamer !',
             html: `
@@ -43,7 +45,7 @@ exports.sendNewsNotification = async (article) => {
         if (emails.length === 0) return;
 
         await resend.emails.send({
-            from: 'Lichtenberg-Kamer <news@resend.dev>', // Will be updated with domain later
+            from: FROM_EMAIL,
             to: emails,
             subject: `Nouvel Article : ${article.title}`,
             html: `
@@ -72,7 +74,7 @@ exports.sendMatchNotification = async (match) => {
         if (emails.length === 0) return;
 
         await resend.emails.send({
-            from: 'Lichtenberg-Kamer <news@resend.dev>',
+            from: FROM_EMAIL,
             to: emails,
             subject: `Prochain Match : LK vs ${match.opponent}`,
             html: `
