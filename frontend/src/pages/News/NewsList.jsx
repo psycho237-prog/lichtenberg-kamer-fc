@@ -13,8 +13,8 @@ const NewsList = () => {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const res = await axios.get(API_BASE + '/api/news');
-                setNews(res.data);
+                const sortedNews = res.data.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+                setNews(sortedNews);
                 setLoading(false);
             } catch (err) {
                 console.error(err);

@@ -11,30 +11,30 @@ const MatchCard = ({ match, isResult = false }) => {
         >
             <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                 {/* Teams Display */}
-                <div className="flex items-center space-x-8 flex-1 justify-center md:justify-start">
-                    <div className="text-center">
-                        <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center p-3 mb-2">
+                <div className="flex items-center justify-between md:justify-start w-full md:w-auto md:space-x-8 flex-1">
+                    <div className="text-center flex-1 md:flex-none">
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-white/5 rounded-full flex items-center justify-center p-2 mx-auto mb-2">
                             <img src="/images/logo.png" alt="LK FC" className="w-full h-auto" />
                         </div>
-                        <p className="text-xs font-black italic text-white uppercase tracking-tighter">LICHTENBERG-KAMER e.V</p>
+                        <p className="text-[10px] md:text-xs font-black italic text-white uppercase tracking-tighter truncate max-w-[80px] md:max-w-none mx-auto">LK e.V</p>
                     </div>
 
-                    <div className="text-center">
+                    <div className="text-center px-2 md:px-0">
                         {isResult ? (
-                            <div className="text-3xl font-black italic text-primary-yellow bg-primary-yellow/10 px-4 py-2 rounded">
+                            <div className="text-xl md:text-3xl font-black italic text-primary-yellow bg-primary-yellow/10 px-3 md:px-4 py-1.5 md:py-2 rounded whitespace-nowrap">
                                 {match.score.home} - {match.score.away}
                             </div>
                         ) : (
-                            <div className="text-2xl font-black italic text-white px-4 py-2">VS</div>
+                            <div className="text-lg md:text-2xl font-black italic text-white px-2 py-1">VS</div>
                         )}
-                        <p className="text-[10px] text-gray-500 font-bold uppercase mt-2">{isResult ? 'Score Final' : 'Coup d\'envoi'}</p>
+                        <p className="text-[8px] md:text-[10px] text-gray-500 font-bold uppercase mt-1 md:mt-2">{isResult ? 'Score Final' : 'Coup d\'envoi'}</p>
                     </div>
 
-                    <div className="text-center">
-                        <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center p-3 mb-2">
+                    <div className="text-center flex-1 md:flex-none">
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-white/5 rounded-full flex items-center justify-center p-2 mx-auto mb-2">
                             <img src={match.opponentLogo || 'https://images.squarespace-cdn.com/content/v1/5e3d7a9643d4632ff4b9ca04/1614115167644-88A7O6AOY7P6S6Q6T6B6/placeholder-logo.png'} alt={match.opponent} className="w-full h-auto grayscale opacity-50" />
                         </div>
-                        <p className="text-xs font-black italic text-white uppercase tracking-tighter">{match.opponent}</p>
+                        <p className="text-[10px] md:text-xs font-black italic text-white uppercase tracking-tighter truncate max-w-[80px] md:max-w-none mx-auto">{match.opponent}</p>
                     </div>
                 </div>
 
