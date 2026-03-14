@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaPlay, FaChevronDown } from 'react-icons/fa';
 
@@ -9,6 +9,20 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
     // or just use the first word for the big white part
     const mainTitle = title ? title.split(' ')[0] : 'LICHTENBERG';
     const highlightTitle = title ? title.split(' ').slice(1).join(' ') : 'KAMER e.V';
+
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <div className="relative h-screen min-h-[600px] flex items-center overflow-hidden">
@@ -59,9 +73,9 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
             {/* Scroll Indicator */}
             <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="absolute bottom-28 md:bottom-32 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center cursor-pointer pointer-events-auto"
+                animate={{ opacity: isScrolled ? 0 : 1 }}
+                transition={{ delay: isScrolled ? 0 : 1.5, duration: 0.5 }}
+                className={`absolute bottom-28 md:bottom-32 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center cursor-pointer pointer-events-auto ${isScrolled ? 'pointer-events-none' : ''}`}
                 onClick={() => window.scrollTo({ top: window.innerHeight - 100, behavior: 'smooth' })}
             >
                 <span className="text-white/50 text-[10px] md:text-xs uppercase tracking-widest font-bold mb-2">Découvrir</span>
