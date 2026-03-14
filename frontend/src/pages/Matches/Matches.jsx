@@ -42,51 +42,61 @@ const Matches = () => {
                     {matches.map((match, index) => (
                         <motion.div
                             key={match._id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="card-gradient rounded-3xl p-8 border border-white/5 flex flex-col md:flex-row items-center justify-between group hover:border-primary-blue/30 transition-all shadow-xl"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="bg-card-bg border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col transition-transform hover:scale-[1.01]"
                         >
-                            <div className="text-center md:text-left mb-6 md:mb-0">
-                                <span className="inline-block bg-primary-blue/10 text-primary-blue text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full italic mb-3">
-                                    {match.competition || 'Elite One'}
-                                </span>
-                                <div className="text-white font-black italic text-2xl uppercase">
-                                    {new Date(match.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                </div>
-                                <div className="text-gray-500 text-sm font-bold mt-1 uppercase tracking-widest">
-                                    {new Date(match.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })} • {match.location}
-                                </div>
-                            </div>
-
-                            <div className="flex items-center justify-center space-x-6 md:space-x-12">
-                                <div className="text-center w-24 md:w-32">
-                                    <div className="text-white font-black italic uppercase text-lg mb-2">LK FC</div>
-                                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto border border-white/10 group-hover:border-primary-blue/50 transition-colors">
-                                        <img src="/images/logo.png" className="w-10 h-10 object-contain" alt="LK FC" />
+                            <div className="flex flex-row items-center justify-between w-full">
+                                {/* Team A */}
+                                <div className="flex-1 p-2 md:p-8 flex flex-col items-center justify-center space-y-2 md:space-y-4">
+                                    <div className="w-12 h-12 md:w-24 md:h-24 bg-white/5 rounded-full flex items-center justify-center p-2 md:p-4 border border-white/10 shrink-0">
+                                        <img src="/images/logo.png" alt="LK FC" className="w-full h-auto" loading="lazy" />
                                     </div>
+                                    <h3 className="text-[8px] md:text-xl font-bold italic text-white text-center leading-tight truncate px-1 max-w-full">LK e.V</h3>
                                 </div>
 
-                                <div className="flex items-center space-x-4">
-                                    <span className="text-5xl font-black italic text-white">{match.score.home}</span>
-                                    <span className="text-gray-700 font-black text-3xl">-</span>
-                                    <span className="text-5xl font-black italic text-white">{match.score.away}</span>
-                                </div>
+                                {/* Match Info */}
+                                <div className="flex-[1.5] bg-primary-blue/5 p-2 md:p-8 border-x border-white/5 flex flex-col items-center justify-center text-center">
+                                    <span className="text-primary-yellow font-bold uppercase tracking-widest text-[8px] md:text-xs mb-1 md:mb-2">{match.competition || 'Elite One'}</span>
 
-                                <div className="text-center w-24 md:w-32">
-                                    <div className="text-white font-black italic uppercase text-lg mb-2 truncate">{match.opponent}</div>
-                                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto border border-white/10 group-hover:border-primary-yellow/50 transition-colors uppercase font-black italic text-primary-yellow">
-                                        {match.opponent.slice(0, 2)}
+                                    <p className="text-white font-black italic uppercase text-[10px] md:text-xl md:mb-1">
+                                        {new Date(match.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                    </p>
+
+                                    {match.status === 'finished' || match.status === 'ongoing' ? (
+                                        <div className="text-3xl md:text-5xl font-black italic text-white my-1 md:my-3 tracking-widest">
+                                            {match.score.home} - {match.score.away}
+                                        </div>
+                                    ) : (
+                                        <div className="text-xl md:text-4xl font-black italic text-white mb-1 md:mb-2 my-1 md:my-3">VS</div>
+                                    )}
+
+                                    <div className="space-y-0.5 md:space-y-1">
+                                        <p className="text-gray-400 text-[6px] md:text-sm font-bold tracking-widest uppercase">
+                                            {new Date(match.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })} • {match.location || 'Stadium'}
+                                        </p>
                                     </div>
+                                    <button className={`mt-2 md:mt-4 px-3 py-1 md:px-6 md:py-2 font-black italic uppercase text-[6px] md:text-xs rounded transition-colors shadow-lg ${match.status === 'finished' ? 'bg-white/10 text-white cursor-default' :
+                                            match.status === 'ongoing' ? 'bg-red-600 text-white animate-pulse' :
+                                                'bg-primary-yellow text-black hover:bg-yellow-400'
+                                        }`}
+                                    >
+                                        <span>
+                                            {match.status === 'finished' ? 'Terminé' : match.status === 'ongoing' ? 'En Direct' : 'À Venir'}
+                                        </span>
+                                    </button>
                                 </div>
-                            </div>
 
-                            <div className="mt-8 md:mt-0">
-                                <span className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg italic ${match.status === 'finished' ? 'bg-gray-500/10 text-gray-400' :
-                                    match.status === 'ongoing' ? 'bg-red-500 text-white animate-pulse' : 'bg-primary-blue text-white'
-                                    }`}>
-                                    {match.status === 'finished' ? 'Terminé' : match.status === 'ongoing' ? 'En Direct' : 'À Venir'}
-                                </span>
+                                {/* Team B */}
+                                <div className="flex-1 p-2 md:p-8 flex flex-col items-center justify-center space-y-2 md:space-y-4">
+                                    <div className="w-12 h-12 md:w-24 md:h-24 bg-white/5 rounded-full flex items-center justify-center p-2 md:p-4 border border-white/10 overflow-hidden text-center shrink-0">
+                                        <span className="text-xl md:text-3xl font-black italic uppercase text-primary-yellow opacity-50">
+                                            {match.opponent.substring(0, 2)}
+                                        </span>
+                                    </div>
+                                    <h3 className="text-[8px] md:text-xl font-bold italic text-white text-center uppercase leading-tight truncate px-1 max-w-full">{match.opponent}</h3>
+                                </div>
                             </div>
                         </motion.div>
                     ))}
