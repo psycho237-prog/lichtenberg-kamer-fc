@@ -69,7 +69,7 @@ const Home = () => {
                                 L'ADN DU <span className="text-primary-yellow">CLUB</span>
                             </h2>
                             <div
-                                className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold text-lg leading-relaxed ql-editor !p-0"
+                                className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold text-lg leading-relaxed ql-editor !p-0 break-normal"
                                 dangerouslySetInnerHTML={{ __html: pageData.aboutContent }}
                             />
                         </motion.div>
@@ -117,7 +117,7 @@ const Home = () => {
                                     <h3 className="text-2xl md:text-3xl font-black italic text-white uppercase mb-4 md:mb-6">Notre <span className="text-primary-yellow">Vision</span></h3>
                                     <div className={`relative transition-all duration-500 ease-in-out md:max-h-none ${!visionExpanded ? 'max-h-[14rem] overflow-hidden' : 'max-h-[1000px] overflow-hidden'}`}>
                                         <div
-                                            className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 ![overflow:hidden]"
+                                            className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 ![overflow:hidden] break-normal"
                                             dangerouslySetInnerHTML={{ __html: pageData.visionContent }}
                                         />
                                         <div className={`absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#0b1324] to-transparent pointer-events-none md:hidden transition-opacity duration-300 ${visionExpanded ? 'opacity-0' : 'opacity-100'}`} />
@@ -140,7 +140,7 @@ const Home = () => {
                                     <h3 className="text-2xl md:text-3xl font-black italic text-white uppercase mb-4 md:mb-6">Notre <span className="text-primary-blue">Philosophie</span></h3>
                                     <div className={`relative transition-all duration-500 ease-in-out md:max-h-none ${!philosophyExpanded ? 'max-h-[14rem] overflow-hidden' : 'max-h-[1000px] overflow-hidden'}`}>
                                         <div
-                                            className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 ![overflow:hidden]"
+                                            className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 ![overflow:hidden] break-normal"
                                             dangerouslySetInnerHTML={{ __html: pageData.philosophyContent }}
                                         />
                                         <div className={`absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#0b1324] to-transparent pointer-events-none md:hidden transition-opacity duration-300 ${philosophyExpanded ? 'opacity-0' : 'opacity-100'}`} />
@@ -194,7 +194,7 @@ const Home = () => {
                                     <span className="text-gray-500 text-[8px] md:text-[10px] font-bold uppercase tracking-widest block mb-1 md:mb-4 italic">
                                         {new Date(item.publishDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                                     </span>
-                                    <h3 className="text-lg md:text-2xl font-black italic text-white group-hover:text-primary-blue transition-colors leading-[1.1] mb-2 md:mb-4 uppercase break-words line-clamp-2">
+                                    <h3 className="text-lg md:text-2xl font-black italic text-white group-hover:text-primary-blue transition-colors leading-[1.1] mb-2 md:mb-4 uppercase break-normal line-clamp-2">
                                         {item.title}
                                     </h3>
                                     <p className="text-gray-400 text-[10px] md:text-sm line-clamp-2 md:line-clamp-3 mb-3 md:mb-6 flex-1 leading-snug">
