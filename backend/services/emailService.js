@@ -9,6 +9,32 @@ const getSubscribers = async () => {
     return snapshot.docs.map(doc => doc.data().email);
 };
 
+exports.sendWelcomeEmail = async (email) => {
+    try {
+        if (!resend) return;
+
+        await resend.emails.send({
+            from: 'Lichtenberg-Kamer <news@resend.dev>',
+            to: [email],
+            subject: 'Bienvenue chez Lichtenberg-Kamer !',
+            html: `
+                <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px; background-color: #0A0F1C; color: white;">
+                    <img src="https://lichtenbergkamer.page/images/logo.png" style="width: 80px; display: block; margin: auto;" />
+                    <h2 style="text-align: center; color: #F5C518; text-transform: uppercase;">Merci de votre inscription !</h2>
+                    <p style="font-size: 16px; text-align: center;">Vous faites maintenant partie de la famille <strong>Lichtenberg-Kamer e.V.</strong></p>
+                    <p style="font-size: 14px; color: #ccc; text-align: center;">Désormais, vous recevrez en exclusivité toutes nos actualités et les horaires de nos prochains matchs.</p>
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="https://lichtenbergkamer.page" style="background-color: #1B5BA6; color: white; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px; text-transform: uppercase;">Visiter le site</a>
+                    </div>
+                    <p style="font-size: 11px; color: #666; text-align: center;">Vous recevez ce mail car vous vous êtes inscrit à la newsletter sur lichtenbergkamer.page</p>
+                </div>
+            `
+        });
+    } catch (error) {
+        console.error('Welcome Email Error:', error);
+    }
+};
+
 exports.sendNewsNotification = async (article) => {
     try {
         if (!resend) return;

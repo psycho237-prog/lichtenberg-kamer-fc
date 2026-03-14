@@ -1,4 +1,5 @@
 const { db } = require('../config/firebase');
+const { sendWelcomeEmail } = require('../services/emailService');
 
 // @desc    Subscribe to newsletter
 exports.subscribe = async (req, res) => {
@@ -16,6 +17,9 @@ exports.subscribe = async (req, res) => {
             email: email.toLowerCase(),
             subscribedAt: new Date().toISOString()
         });
+
+        // Send Welcome Email (Non-blocking)
+        sendWelcomeEmail(email.toLowerCase()).catch(e => console.error(e));
 
         res.status(201).json({ message: 'Bienvenue dans la newsletter !' });
     } catch (error) {
