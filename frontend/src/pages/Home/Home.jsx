@@ -27,7 +27,8 @@ const Home = () => {
                     axios.get(API_BASE + '/api/sponsors'),
                     axios.get(API_BASE + '/api/matches')
                 ]);
-                setNews(newsRes.data.slice(0, 3));
+                const sortedNews = newsRes.data.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+                setNews(sortedNews.slice(0, 3));
                 setPageData(pageRes.data.content);
                 setSponsors(sponsorRes.data);
 
