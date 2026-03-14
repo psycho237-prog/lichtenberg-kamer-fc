@@ -96,18 +96,16 @@ const Contact = () => {
                             ))}
                         </div>
 
-                        {/* Map from CMS */}
-                        {pageData?.mapIframe && (
-                            <div className="relative rounded-xl overflow-hidden h-48 md:h-96 grayscale contrast-125 border border-white/10 group">
-                                <div
-                                    className="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-700 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0"
-                                    dangerouslySetInnerHTML={{ __html: pageData.mapIframe }}
-                                />
-                                <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4 bg-dark-bg/80 backdrop-blur p-2 md:p-3 rounded-xl border border-white/10 text-[8px] md:text-[10px] text-center text-white font-black uppercase tracking-widest italic group-hover:translate-y-20 transition-transform duration-500 pointer-events-none">
-                                    {pageData?.address || "Lichtenberg, Berlin, Germany"}
-                                </div>
+                        {/* Map from CMS or Default */}
+                        <div className="relative rounded-xl overflow-hidden h-48 md:h-96 grayscale contrast-125 border border-white/10 group">
+                            <div
+                                className="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-700 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0"
+                                dangerouslySetInnerHTML={{ __html: pageData?.mapIframe || '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31063.07682977402!2d13.468757049999999!3d52.51862485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84eef26f6341d%3A0x6bda1aabfbe09e51!2sLichtenberg%2C%20Berlin%2C%20Germany!5e0!3m2!1sen!2sfr!4v1715000000000!5m2!1sen!2sfr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>' }}
+                            />
+                            <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4 bg-dark-bg/80 backdrop-blur p-2 md:p-3 rounded-xl border border-white/10 text-[8px] md:text-[10px] text-center text-white font-black uppercase tracking-widest italic group-hover:translate-y-20 transition-transform duration-500 pointer-events-none">
+                                {pageData?.address || "Lichtenberg, Berlin, Germany"}
                             </div>
-                        )}
+                        </div>
 
                         {/* Social Follow from Settings */}
                         <div className="card-gradient p-6 rounded-xl border border-white/5">
