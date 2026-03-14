@@ -222,14 +222,20 @@ const Home = () => {
                         </div>
                         <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24">
                             {sponsors.map(sponsor => (
-                                <div key={sponsor._id} className="group transition-all duration-500 hover:scale-110">
+                                <a
+                                    key={sponsor._id}
+                                    href={sponsor.website || '#'}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`group transition-all duration-500 hover:scale-110 ${!sponsor.website ? 'pointer-events-none' : ''}`}
+                                >
                                     <img
                                         src={getImageUrl(sponsor.logo)}
                                         alt={sponsor.name}
                                         className="h-24 md:h-36 w-auto object-contain"
                                         title={sponsor.name}
                                     />
-                                </div>
+                                </a>
                             ))}
                         </div>
                     </div>
