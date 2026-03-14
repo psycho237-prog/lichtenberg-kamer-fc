@@ -35,7 +35,7 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
                     <span className="inline-block px-4 py-1 mb-6 border-l-4 border-primary-yellow bg-primary-blue/20 text-primary-yellow font-bold uppercase tracking-widest text-xs sm:text-sm italic">
                         {seasonPeriod || 'Saison 2024 / 2025'}
                     </span>
-                    <h1 className="text-5xl sm:text-6xl md:text-8xl font-black italic text-white leading-[0.9] mb-8 uppercase italic tracking-tighter">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black italic text-white leading-[0.9] mb-8 uppercase tracking-tighter">
                         {mainTitle} <br />
                         <span className="text-primary-yellow">{highlightTitle}</span>
                     </h1>

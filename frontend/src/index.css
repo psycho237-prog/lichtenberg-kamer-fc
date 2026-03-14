@@ -63,37 +63,37 @@
 
 /* CMS Content Styles */
 .ql-editor {
-  @apply font-sport;
+  @apply font-sport text-[15px] md:text-lg;
 }
 
 .ql-editor h1 {
-  @apply !text-4xl !mb-6 !text-white !border-l-4 !border-primary-blue !pl-4;
+  @apply !text-2xl md: !text-4xl !mb-4 md: !mb-6 !text-white !border-l-4 !border-primary-blue !pl-3 md: !pl-4;
 }
 
 .ql-editor h2 {
-  @apply !text-3xl !mb-5 !text-white;
+  @apply !text-xl md: !text-3xl !mb-3 md: !mb-5 !text-white;
 }
 
 .ql-editor h3 {
-  @apply !text-2xl !mb-4 !text-white;
+  @apply !text-lg md: !text-2xl !mb-2 md: !mb-4 !text-white;
 }
 
 .ql-editor p {
-  @apply !text-gray-400 !mb-6 !font-semibold !leading-relaxed;
+  @apply !text-gray-400 !mb-4 md: !mb-6 !font-medium md: !font-semibold leading-[1.6] md: !leading-relaxed;
 }
 
 .ql-editor ul {
   list-style-type: disc !important;
-  @apply !ml-6 !mb-6;
+  @apply !ml-4 md: !ml-6 !mb-4 md: !mb-6;
 }
 
 .ql-editor ol {
   list-style-type: decimal !important;
-  @apply !ml-6 !mb-6;
+  @apply !ml-4 md: !ml-6 !mb-4 md: !mb-6;
 }
 
 .ql-editor li {
-  @apply !mb-2 !pl-2 !text-gray-400 !font-semibold;
+  @apply !mb-2 !pl-1 md: !pl-2 !text-gray-400 !font-medium md: !font-semibold;
 }
 
 .ql-editor strong {
@@ -105,7 +105,7 @@
 }
 
 .ql-editor a {
-  @apply !text-primary-blue !underline !font-bold;
+  @apply !text-primary-blue !underline !font-bold hover: !text-white transition-colors;
 }
 
 .ql-editor.ql-blank::before {

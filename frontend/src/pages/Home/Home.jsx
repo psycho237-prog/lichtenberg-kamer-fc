@@ -144,7 +144,7 @@ const Home = () => {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="flex md:grid flex-nowrap md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8 md:pb-0">
                     {news.map((item, index) => (
                         <motion.div
                             key={item._id}
@@ -152,7 +152,7 @@ const Home = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="card-gradient rounded-3xl overflow-hidden group border border-white/5"
+                            className="card-gradient rounded-3xl overflow-hidden group border border-white/5 min-w-[85vw] md:min-w-0 snap-center shrink-0"
                         >
                             <Link to={`/news/${item._id}`}>
                                 <div className="relative h-64 overflow-hidden">
