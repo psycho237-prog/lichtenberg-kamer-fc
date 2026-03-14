@@ -1,4 +1,5 @@
 const { db } = require('../config/firebase');
+const { sendNewsNotification } = require('../services/emailService');
 
 // @desc    Get all news
 exports.getAllNews = async (req, res) => {
@@ -32,6 +33,10 @@ exports.createNews = async (req, res) => {
         if (req.file) newsData.image = req.file.path;
 
         const docRef = await db.collection('news').add(newsData);
+
+        // Trigger Email Notification (Non-blocking)
+        sendNewsNotification({ _id: docRef.id, ...newsData }).catch(e => console.error(e));
+
         res.status(201).json({ _id: docRef.id, ...newsData });
     } catch (error) {
         res.status(400).json({ message: error.message });

@@ -1,4 +1,5 @@
 const { db } = require('../config/firebase');
+const { sendMatchNotification } = require('../services/emailService');
 
 exports.getMatches = async (req, res) => {
     try {
@@ -14,6 +15,10 @@ exports.createMatch = async (req, res) => {
     try {
         const matchData = { ...req.body };
         const docRef = await db.collection('matches').add(matchData);
+
+        // Trigger Email Notification (Non-blocking)
+        sendMatchNotification({ _id: docRef.id, ...matchData }).catch(e => console.error(e));
+
         res.status(201).json({ _id: docRef.id, ...matchData });
     } catch (error) {
         res.status(400).json({ message: error.message });

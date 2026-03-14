@@ -101,13 +101,27 @@ const Footer = () => {
                     <div>
                         <h3 className="text-white text-base md:text-lg font-black italic uppercase mb-4 md:mb-6">Newsletter</h3>
                         <p className="text-gray-400 text-sm mb-4">Abonnez-vous pour recevoir les dernières infos.</p>
-                        <form className="space-y-3">
+                        <form className="space-y-3" onSubmit={async (e) => {
+                            e.preventDefault();
+                            const email = e.target.email.value;
+                            if (!email) return;
+
+                            try {
+                                const { data } = await axios.post(API_BASE + '/api/newsletter/subscribe', { email });
+                                import('react-hot-toast').then(t => t.default.success(data.message));
+                                e.target.reset();
+                            } catch (err) {
+                                import('react-hot-toast').then(t => t.default.error(err.response?.data?.message || "Erreur d'inscription"));
+                            }
+                        }}>
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="Votre Email"
                                 className="w-full bg-white/5 border border-white/10 rounded px-4 py-2 focus:outline-none focus:border-primary-blue text-white"
+                                required
                             />
-                            <button className="btn-primary w-full justify-center py-3">
+                            <button type="submit" className="btn-primary w-full justify-center py-3">
                                 S'abonner
                             </button>
                         </form>
