@@ -1,7 +1,8 @@
 const { Resend } = require('resend');
 const { db } = require('../config/firebase');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend safely
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 const getSubscribers = async () => {
     const snapshot = await db.collection('subscribers').get();
@@ -10,7 +11,7 @@ const getSubscribers = async () => {
 
 exports.sendNewsNotification = async (article) => {
     try {
-        if (!process.env.RESEND_API_KEY) return;
+        if (!resend) return;
 
         const emails = await getSubscribers();
         if (emails.length === 0) return;
@@ -39,7 +40,7 @@ exports.sendNewsNotification = async (article) => {
 
 exports.sendMatchNotification = async (match) => {
     try {
-        if (!process.env.RESEND_API_KEY) return;
+        if (!resend) return;
 
         const emails = await getSubscribers();
         if (emails.length === 0) return;
