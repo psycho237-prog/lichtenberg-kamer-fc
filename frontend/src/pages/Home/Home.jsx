@@ -15,6 +15,8 @@ const Home = () => {
     const [pageData, setPageData] = useState(null);
     const [nextMatch, setNextMatch] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [visionExpanded, setVisionExpanded] = useState(false);
+    const [philosophyExpanded, setPhilosophyExpanded] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -94,20 +96,32 @@ const Home = () => {
                 <section className="bg-clear py-16 md:py-32 mt-16 md:mt-32 border-y border-white/5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary-blue/5 rounded-full blur-[150px] -mr-48 -mt-48"></div>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full overflow-hidden">
+
+                        <div className="flex items-center justify-end mb-4 md:hidden text-gray-500 text-[9px] font-bold uppercase tracking-widest relative z-20">
+                            <span className="mr-2">Faites glisser</span>
+                            <motion.div animate={{ x: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}>
+                                <FaArrowRight />
+                            </motion.div>
+                        </div>
+
                         <div className="flex md:grid flex-nowrap md:grid-cols-2 gap-4 md:gap-12 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
                             {pageData.visionContent && (
                                 <motion.div
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    className="card-gradient rounded-3xl p-8 md:p-10 border border-white/5 w-[85vw] max-w-[320px] md:max-w-none md:w-auto shrink-0 snap-center"
+                                    onClick={() => setVisionExpanded(!visionExpanded)}
+                                    className="card-gradient rounded-3xl p-8 md:p-10 border border-white/5 w-[85vw] max-w-[320px] md:max-w-none md:w-auto shrink-0 snap-center cursor-pointer transition-all"
                                 >
-                                    <div className="w-16 h-1 w-24 bg-primary-yellow mb-8"></div>
-                                    <h3 className="text-3xl font-black italic text-white uppercase italic mb-6">Notre <span className="text-primary-yellow">Vision</span></h3>
+                                    <div className="w-16 h-1 bg-primary-yellow mb-4 md:mb-8"></div>
+                                    <h3 className="text-2xl md:text-3xl font-black italic text-white uppercase mb-4 md:mb-6">Notre <span className="text-primary-yellow">Vision</span></h3>
                                     <div
-                                        className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0"
+                                        className={`prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 transition-all duration-300 ${!visionExpanded ? 'line-clamp-6 md:line-clamp-none' : ''}`}
                                         dangerouslySetInnerHTML={{ __html: pageData.visionContent }}
                                     />
+                                    <div className="text-primary-yellow text-[10px] font-bold uppercase tracking-widest mt-4 md:hidden text-center opacity-70">
+                                        {visionExpanded ? '▼ Réduire' : '▶ Lire la suite'}
+                                    </div>
                                 </motion.div>
                             )}
                             {pageData.philosophyContent && (
@@ -116,14 +130,18 @@ const Home = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.2 }}
-                                    className="card-gradient rounded-3xl p-8 md:p-10 border border-white/5 w-[85vw] max-w-[320px] md:max-w-none md:w-auto shrink-0 snap-center"
+                                    onClick={() => setPhilosophyExpanded(!philosophyExpanded)}
+                                    className="card-gradient rounded-3xl p-8 md:p-10 border border-white/5 w-[85vw] max-w-[320px] md:max-w-none md:w-auto shrink-0 snap-center cursor-pointer transition-all"
                                 >
-                                    <div className="w-16 h-1 w-24 bg-primary-blue mb-8"></div>
-                                    <h3 className="text-3xl font-black italic text-white uppercase italic mb-6">Notre <span className="text-primary-blue">Philosophie</span></h3>
+                                    <div className="w-16 h-1 bg-primary-blue mb-4 md:mb-8"></div>
+                                    <h3 className="text-2xl md:text-3xl font-black italic text-white uppercase mb-4 md:mb-6">Notre <span className="text-primary-blue">Philosophie</span></h3>
                                     <div
-                                        className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0"
+                                        className={`prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 transition-all duration-300 ${!philosophyExpanded ? 'line-clamp-6 md:line-clamp-none' : ''}`}
                                         dangerouslySetInnerHTML={{ __html: pageData.philosophyContent }}
                                     />
+                                    <div className="text-primary-blue text-[10px] font-bold uppercase tracking-widest mt-4 md:hidden text-center opacity-70">
+                                        {philosophyExpanded ? '▼ Réduire' : '▶ Lire la suite'}
+                                    </div>
                                 </motion.div>
                             )}
                         </div>
