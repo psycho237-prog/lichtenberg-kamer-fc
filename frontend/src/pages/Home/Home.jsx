@@ -55,8 +55,8 @@ const Home = () => {
 
             {/* About Section from CMS */}
             {pageData?.aboutContent && (
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-32">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -91,10 +91,10 @@ const Home = () => {
 
             {/* Vision & Philosophy from CMS */}
             {(pageData?.visionContent || pageData?.philosophyContent) && (
-                <section className="bg-clear py-32 mt-32 border-y border-white/5 relative overflow-hidden">
+                <section className="bg-clear py-16 md:py-32 mt-16 md:mt-32 border-y border-white/5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary-blue/5 rounded-full blur-[150px] -mr-48 -mt-48"></div>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                             {pageData.visionContent && (
                                 <motion.div
                                     initial={{ opacity: 0, y: 30 }}
@@ -132,13 +132,13 @@ const Home = () => {
             )}
 
             {/* Latest News Section */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
-                <div className="flex justify-between items-end mb-12">
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-32">
+                <div className="flex justify-between items-end mb-8 md:mb-12">
                     <div>
-                        <span className="text-primary-blue font-bold uppercase tracking-widest text-xs">Directement du centre d'entraînement</span>
-                        <h2 className="text-4xl md:text-5xl font-black italic text-white mt-2">Dernières <span className="text-primary-yellow">Nouvelles</span></h2>
+                        <span className="text-primary-blue font-bold uppercase tracking-widest text-[10px] md:text-xs">Directement du centre</span>
+                        <h2 className="text-3xl md:text-5xl font-black italic text-white mt-1 md:mt-2">Actus <span className="text-primary-yellow">Club</span></h2>
                     </div>
-                    <Link to="/news" className="flex items-center space-x-2 text-primary-yellow font-bold uppercase text-sm hover:translate-x-2 transition-transform">
+                    <Link to="/news" className="flex items-center space-x-1 md:space-x-2 text-primary-yellow font-bold uppercase text-[10px] md:text-sm hover:translate-x-2 transition-transform mb-1 md:mb-0">
                         <span>Voir Tout</span>
                         <FaArrowRight />
                     </Link>
@@ -189,7 +189,7 @@ const Home = () => {
 
             {/* Sponsors Section */}
             {sponsors && sponsors.length > 0 && (
-                <section className="bg-clear py-20 mt-32 border-y border-white/5">
+                <section className="bg-clear py-12 md:py-20 mt-16 md:mt-32 border-y border-white/5">
                     <div className="max-w-7xl mx-auto px-4">
                         <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
                             {sponsors.map(sponsor => (
