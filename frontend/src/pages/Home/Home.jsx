@@ -152,33 +152,33 @@ const Home = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="card-gradient rounded-2xl md:rounded-3xl overflow-hidden group border border-white/5 w-[85vw] md:w-auto shrink-0 snap-center flex flex-col"
+                            className="card-gradient rounded-2xl md:rounded-3xl overflow-hidden group border border-white/5 w-[75vw] max-w-[280px] md:max-w-none md:w-auto shrink-0 snap-center flex flex-col"
                         >
                             <Link to={`/news/${item._id}`} className="flex flex-col h-full">
-                                <div className="relative h-48 md:h-64 overflow-hidden shrink-0">
+                                <div className="relative h-36 md:h-64 overflow-hidden shrink-0">
                                     <img
                                         src={item.image ? getImageUrl(item.image) : '/images/hero.png'}
                                         alt={item.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                         loading="lazy"
                                     />
-                                    <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-primary-blue text-white text-[10px] font-black italic px-3 py-1.5 rounded-full uppercase tracking-widest">
+                                    <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-primary-blue text-white text-[8px] md:text-[10px] font-black italic px-2 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-widest">
                                         {item.category}
                                     </div>
                                 </div>
-                                <div className="p-5 md:p-8 flex flex-col flex-1">
-                                    <span className="text-gray-500 text-[10px] font-bold uppercase tracking-widest block mb-3 md:mb-4 italic">
+                                <div className="p-4 md:p-8 flex flex-col flex-1">
+                                    <span className="text-gray-500 text-[8px] md:text-[10px] font-bold uppercase tracking-widest block mb-1 md:mb-4 italic">
                                         {new Date(item.publishDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                                     </span>
-                                    <h3 className="text-xl md:text-2xl font-black italic text-white group-hover:text-primary-blue transition-colors leading-tight mb-3 md:mb-4 uppercase break-words line-clamp-2 md:line-clamp-none">
+                                    <h3 className="text-lg md:text-2xl font-black italic text-white group-hover:text-primary-blue transition-colors leading-[1.1] mb-2 md:mb-4 uppercase break-words line-clamp-2">
                                         {item.title}
                                     </h3>
-                                    <p className="text-gray-400 text-xs md:text-sm line-clamp-3 mb-4 md:mb-6 flex-1">
+                                    <p className="text-gray-400 text-[10px] md:text-sm line-clamp-2 md:line-clamp-3 mb-3 md:mb-6 flex-1 leading-snug">
                                         {stripHtml(item.content)}
                                     </p>
-                                    <div className="mt-auto pt-4 md:pt-6 border-t border-white/5 flex items-center text-white font-black italic text-xs uppercase group-hover:text-primary-blue transition-all">
+                                    <div className="mt-auto pt-3 md:pt-6 border-t border-white/5 flex items-center text-white font-black italic text-[10px] md:text-xs uppercase group-hover:text-primary-blue transition-all">
                                         <span>Lire Plus</span>
-                                        <FaArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
+                                        <FaArrowRight className="ml-1.5 md:ml-2 group-hover:translate-x-2 transition-transform" />
                                     </div>
                                 </div>
                             </Link>
