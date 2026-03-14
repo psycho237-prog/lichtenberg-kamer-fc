@@ -13,8 +13,10 @@
 
 @layer base {
   body {
-    @apply bg-dark-bg text-white font-sport antialiased break-normal overflow-wrap-normal;
-    hyphens: none;
+    @apply bg-dark-bg text-white font-sport antialiased;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
   }
 
   h1,
@@ -24,6 +26,9 @@
   h5,
   h6 {
     @apply font-bold italic uppercase tracking-tighter;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
   }
 }
 
