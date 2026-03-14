@@ -80,10 +80,10 @@ const Contact = () => {
                     </div>
 
                     {/* Contact Details Cards */}
-                    <div className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+                    <div className="space-y-4 md:space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 md:gap-6">
                             {contactInfo.map((item, index) => (
-                                <div key={index} className="bg-white/5 border border-white/1 transition-all hover:bg-white/10 p-6 rounded-xl flex items-start space-x-4">
+                                <div key={index} className="bg-white/5 border border-white/1 transition-all hover:bg-white/10 p-4 md:p-6 rounded-xl flex items-start space-x-4">
                                     <div className="p-3 bg-primary-blue/20 text-primary-blue rounded-lg text-xl">
                                         {item.icon}
                                     </div>
@@ -97,21 +97,17 @@ const Contact = () => {
                         </div>
 
                         {/* Map from CMS */}
-                        <div className="relative rounded-xl overflow-hidden h-96 grayscale contrast-125 border border-white/10 group">
-                            {pageData?.mapIframe ? (
+                        {pageData?.mapIframe && (
+                            <div className="relative rounded-xl overflow-hidden h-48 md:h-96 grayscale contrast-125 border border-white/10 group">
                                 <div
                                     className="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-700 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0"
                                     dangerouslySetInnerHTML={{ __html: pageData.mapIframe }}
                                 />
-                            ) : (
-                                <div className="w-full h-full bg-white/5 flex items-center justify-center text-gray-500 font-bold italic uppercase tracking-widest">
-                                    Carte indisponible
+                                <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4 bg-dark-bg/80 backdrop-blur p-2 md:p-3 rounded-xl border border-white/10 text-[8px] md:text-[10px] text-center text-white font-black uppercase tracking-widest italic group-hover:translate-y-20 transition-transform duration-500 pointer-events-none">
+                                    {pageData?.address || "Lichtenberg, Berlin, Germany"}
                                 </div>
-                            )}
-                            <div className="absolute bottom-4 left-4 right-4 bg-dark-bg/80 backdrop-blur p-3 rounded-xl border border-white/10 text-[10px] text-center text-white font-black uppercase tracking-widest italic group-hover:translate-y-20 transition-transform duration-500 pointer-events-none">
-                                {pageData?.address || "Lichtenberg, Berlin, Germany"}
                             </div>
-                        </div>
+                        )}
 
                         {/* Social Follow from Settings */}
                         <div className="card-gradient p-6 rounded-xl border border-white/5">

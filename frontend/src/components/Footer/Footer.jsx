@@ -26,7 +26,7 @@ const Footer = () => {
     return (
         <footer className="bg-dark-bg border-t border-white/10 pt-16 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
                     {/* Club Info */}
                     <div>
                         <div className="flex items-center space-x-2 mb-6">
@@ -59,7 +59,7 @@ const Footer = () => {
 
                     {/* Navigation */}
                     <div>
-                        <h3 className="text-white text-lg font-bold mb-6">Navigation</h3>
+                        <h3 className="text-white text-base md:text-lg font-black italic uppercase mb-4 md:mb-6">Navigation</h3>
                         <ul className="space-y-4">
                             {['Home', 'Équipe', 'Matchs', 'Actualités', 'Galerie', 'Contact'].map((item) => (
                                 <li key={item}>
@@ -73,7 +73,7 @@ const Footer = () => {
 
                     {/* Contact Info */}
                     <div>
-                        <h3 className="text-white text-lg font-bold mb-6">Contact</h3>
+                        <h3 className="text-white text-base md:text-lg font-black italic uppercase mb-4 md:mb-6">Contact</h3>
                         <ul className="space-y-4">
                             <li className="flex items-start space-x-3 text-gray-400">
                                 <FaMapMarkerAlt className="mt-1 text-primary-blue" />
@@ -92,7 +92,7 @@ const Footer = () => {
 
                     {/* Newsletter */}
                     <div>
-                        <h3 className="text-white text-lg font-bold mb-6">Newsletter</h3>
+                        <h3 className="text-white text-base md:text-lg font-black italic uppercase mb-4 md:mb-6">Newsletter</h3>
                         <p className="text-gray-400 text-sm mb-4">Abonnez-vous pour recevoir les dernières infos.</p>
                         <form className="space-y-3">
                             <input
