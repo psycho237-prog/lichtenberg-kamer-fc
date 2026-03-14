@@ -115,10 +115,13 @@ const Home = () => {
                                 >
                                     <div className="w-16 h-1 bg-primary-yellow mb-4 md:mb-8"></div>
                                     <h3 className="text-2xl md:text-3xl font-black italic text-white uppercase mb-4 md:mb-6">Notre <span className="text-primary-yellow">Vision</span></h3>
-                                    <div
-                                        className={`prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 transition-all duration-300 ${!visionExpanded ? 'line-clamp-6 md:line-clamp-none' : ''}`}
-                                        dangerouslySetInnerHTML={{ __html: pageData.visionContent }}
-                                    />
+                                    <div className={`relative transition-all duration-500 ease-in-out md:max-h-none ${!visionExpanded ? 'max-h-[14rem] overflow-hidden' : 'max-h-[1000px] overflow-hidden'}`}>
+                                        <div
+                                            className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 ![overflow:hidden]"
+                                            dangerouslySetInnerHTML={{ __html: pageData.visionContent }}
+                                        />
+                                        <div className={`absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#0b1324] to-transparent pointer-events-none md:hidden transition-opacity duration-300 ${visionExpanded ? 'opacity-0' : 'opacity-100'}`} />
+                                    </div>
                                     <div className="text-primary-yellow text-[10px] font-bold uppercase tracking-widest mt-4 md:hidden text-center opacity-70">
                                         {visionExpanded ? '▼ Réduire' : '▶ Lire la suite'}
                                     </div>
@@ -135,10 +138,13 @@ const Home = () => {
                                 >
                                     <div className="w-16 h-1 bg-primary-blue mb-4 md:mb-8"></div>
                                     <h3 className="text-2xl md:text-3xl font-black italic text-white uppercase mb-4 md:mb-6">Notre <span className="text-primary-blue">Philosophie</span></h3>
-                                    <div
-                                        className={`prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 transition-all duration-300 ${!philosophyExpanded ? 'line-clamp-6 md:line-clamp-none' : ''}`}
-                                        dangerouslySetInnerHTML={{ __html: pageData.philosophyContent }}
-                                    />
+                                    <div className={`relative transition-all duration-500 ease-in-out md:max-h-none ${!philosophyExpanded ? 'max-h-[14rem] overflow-hidden' : 'max-h-[1000px] overflow-hidden'}`}>
+                                        <div
+                                            className="prose prose-invert prose-primary-blue max-w-none text-gray-400 font-semibold leading-relaxed ql-editor !p-0 ![overflow:hidden]"
+                                            dangerouslySetInnerHTML={{ __html: pageData.philosophyContent }}
+                                        />
+                                        <div className={`absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#0b1324] to-transparent pointer-events-none md:hidden transition-opacity duration-300 ${philosophyExpanded ? 'opacity-0' : 'opacity-100'}`} />
+                                    </div>
                                     <div className="text-primary-blue text-[10px] font-bold uppercase tracking-widest mt-4 md:hidden text-center opacity-70">
                                         {philosophyExpanded ? '▼ Réduire' : '▶ Lire la suite'}
                                     </div>
