@@ -11,8 +11,8 @@ const keepAlive = require('./utils/autoping');
 dotenv.config();
 
 
-// Initialize self-ping for Render
-if (process.env.NODE_ENV === 'production') {
+// Initialize self-ping for Render (Only if NOT on Vercel)
+if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
     keepAlive(process.env.RENDER_EXTERNAL_URL);
 }
 
@@ -39,8 +39,8 @@ app.use('/api/newsletter', require('./routes/newsletterRoutes'));
 // Static folder for uploads
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-// Serve Static Assets in production
-if (process.env.NODE_ENV === 'production') {
+// Serve Static Assets (Only if NOT on Vercel)
+if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
     const distPath = path.join(__dirname, '..', 'frontend', 'dist');
     const fs = require('fs');
 
@@ -126,7 +126,11 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-    console.log(`Local network access: http://0.0.0.0:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+        console.log(`Local network access: http://0.0.0.0:${PORT}`);
+    });
+}
+
+module.exports = app;
