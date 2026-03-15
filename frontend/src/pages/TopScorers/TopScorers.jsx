@@ -3,6 +3,7 @@ import { getImageUrl } from '../../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { FaArrowRight } from 'react-icons/fa';
 import PageHero from '../../components/Shared/PageHero';
 import PlayerStatsRow from '../../components/PlayerStatsRow';
 
@@ -66,8 +67,14 @@ const TopScorers = () => {
                 </div>
 
                 {/* Table Container */}
-                <div className="card-gradient rounded-3xl overflow-hidden shadow-2xl border border-white/5">
-                    <table className="w-full text-left border-collapse">
+                <div className="flex items-center justify-end mb-4 md:hidden text-gray-500 text-[9px] font-bold uppercase tracking-widest">
+                    <span className="mr-2">Glisser pour voir plus</span>
+                    <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                        <FaArrowRight />
+                    </motion.div>
+                </div>
+                <div className="card-gradient rounded-3xl overflow-hidden shadow-2xl border border-white/5 overflow-x-auto no-scrollbar">
+                    <table className="w-full text-left border-collapse min-w-[500px]">
                         <thead>
                             <tr className="bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
                                 <th className="py-6 px-4 text-center">#</th>
