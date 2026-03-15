@@ -1,4 +1,5 @@
 import { API_BASE } from '../../services/api';
+import { getImageUrl } from '../../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -7,23 +8,28 @@ import PlayerStatsRow from '../../components/PlayerStatsRow';
 
 const TopScorers = () => {
     const [players, setPlayers] = useState([]);
+    const [sponsors, setSponsors] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeFilter, setActiveFilter] = useState('Tous');
 
     const filters = ['Tous', 'Domicile', 'Extérieur', 'Forme'];
 
     useEffect(() => {
-        const fetchStats = async () => {
+        const fetchData = async () => {
             try {
-                const res = await axios.get(API_BASE + '/api/player-stats');
-                setPlayers(res.data);
+                const [statsRes, sponsorRes] = await Promise.all([
+                    axios.get(API_BASE + '/api/player-stats'),
+                    axios.get(API_BASE + '/api/sponsors')
+                ]);
+                setPlayers(statsRes.data);
+                setSponsors(sponsorRes.data);
                 setLoading(false);
             } catch (err) {
                 console.error(err);
                 setLoading(false);
             }
         };
-        fetchStats();
+        fetchData();
     }, []);
 
     if (loading) return (
@@ -94,14 +100,32 @@ const TopScorers = () => {
                     )}
                 </div>
 
-                {/* Footer Sponsor Mockup like in image */}
-                <div className="mt-12 flex flex-col items-center">
-                    <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-4 italic">Partenaire Officiel</span>
-                    <div className="bg-white/5 border border-white/10 px-8 py-4 rounded-xl flex items-center space-x-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer">
-                        <div className="w-8 h-8 bg-primary-yellow rounded shadow-lg"></div>
-                        <span className="text-white font-black italic uppercase tracking-tighter">NIKE FOOTBALL</span>
+                {/* Sponsors Section */}
+                {sponsors && sponsors.length > 0 && (
+                    <div className="mt-20 border-t border-white/5 pt-12">
+                        <div className="text-center mb-8">
+                            <span className="text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] italic">Partenaires Officiels</span>
+                        </div>
+                        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                            {sponsors.map(sponsor => (
+                                <a
+                                    key={sponsor._id}
+                                    href={sponsor.website || '#'}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`transition-all duration-300 hover:scale-110 opacity-60 hover:opacity-100 ${!sponsor.website ? 'pointer-events-none' : ''}`}
+                                >
+                                    <img
+                                        src={getImageUrl(sponsor.logo)}
+                                        alt={sponsor.name}
+                                        className="h-12 md:h-16 w-auto object-contain"
+                                        title={sponsor.name}
+                                    />
+                                </a>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
