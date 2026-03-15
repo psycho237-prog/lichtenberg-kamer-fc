@@ -48,7 +48,7 @@ const TopScorers = () => {
                 bgImage="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
             />
 
-            <div className="max-w-4xl mx-auto px-1 md:px-4 -mt-10 relative z-10">
+            <div className="max-w-4xl mx-auto px-0 md:px-4 -mt-10 relative z-10">
                 {/* Filter Bar */}
                 <div className="flex flex-nowrap items-center justify-start md:justify-center gap-2 mb-8 bg-card-bg/50 p-2 rounded-2xl backdrop-blur-md border border-white/5 shadow-2xl overflow-x-auto no-scrollbar">
                     {filters.map((filter) => (
@@ -69,12 +69,12 @@ const TopScorers = () => {
                 <div className="card-gradient rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/5">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-white/5 text-[9px] md:text-[10px] font-black uppercase tracking-normal md:tracking-[0.2em] text-gray-500">
-                                <th className="py-4 md:py-6 px-1 md:px-4 text-center w-8 md:w-12">#</th>
-                                <th className="py-4 md:py-6 px-1 md:px-4">Joueur</th>
-                                <th className="py-4 md:py-6 px-2 md:px-4 text-right">MJ</th>
-                                <th className="py-4 md:py-6 px-2 md:px-4 text-right">But</th>
-                                <th className="py-4 md:py-6 px-2 md:px-4 text-right">Ast</th>
+                            <tr className="bg-white/5 text-[8px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-[0.2em] text-gray-500">
+                                <th className="py-2 md:py-6 px-0.5 md:px-4 text-center w-6 md:w-12">#</th>
+                                <th className="py-2 md:py-6 px-0.5 md:px-4">Joueur</th>
+                                <th className="py-2 md:py-6 px-1 md:px-4 text-right">MJ</th>
+                                <th className="py-2 md:py-6 px-1 md:px-4 text-right">But</th>
+                                <th className="py-2 md:py-6 px-1 md:px-4 text-right">Ast</th>
                             </tr>
                         </thead>
                         <tbody>
