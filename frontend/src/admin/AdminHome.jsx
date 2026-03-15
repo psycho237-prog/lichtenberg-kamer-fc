@@ -159,12 +159,22 @@ const AdminHome = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Lien du Bouton (Page / URL)</label>
-                                    <input
-                                        type="text" value={content.heroBtnLink || ''} onChange={(e) => handleChange('heroBtnLink', e.target.value)}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-semibold"
-                                        placeholder="Ex: /gallery ou #newsletter"
-                                    />
+                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Lien du Bouton (Destination)</label>
+                                    <select
+                                        value={content.heroBtnLink || '/gallery'}
+                                        onChange={(e) => handleChange('heroBtnLink', e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-semibold appearance-none cursor-pointer"
+                                    >
+                                        <option value="/" className="bg-[#0b1324] text-white">Accueil</option>
+                                        <option value="/team" className="bg-[#0b1324] text-white">L'Équipe</option>
+                                        <option value="/matches" className="bg-[#0b1324] text-white">Calendrier & Résultats</option>
+                                        <option value="/news" className="bg-[#0b1324] text-white">Actualités</option>
+                                        <option value="/gallery" className="bg-[#0b1324] text-white">Galerie / Highlights</option>
+                                        <option value="/stats" className="bg-[#0b1324] text-white">Classement Buteurs</option>
+                                        <option value="/contact" className="bg-[#0b1324] text-white">Page Contact</option>
+                                        <option value="#footer" className="bg-[#0b1324] text-white">Newsletter (Bas de page)</option>
+                                    </select>
+                                    <p className="text-[9px] text-gray-600 mt-2 font-bold uppercase italic tracking-widest text-right">Choisissez une destination interne</p>
                                 </div>
                             </div>
 
