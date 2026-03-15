@@ -20,7 +20,9 @@ const AdminHome = () => {
         aboutContent: '',
         visionContent: '',
         philosophyContent: '',
-        aboutImage: ''
+        aboutImage: '',
+        heroBtnText: '',
+        heroBtnLink: ''
     });
 
     const fetchContent = async () => {
@@ -147,6 +149,25 @@ const AdminHome = () => {
                                 </div>
                             </div>
 
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Texte du Bouton Hero</label>
+                                    <input
+                                        type="text" value={content.heroBtnText || ''} onChange={(e) => handleChange('heroBtnText', e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold uppercase"
+                                        placeholder="Ex: Voir Highlights"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Lien du Bouton (Page / URL)</label>
+                                    <input
+                                        type="text" value={content.heroBtnLink || ''} onChange={(e) => handleChange('heroBtnLink', e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-semibold"
+                                        placeholder="Ex: /gallery ou #newsletter"
+                                    />
+                                </div>
+                            </div>
+
                             <div>
                                 <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Sous-titre</label>
                                 <textarea
@@ -212,7 +233,7 @@ const AdminHome = () => {
                     </form>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 

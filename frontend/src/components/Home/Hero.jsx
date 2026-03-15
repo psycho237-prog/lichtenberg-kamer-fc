@@ -4,7 +4,7 @@ import { FaPlay, FaChevronDown } from 'react-icons/fa';
 
 import { Link } from 'react-router-dom';
 
-const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
+const Hero = ({ title, subtitle, seasonPeriod, heroImage, heroBtnText, heroBtnLink }) => {
     // Split title if it contains <br /> or custom marker if needed, 
     // or just use the first word for the big white part
     const mainTitle = title ? title.split(' ')[0] : 'LICHTENBERG';
@@ -23,6 +23,9 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const buttonLink = heroBtnLink || '/gallery';
+    const isAnchor = buttonLink.startsWith('#');
 
     return (
         <div className="relative h-screen min-h-[600px] flex items-center overflow-hidden">
@@ -58,9 +61,15 @@ const Hero = ({ title, subtitle, seasonPeriod, heroImage }) => {
                     </p>
 
                     <div className="flex w-full justify-center md:justify-start">
-                        <Link to="/gallery" className="btn-outline px-8 py-4 text-lg bg-white/5 border-white/20 hover:border-primary-blue inline-flex items-center group">
-                            <FaPlay className="mr-3 text-sm group-hover:text-primary-blue transition-colors" /> Voir Highlights
-                        </Link>
+                        {isAnchor ? (
+                            <a href={buttonLink} className="btn-outline px-8 py-4 text-lg bg-white/5 border-white/20 hover:border-primary-blue inline-flex items-center group">
+                                <FaPlay className="mr-3 text-sm group-hover:text-primary-blue transition-colors" /> {heroBtnText || 'Voir Highlights'}
+                            </a>
+                        ) : (
+                            <Link to={buttonLink} className="btn-outline px-8 py-4 text-lg bg-white/5 border-white/20 hover:border-primary-blue inline-flex items-center group">
+                                <FaPlay className="mr-3 text-sm group-hover:text-primary-blue transition-colors" /> {heroBtnText || 'Voir Highlights'}
+                            </Link>
+                        )}
                     </div>
                 </motion.div>
             </div>

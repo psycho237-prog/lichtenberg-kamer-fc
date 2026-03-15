@@ -53,6 +53,8 @@ const Home = () => {
                 subtitle={pageData?.heroSubtitle}
                 seasonPeriod={pageData?.seasonPeriod}
                 heroImage={getImageUrl(pageData?.heroImage)}
+                heroBtnText={pageData?.heroBtnText}
+                heroBtnLink={pageData?.heroBtnLink}
             />
             <NextMatch match={nextMatch} />
 
