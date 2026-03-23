@@ -231,7 +231,7 @@ const Home = () => {
                                 viewport={{ once: true }}
                                 className="relative group"
                             >
-                                <div className="aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden bg-white/5 border border-white/5 group-hover:border-primary-blue/30 transition-colors duration-500">
+                                <div className="aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden bg-transparent border-none group-hover:border-primary-blue/30 transition-colors duration-500">
                                     <img
                                         src={getImageUrl(kit.image)}
                                         alt={kit.name}
