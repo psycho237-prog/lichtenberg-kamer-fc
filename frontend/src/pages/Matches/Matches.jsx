@@ -51,7 +51,7 @@ const Matches = () => {
                             <div className="flex flex-row items-center justify-between w-full">
                                 {/* Team A */}
                                 <div className="flex-1 p-2 md:p-8 flex flex-col items-center justify-center space-y-2 md:space-y-4">
-                                    <div className="w-12 h-12 md:w-24 md:h-24 bg-white/5 rounded-full flex items-center justify-center p-2 md:p-4 border border-white/10 shrink-0">
+                                    <div className="w-12 h-12 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center p-1.5 md:p-3 border border-white/10 shrink-0 shadow-lg shadow-black/20">
                                         <img src="/images/logo.png" alt="LK FC" className="w-full h-auto" loading="lazy" />
                                     </div>
                                     <h3 className="text-[8px] md:text-xl font-bold italic text-white text-center leading-tight truncate px-1 max-w-full">LK e.V</h3>
@@ -91,7 +91,7 @@ const Matches = () => {
 
                                 {/* Team B */}
                                 <div className="flex-1 p-2 md:p-8 flex flex-col items-center justify-center space-y-2 md:space-y-4">
-                                    <div className="w-12 h-12 md:w-24 md:h-24 bg-white/5 rounded-full flex items-center justify-center p-2 md:p-4 border border-white/10 overflow-hidden text-center shrink-0">
+                                    <div className="w-12 h-12 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center p-1.5 md:p-3 border border-white/10 overflow-hidden text-center shrink-0 shadow-lg shadow-black/20">
                                         {match.opponentLogo ? (
                                             <img src={getImageUrl(match.opponentLogo)} alt="Opponent" className="w-full h-full object-contain" />
                                         ) : (

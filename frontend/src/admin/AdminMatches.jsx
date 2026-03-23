@@ -181,7 +181,7 @@ const AdminMatches = () => {
 
                                     <div className="flex items-center space-x-6">
                                         <div className="text-right w-32 flex flex-col items-center">
-                                            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 overflow-hidden mb-1 flex items-center justify-center p-1">
+                                            <div className="w-10 h-10 rounded-full bg-white border border-white/10 overflow-hidden mb-1 flex items-center justify-center p-1 shadow-inner">
                                                 <img src="/images/logo.png" alt="LK FC" className="w-full h-auto" />
                                             </div>
                                             <div className="text-white font-black italic uppercase italic text-[10px]">Lichtenberg FC</div>
@@ -192,11 +192,11 @@ const AdminMatches = () => {
                                             <span className="text-2xl font-black italic text-white">{match.score.away}</span>
                                         </div>
                                         <div className="text-left w-32 flex flex-col items-center">
-                                            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 overflow-hidden mb-1 flex items-center justify-center p-1">
+                                            <div className="w-10 h-10 rounded-full bg-white border border-white/10 overflow-hidden mb-1 flex items-center justify-center p-1 shadow-inner">
                                                 {match.opponentLogo ? (
                                                     <img src={getImageUrl(match.opponentLogo)} alt="Opponent" className="w-full h-full object-contain" />
                                                 ) : (
-                                                    <div className="text-[10px] text-gray-600 font-bold">{match.opponent.substring(0, 2)}</div>
+                                                    <div className="text-[10px] text-gray-400 font-bold">{match.opponent.substring(0, 2)}</div>
                                                 )}
                                             </div>
                                             <div className="text-white font-black italic uppercase italic text-[10px]">{match.opponent}</div>
@@ -243,11 +243,24 @@ const AdminMatches = () => {
                                     <div className="col-span-2 md:col-span-1">
                                         <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Logo Adversaire</label>
                                         <div className="flex items-center space-x-4">
-                                            <div className="w-16 h-16 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center overflow-hidden">
+                                            <div className="w-16 h-16 rounded-xl border border-white/10 bg-white flex items-center justify-center overflow-hidden relative group">
                                                 {logoPreview ? (
-                                                    <img src={logoPreview} alt="Logo" className="w-full h-full object-contain" />
+                                                    <>
+                                                        <img src={logoPreview} alt="Logo" className="w-full h-full object-contain p-1" />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                setLogoFile(null);
+                                                                setLogoPreview(null);
+                                                                setFormData({ ...formData, opponentLogo: '' });
+                                                            }}
+                                                            className="absolute inset-0 bg-red-500/80 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity"
+                                                        >
+                                                            <FaTrash size={16} />
+                                                        </button>
+                                                    </>
                                                 ) : (
-                                                    <div className="text-[8px] text-gray-600 font-bold uppercase text-center">No Logo</div>
+                                                    <div className="text-[8px] text-gray-400 font-bold uppercase text-center">No Logo</div>
                                                 )}
                                             </div>
                                             <label className="btn-outline py-2 px-4 text-[10px] cursor-pointer">
