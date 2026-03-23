@@ -221,7 +221,7 @@ const Home = () => {
                         <span className="text-primary-blue font-black uppercase tracking-widest text-[10px] md:text-xs italic">Nos Couleurs</span>
                         <h2 className="text-3xl md:text-5xl font-black italic text-white mt-2 uppercase">L'Armure des <span className="text-primary-yellow">Lions</span></h2>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-12">
                         {pageData.kits.map((kit, index) => (
                             <motion.div
                                 key={index}
@@ -231,17 +231,17 @@ const Home = () => {
                                 viewport={{ once: true }}
                                 className="relative group"
                             >
-                                <div className="aspect-[3/4] rounded-3xl overflow-hidden bg-white/5 border border-white/5 group-hover:border-primary-blue/30 transition-colors duration-500">
+                                <div className="aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden bg-white/5 border border-white/5 group-hover:border-primary-blue/30 transition-colors duration-500">
                                     <img
                                         src={getImageUrl(kit.image)}
                                         alt={kit.name}
-                                        className="w-full h-full object-contain p-8 group-hover:scale-110 transition-transform duration-700"
+                                        className="w-full h-full object-contain p-4 md:p-8 group-hover:scale-110 transition-transform duration-700"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                 </div>
-                                <div className="mt-6 text-center">
-                                    <h3 className="text-xl md:text-2xl font-black italic text-white uppercase italic tracking-tighter">{kit.name}</h3>
-                                    <div className="w-12 h-1 bg-primary-blue mx-auto mt-2 group-hover:w-24 transition-all duration-500"></div>
+                                <div className="mt-4 md:mt-6 text-center">
+                                    <h3 className="text-sm md:text-2xl font-black italic text-white uppercase italic tracking-tighter">{kit.name}</h3>
+                                    <div className="w-8 md:w-12 h-0.5 md:h-1 bg-primary-blue mx-auto mt-2 group-hover:w-24 transition-all duration-500"></div>
                                 </div>
                             </motion.div>
                         ))}
