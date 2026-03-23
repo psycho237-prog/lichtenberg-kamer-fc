@@ -1,4 +1,5 @@
 import { API_BASE } from '../services/api';
+import { getImageUrl } from '../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -135,7 +136,7 @@ const AdminMatches = () => {
             opponentLogo: match.opponentLogo || ''
         });
         if (match.opponentLogo) {
-            setLogoPreview(match.opponentLogo.startsWith('http') ? match.opponentLogo : `${API_BASE}/${match.opponentLogo}`);
+            setLogoPreview(getImageUrl(match.opponentLogo));
         } else {
             setLogoPreview(null);
         }
@@ -179,16 +180,26 @@ const AdminMatches = () => {
                                     </div>
 
                                     <div className="flex items-center space-x-6">
-                                        <div className="text-right w-32">
-                                            <div className="text-white font-black italic uppercase italic">Lichtenberg FC</div>
+                                        <div className="text-right w-32 flex flex-col items-center">
+                                            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 overflow-hidden mb-1 flex items-center justify-center p-1">
+                                                <img src="/images/logo.png" alt="LK FC" className="w-full h-auto" />
+                                            </div>
+                                            <div className="text-white font-black italic uppercase italic text-[10px]">Lichtenberg FC</div>
                                         </div>
                                         <div className="bg-white/5 px-4 py-2 rounded-xl border border-white/10 flex items-center space-x-4">
                                             <span className="text-2xl font-black italic text-white">{match.score.home}</span>
                                             <span className="text-gray-600 font-black">-</span>
                                             <span className="text-2xl font-black italic text-white">{match.score.away}</span>
                                         </div>
-                                        <div className="text-left w-32">
-                                            <div className="text-white font-black italic uppercase italic">{match.opponent}</div>
+                                        <div className="text-left w-32 flex flex-col items-center">
+                                            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 overflow-hidden mb-1 flex items-center justify-center p-1">
+                                                {match.opponentLogo ? (
+                                                    <img src={getImageUrl(match.opponentLogo)} alt="Opponent" className="w-full h-full object-contain" />
+                                                ) : (
+                                                    <div className="text-[10px] text-gray-600 font-bold">{match.opponent.substring(0, 2)}</div>
+                                                )}
+                                            </div>
+                                            <div className="text-white font-black italic uppercase italic text-[10px]">{match.opponent}</div>
                                         </div>
                                     </div>
 

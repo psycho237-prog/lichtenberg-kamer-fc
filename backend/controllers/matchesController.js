@@ -14,14 +14,29 @@ exports.getMatches = async (req, res) => {
 exports.createMatch = async (req, res) => {
     try {
         const matchData = { ...req.body };
-        if (req.file) {
-            matchData.opponentLogo = req.file.path;
+        
+        // Multer puts files in req.file, but other fields are strings in req.body
+        // If FormData sent score[home], we need to reconstruct the score object
+        if (!matchData.score && req.body['score[home]'] !== undefined) {
+            matchData.score = {
+                home: parseInt(req.body['score[home]']) || 0,
+                away: parseInt(req.body['score[away]']) || 0
+            };
+            delete matchData['score[home]'];
+            delete matchData['score[away]'];
         }
+
+        // Parse isHome from string to boolean
+        if (matchData.isHome === 'true') matchData.isHome = true;
+        if (matchData.isHome === 'false') matchData.isHome = false;
+
+        if (req.file) {
+            matchData.opponentLogo = req.file.path; // Cloudinary URL
+        }
+        
         const docRef = await db.collection('matches').add(matchData);
-
-        // Trigger Email Notification (Non-blocking)
+        
         sendMatchNotification({ _id: docRef.id, ...matchData }).catch(e => console.error(e));
-
         res.status(201).json({ _id: docRef.id, ...matchData });
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -31,9 +46,24 @@ exports.createMatch = async (req, res) => {
 exports.updateMatch = async (req, res) => {
     try {
         const updateData = { ...req.body };
+        
+        if (!updateData.score && req.body['score[home]'] !== undefined) {
+            updateData.score = {
+                home: parseInt(req.body['score[home]']) || 0,
+                away: parseInt(req.body['score[away]']) || 0
+            };
+            delete updateData['score[home]'];
+            delete updateData['score[away]'];
+        }
+
+        // Parse isHome from string to boolean
+        if (updateData.isHome === 'true') updateData.isHome = true;
+        if (updateData.isHome === 'false') updateData.isHome = false;
+
         if (req.file) {
             updateData.opponentLogo = req.file.path;
         }
+        
         await db.collection('matches').doc(req.params.id).update(updateData);
         res.json({ _id: req.params.id, ...updateData });
     } catch (error) {
