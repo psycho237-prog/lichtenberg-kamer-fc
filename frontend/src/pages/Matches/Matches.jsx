@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import PageHero from '../../components/Shared/PageHero';
+import { getImageUrl } from '../../utils/imageUtils';
 
 const Matches = () => {
     const [matches, setMatches] = useState([]);
@@ -91,9 +92,13 @@ const Matches = () => {
                                 {/* Team B */}
                                 <div className="flex-1 p-2 md:p-8 flex flex-col items-center justify-center space-y-2 md:space-y-4">
                                     <div className="w-12 h-12 md:w-24 md:h-24 bg-white/5 rounded-full flex items-center justify-center p-2 md:p-4 border border-white/10 overflow-hidden text-center shrink-0">
-                                        <span className="text-xl md:text-3xl font-black italic uppercase text-primary-yellow opacity-50">
-                                            {match.opponent.substring(0, 2)}
-                                        </span>
+                                        {match.opponentLogo ? (
+                                            <img src={getImageUrl(match.opponentLogo)} alt="Opponent" className="w-full h-full object-contain" />
+                                        ) : (
+                                            <span className="text-xl md:text-3xl font-black italic uppercase text-primary-yellow opacity-50">
+                                                {match.opponent.substring(0, 2)}
+                                            </span>
+                                        )}
                                     </div>
                                     <h3 className="text-[8px] md:text-xl font-bold italic text-white text-center uppercase leading-tight truncate px-1 max-w-full">{match.opponent}</h3>
                                 </div>
