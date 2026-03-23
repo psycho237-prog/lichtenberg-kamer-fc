@@ -29,6 +29,11 @@ exports.updatePageContent = async (req, res) => {
                     content.aboutImage = file.path;
                 } else if (file.fieldname === 'heroImage') {
                     content.heroImage = file.path;
+                } else if (file.fieldname.startsWith('kitImage_')) {
+                    const index = parseInt(file.fieldname.split('_')[1]);
+                    if (content.kits && content.kits[index]) {
+                        content.kits[index].image = file.path;
+                    }
                 }
             });
         }

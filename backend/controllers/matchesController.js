@@ -14,6 +14,9 @@ exports.getMatches = async (req, res) => {
 exports.createMatch = async (req, res) => {
     try {
         const matchData = { ...req.body };
+        if (req.file) {
+            matchData.opponentLogo = req.file.path;
+        }
         const docRef = await db.collection('matches').add(matchData);
 
         // Trigger Email Notification (Non-blocking)
@@ -27,8 +30,12 @@ exports.createMatch = async (req, res) => {
 
 exports.updateMatch = async (req, res) => {
     try {
-        await db.collection('matches').doc(req.params.id).update(req.body);
-        res.json({ _id: req.params.id, ...req.body });
+        const updateData = { ...req.body };
+        if (req.file) {
+            updateData.opponentLogo = req.file.path;
+        }
+        await db.collection('matches').doc(req.params.id).update(updateData);
+        res.json({ _id: req.params.id, ...updateData });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

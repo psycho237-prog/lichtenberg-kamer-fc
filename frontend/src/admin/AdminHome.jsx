@@ -3,6 +3,7 @@ import { getImageUrl } from '../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import Sidebar from './Sidebar';
 import RichTextEditor from './components/RichTextEditor';
 
@@ -22,8 +23,10 @@ const AdminHome = () => {
         philosophyContent: '',
         aboutImage: '',
         heroBtnText: '',
-        heroBtnLink: ''
+        heroBtnLink: '',
+        kits: []
     });
+    const [kitFiles, setKitFiles] = useState({});
 
     const fetchContent = async () => {
         try {
@@ -84,6 +87,10 @@ const AdminHome = () => {
             if (heroImage) {
                 formData.append('heroImage', heroImage);
             }
+
+            Object.keys(kitFiles).forEach(key => {
+                formData.append(`kitImage_${key}`, kitFiles[key]);
+            });
 
             await axios.put(API_BASE + '/api/pages/home', formData, config);
             toast.success('Page d\'accueil mise à jour');
@@ -231,6 +238,79 @@ const AdminHome = () => {
                                 onChange={(val) => handleChange('philosophyContent', val)}
                                 label="Notre Philosophie"
                             />
+                        </div>
+
+                        {/* Kits Section */}
+                        <div className="card-gradient rounded-3xl p-8 border border-white/5 space-y-6">
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="text-primary-blue font-black italic uppercase text-lg italic tracking-widest">Maillots du Club</h3>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const newKits = [...(content.kits || []), { name: '', image: '' }];
+                                        setContent({ ...content, kits: newKits });
+                                    }}
+                                    className="btn-outline py-2 px-4 text-xs flex items-center space-x-2"
+                                >
+                                    <FaPlus /> <span>Ajouter un Maillot</span>
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {(content.kits || []).map((kit, index) => (
+                                    <div key={index} className="bg-white/5 rounded-2xl p-4 border border-white/10 relative group">
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const newKits = content.kits.filter((_, i) => i !== index);
+                                                setContent({ ...content, kits: newKits });
+                                                const newFiles = { ...kitFiles };
+                                                delete newFiles[index];
+                                                setKitFiles(newFiles);
+                                            }}
+                                            className="absolute -top-2 -right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                                        >
+                                            <FaTrash size={12} />
+                                        </button>
+
+                                        <div className="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-black/20 relative group/img">
+                                            <img
+                                                src={kitFiles[index] ? URL.createObjectURL(kitFiles[index]) : (kit.image ? getImageUrl(kit.image) : '/images/kit-placeholder.png')}
+                                                alt={kit.name}
+                                                className="w-full h-full object-contain"
+                                            />
+                                            <label className="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center cursor-pointer text-[10px] font-black uppercase tracking-widest text-white">
+                                                Changer l'image
+                                                <input
+                                                    type="file"
+                                                    className="hidden"
+                                                    accept="image/*"
+                                                    onChange={(e) => {
+                                                        if (e.target.files[0]) {
+                                                            setKitFiles({ ...kitFiles, [index]: e.target.files[0] });
+                                                        }
+                                                    }}
+                                                />
+                                            </label>
+                                        </div>
+
+                                        <input
+                                            type="text"
+                                            value={kit.name}
+                                            onChange={(e) => {
+                                                const newKits = [...content.kits];
+                                                newKits[index].name = e.target.value;
+                                                setContent({ ...content, kits: newKits });
+                                            }}
+                                            placeholder="Nom (ex: Domicile)"
+                                            className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white text-xs font-bold uppercase outline-none focus:border-primary-blue"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            {(content.kits || []).length === 0 && (
+                                <p className="text-center text-gray-600 text-[10px] font-bold uppercase tracking-widest py-8">Aucun maillot configuré</p>
+                            )}
                         </div>
 
                         <button

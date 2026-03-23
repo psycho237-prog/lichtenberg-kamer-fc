@@ -18,8 +18,11 @@ const AdminMatches = () => {
         isHome: true,
         score: { home: 0, away: 0 },
         status: 'upcoming',
-        competition: 'Elite One'
+        competition: 'Elite One',
+        opponentLogo: ''
     });
+    const [logoFile, setLogoFile] = useState(null);
+    const [logoPreview, setLogoPreview] = useState(null);
 
     const statusOptions = ['upcoming', 'ongoing', 'finished'];
 
@@ -58,20 +61,37 @@ const AdminMatches = () => {
         try {
             const config = {
                 headers: {
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             };
 
+            const data = new FormData();
+            Object.keys(formData).forEach(key => {
+                if (key === 'score') {
+                    data.append('score[home]', formData.score.home);
+                    data.append('score[away]', formData.score.away);
+                } else {
+                    data.append(key, formData[key]);
+                }
+            });
+
+            if (logoFile) {
+                data.append('opponentLogo', logoFile);
+            }
+
             if (editingMatch) {
-                await axios.put(`${API_BASE}/api/matches/${editingMatch._id}`, formData, config);
+                await axios.put(`${API_BASE}/api/matches/${editingMatch._id}`, data, config);
                 toast.success('Match mis à jour');
             } else {
-                await axios.post(API_BASE + '/api/matches', formData, config);
+                await axios.post(API_BASE + '/api/matches', data, config);
                 toast.success('Match ajouté');
             }
 
             setIsModalOpen(false);
             setEditingMatch(null);
+            setLogoFile(null);
+            setLogoPreview(null);
             setFormData({
                 opponent: '',
                 date: '',
@@ -79,7 +99,8 @@ const AdminMatches = () => {
                 isHome: true,
                 score: { home: 0, away: 0 },
                 status: 'upcoming',
-                competition: 'Elite One'
+                competition: 'Elite One',
+                opponentLogo: ''
             });
             fetchMatches();
         } catch (err) {
@@ -110,8 +131,14 @@ const AdminMatches = () => {
             isHome: match.isHome,
             score: match.score || { home: 0, away: 0 },
             status: match.status,
-            competition: match.competition || 'Elite One'
+            competition: match.competition || 'Elite One',
+            opponentLogo: match.opponentLogo || ''
         });
+        if (match.opponentLogo) {
+            setLogoPreview(match.opponentLogo.startsWith('http') ? match.opponentLogo : `${API_BASE}/${match.opponentLogo}`);
+        } else {
+            setLogoPreview(null);
+        }
         setIsModalOpen(true);
     };
 
@@ -203,11 +230,33 @@ const AdminMatches = () => {
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-2 gap-6">
                                     <div className="col-span-2 md:col-span-1">
+                                        <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Logo Adversaire</label>
+                                        <div className="flex items-center space-x-4">
+                                            <div className="w-16 h-16 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center overflow-hidden">
+                                                {logoPreview ? (
+                                                    <img src={logoPreview} alt="Logo" className="w-full h-full object-contain" />
+                                                ) : (
+                                                    <div className="text-[8px] text-gray-600 font-bold uppercase text-center">No Logo</div>
+                                                )}
+                                            </div>
+                                            <label className="btn-outline py-2 px-4 text-[10px] cursor-pointer">
+                                                Choisir
+                                                <input type="file" className="hidden" accept="image/*" onChange={(e) => {
+                                                    const file = e.target.files[0];
+                                                    if (file) {
+                                                        setLogoFile(file);
+                                                        setLogoPreview(URL.createObjectURL(file));
+                                                    }
+                                                }} />
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-span-2 md:col-span-1">
                                         <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Adversaire</label>
                                         <input type="text" name="opponent" value={formData.opponent} onChange={handleChange}
                                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none uppercase font-black" required />
                                     </div>
-                                    <div className="col-span-2 md:col-span-1">
+                                    <div className="col-span-2">
                                         <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-2 block">Date & Heure</label>
                                         <input type="datetime-local" name="date" value={formData.date} onChange={handleChange}
                                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none" required />
