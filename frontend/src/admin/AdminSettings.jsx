@@ -15,7 +15,8 @@ const AdminSettings = () => {
         whatsapp: '',
         contactWhatsAppMessage: '',
         foundationYear: '',
-        trophiesCount: ''
+        trophiesCount: '',
+        baseMatchesPlayed: ''
     });
 
     const fetchSettings = async () => {
@@ -160,6 +161,15 @@ const AdminSettings = () => {
                                         placeholder="Ex: 5"
                                     />
                                 </div>
+                            </div>
+                            <div>
+                                <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-2 block">Matchs Joués (Historique hors base de données)</label>
+                                <input
+                                    type="number" value={settings.baseMatchesPlayed || ''} onChange={(e) => handleChange('baseMatchesPlayed', e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold"
+                                    placeholder="Ex: 50 (S'ajoutera automatiquement aux matchs terminés du site)"
+                                />
+                                <p className="text-[9px] text-gray-500 mt-2 font-bold uppercase tracking-widest italic">Ce nombre s'additionnera automatiquement aux matchs dont la date est passée.</p>
                             </div>
                         </div>
 
