@@ -1,36 +1,44 @@
 # 🦁 Lichtenberg-Kamer e.V Website
 
-A professional football club website for the Cameroonian community in Berlin. A fully dynamic site with a custom CMS to manage players, matches, news, and sponsors.
+A professional football club website for the Cameroonian community in Berlin. A fully dynamic site with a custom CMS to manage players, matches, news, statistics, and sponsors.
 
 - **Official Domain**: [https://lichtenbergkamer.page](https://lichtenbergkamer.page)
 - **Admin Panel**: `/lkev-admin/login`
 
+## ✨ Key Features
+- **Dynamic Content Management**: Custom CMS to manage News, Matches, Players, Top Scorers, and Galleries.
+- **Automated Statistics**: Real-time display of matches played, articles published, subscribers, and club trophies on the homepage.
+- **Engagement**: Newsletter subscription system and anonymous "Likes" functionality for news articles.
+- **Mobile First**: Ultra-compressed tables, horizontal scrolling carousels, and responsive design tailored for mobile users.
+- **Multilingual Support**: Integrated Google Translate widget for instant language switching without manual translation management.
+- **SEO Optimized**: Dynamic OpenGraph tags and Meta descriptions strictly generated for every page and article.
+
 ## 🛠 Tech Stack
-- **Frontend**: React (Vite), Tailwind CSS, Framer Motion, Axios
-- **Backend**: Node.js, Express (Express 5)
+- **Frontend**: React (Vite), Tailwind CSS, Framer Motion, Axios, React Router
+- **Backend**: Node.js, Express 5
 - **Database**: Firebase (Firestore)
 - **Media Storage**: Cloudinary (Images & Videos)
-- **CMS**: Custom Administration Dashboard with Google Translate integration
+- **Emails & Newsletter**: Resend API
 
 ---
 
 ## 🔐 Environment Variables
 
-### Backend (`/backend/.env`)
+### Global Backend (`/.env` or Vercel Config)
 These variables are required for the server to run and connect to the database/storage.
 
-| Variable | Description | Example |
-| :--- | :--- | :--- |
-| `PORT` | Server port | `5000` |
-| `FIREBASE_SERVICE_ACCOUNT` | Firebase admin SDK JSON string | `{"type": "service_account", ...}` |
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary name | `your_name` |
-| `CLOUDINARY_API_KEY` | Cloudinary key | `your_key` |
-| `CLOUDINARY_API_SECRET` | Cloudinary secret | `your_secret` |
-| `JWT_SECRET` | Secret key for login tokens | `any_long_random_string` |
-| `ADMIN_EMAIL` | Email for CMS login | `admin@lichtenberg-kamer.de` |
-| `ADMIN_PASSWORD` | Password for CMS login | `your_secure_password` |
-| `NODE_ENV` | Environment mode | `production` or `development` |
-| `RENDER_EXTERNAL_URL` | Your site URL (for auto-ping) | `https://lichtenbergkamer.page` |
+| Variable | Description |
+| :--- | :--- |
+| `PORT` | Server port (e.g., 5000) |
+| `FIREBASE_SERVICE_ACCOUNT` | Firebase admin SDK JSON string |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary name |
+| `CLOUDINARY_API_KEY` | Cloudinary key |
+| `CLOUDINARY_API_SECRET` | Cloudinary secret |
+| `RESEND_API_KEY` | API key from Resend for Newsletter/Emails |
+| `JWT_SECRET` | Secret key for login tokens |
+| `ADMIN_EMAIL` | Email for CMS login |
+| `ADMIN_PASSWORD` | Password for CMS login |
+| `NODE_ENV` | `production` or `development` |
 
 ### Frontend (`/frontend/.env`)
 Used for local development to point to the backend.
@@ -41,37 +49,30 @@ Used for local development to point to the backend.
 
 ---
 
-## 📦 Deployment on Render (Recommended)
+## 📦 Deployment (Vercel)
 
-Render is perfect for this project. Since we use a Node.js monorepo structure:
+The application is configured to run flawlessly on Vercel leveraging Serverless Functions.
 
-1. **Connect your GitHub** to Render.
-2. **Environment**: Select `Node`.
-3. **Build Command**: `cd frontend && npm install && npm run build && cd ../backend && npm install`
-4. **Start Command**: `node backend/server.js` (or use the root `npm start` if configured)
-5. **Add Environment Variables**: Copy the variables from the "Backend" table above into the Render "Environment" tab.
+1. **Connect your GitHub** to Vercel.
+2. **Framework Preset**: Vite (for frontend builds).
+3. **Build Command**: `npm run build`
+4. **Output Directory**: `frontend/dist`
+5. **Add Environment Variables**: Add all Backend variables listed above to your Vercel Project Environment.
+6. The `vercel.json` file handles all API routing seamlessly mapping `/api/*` to the Node.js backend controllers.
 
 ---
 
 ## 💻 Local Development
 
-1. **Install everything**:
-   ```bash
-   npm run install-all
-   ```
+1. **Install Dependencies**:
+   Navigate to both `frontend` and `backend` directories and run `npm install`.
 
-2. **Expose on Local Network**:
-   To view the site on your phone or other device on the same Wifi:
-   - Backend will listen on `0.0.0.0:5000`.
-   - Run frontend with: `cd frontend && npm run dev -- --host`
+2. **Expose on Local Network (Mobile Testing)**:
+   - Start backend: `cd backend && npm run dev`
+   - Run frontend: `cd frontend && npm run dev -- --host`
 
 3. **Database Seed**:
-   Fill the database with initial data (requires Firebase credentials):
+   Fill the database with initial standard pages data (requires Firebase credentials):
    ```bash
    cd backend && npm run seed
-   ```
-
-4. **Launch**:
-   ```bash
-   npm start
    ```
