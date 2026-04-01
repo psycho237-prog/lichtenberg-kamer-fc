@@ -69,17 +69,6 @@ exports.deleteNews = async (req, res) => {
 // @desc    Like a news article
 exports.likeNews = async (req, res) => {
     try {
-        const { email } = req.body;
-        if (!email) {
-            return res.status(400).json({ message: 'Email requis' });
-        }
-
-        // Verify newsletter subscription
-        const subscriberQuery = await db.collection('subscribers').where('email', '==', email.toLowerCase()).get();
-        if (subscriberQuery.empty) {
-            return res.status(403).json({ message: 'Vous devez être abonné à la newsletter pour liker un article.' });
-        }
-
         const newsRef = db.collection('news').doc(req.params.id);
         const doc = await newsRef.get();
 
@@ -88,16 +77,20 @@ exports.likeNews = async (req, res) => {
         }
 
         const newsData = doc.data();
-        const likes = newsData.likes || [];
-
-        if (likes.includes(email)) {
-             return res.status(400).json({ message: 'Vous avez déjà liké cet article.' });
+        let likesCount = newsData.likesCount || 0;
+        
+        // If they had old 'likes' array, use its length as base
+        if (newsData.likes && Array.isArray(newsData.likes)) {
+            likesCount = newsData.likes.length;
+            // Optionally remove the array or just ignore it
         }
 
-        likes.push(email);
-        await newsRef.update({ likes });
+        likesCount += 1;
+        
+        // Update both to be safe or just likesCount
+        await newsRef.update({ likesCount: likesCount });
 
-        res.json({ message: 'Article liké avec succès!', likes });
+        res.json({ message: 'Article liké avec succès!', likesCount });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

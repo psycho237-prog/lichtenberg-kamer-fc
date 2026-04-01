@@ -14,13 +14,24 @@ const NewsDetail = () => {
 
     const [likesCount, setLikesCount] = useState(0);
     const [isLiking, setIsLiking] = useState(false);
+    const [hasLiked, setHasLiked] = useState(false);
 
     useEffect(() => {
         const fetchArticle = async () => {
             try {
                 const res = await axios.get(`${API_BASE}/api/news/${id}`);
                 setArticle(res.data);
-                setLikesCount(res.data.likes ? res.data.likes.length : 0);
+                
+                // Compatibility for old data format
+                const count = res.data.likesCount || (res.data.likes ? res.data.likes.length : 0);
+                setLikesCount(count);
+
+                // Check local storage for like
+                const likedArticles = JSON.parse(localStorage.getItem('liked_articles') || '[]');
+                if (likedArticles.includes(id)) {
+                    setHasLiked(true);
+                }
+
                 setLoading(false);
             } catch (err) {
                 console.error(err);
@@ -32,13 +43,22 @@ const NewsDetail = () => {
     }, [id]);
 
     const handleLike = async () => {
-        const email = prompt("Veuillez entrer votre adresse email pour liker cet article.\n\nNote: Vous devez être abonné à la newsletter.");
-        if (!email) return;
+        if (hasLiked) {
+             toast.error("Vous avez déjà liké cet article.");
+             return;
+        }
 
         setIsLiking(true);
         try {
-            const res = await axios.post(`${API_BASE}/api/news/${id}/like`, { email });
-            setLikesCount(res.data.likes.length);
+            const res = await axios.post(`${API_BASE}/api/news/${id}/like`);
+            setLikesCount(res.data.likesCount);
+            setHasLiked(true);
+            
+            // Save to local storage
+            const likedArticles = JSON.parse(localStorage.getItem('liked_articles') || '[]');
+            likedArticles.push(id);
+            localStorage.setItem('liked_articles', JSON.stringify(likedArticles));
+            
             toast.success(res.data.message);
         } catch (err) {
             toast.error(err.response?.data?.message || "Erreur lors du like.");
@@ -135,12 +155,12 @@ const NewsDetail = () => {
                             {/* Like Button */}
                             <button
                                 onClick={handleLike}
-                                disabled={isLiking}
-                                className="p-3 bg-white/5 hover:bg-red-500/20 text-white rounded-xl transition-all flex items-center space-x-2 group border border-white/5"
-                                title="Liker l'article"
+                                disabled={isLiking || hasLiked}
+                                className={`p-3 rounded-xl transition-all flex items-center space-x-2 group border border-white/5 ${hasLiked ? 'bg-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'bg-white/5 hover:bg-red-500/20 text-white'}`}
+                                title={hasLiked ? "Vous avez aimé cela" : "Liker l'article"}
                             >
-                                <FaHeart className={`transition-colors ${isLiking ? 'text-gray-500' : 'text-red-500 group-hover:scale-110'}`} />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white">
+                                <FaHeart className={`transition-colors ${isLiking ? 'text-gray-500' : 'text-red-500'} ${!hasLiked && 'group-hover:scale-110'}`} />
+                                <span className={`text-[10px] font-black uppercase tracking-widest ${hasLiked ? 'text-red-500' : 'text-white'}`}>
                                     {likesCount > 0 ? likesCount : 'Liker'}
                                 </span>
                             </button>
