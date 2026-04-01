@@ -35,6 +35,7 @@ app.use('/api/pages', require('./routes/pageRoutes'));
 app.use('/api/sponsors', require('./routes/sponsorRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/newsletter', require('./routes/newsletterRoutes'));
+app.use('/api/stats', require('./routes/statsRoutes'));
 
 // Static folder for uploads
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

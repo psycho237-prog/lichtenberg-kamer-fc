@@ -4,18 +4,23 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaUser, FaShareAlt } from 'react-icons/fa';
+import { FaCalendarAlt, FaUser, FaShareAlt, FaHeart } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 const NewsDetail = () => {
     const { id } = useParams();
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [likesCount, setLikesCount] = useState(0);
+    const [isLiking, setIsLiking] = useState(false);
+
     useEffect(() => {
         const fetchArticle = async () => {
             try {
                 const res = await axios.get(`${API_BASE}/api/news/${id}`);
                 setArticle(res.data);
+                setLikesCount(res.data.likes ? res.data.likes.length : 0);
                 setLoading(false);
             } catch (err) {
                 console.error(err);
@@ -25,6 +30,22 @@ const NewsDetail = () => {
         fetchArticle();
         window.scrollTo(0, 0);
     }, [id]);
+
+    const handleLike = async () => {
+        const email = prompt("Veuillez entrer votre adresse email pour liker cet article.\n\nNote: Vous devez être abonné à la newsletter.");
+        if (!email) return;
+
+        setIsLiking(true);
+        try {
+            const res = await axios.post(`${API_BASE}/api/news/${id}/like`, { email });
+            setLikesCount(res.data.likes.length);
+            toast.success(res.data.message);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Erreur lors du like.");
+        } finally {
+            setIsLiking(false);
+        }
+    };
 
     if (loading) return (
         <div className="min-h-screen bg-dark-bg flex items-center justify-center">
@@ -109,7 +130,22 @@ const NewsDetail = () => {
                         </Link>
 
                         <div className="flex items-center space-x-3">
-                            <span className="text-gray-500 font-black uppercase text-[10px] tracking-widest hidden sm:block">Partager :</span>
+                            <span className="text-gray-500 font-black uppercase text-[10px] tracking-widest hidden sm:block">Actions :</span>
+
+                            {/* Like Button */}
+                            <button
+                                onClick={handleLike}
+                                disabled={isLiking}
+                                className="p-3 bg-white/5 hover:bg-red-500/20 text-white rounded-xl transition-all flex items-center space-x-2 group border border-white/5"
+                                title="Liker l'article"
+                            >
+                                <FaHeart className={`transition-colors ${isLiking ? 'text-gray-500' : 'text-red-500 group-hover:scale-110'}`} />
+                                <span className="text-[10px] font-black uppercase tracking-widest text-white">
+                                    {likesCount > 0 ? likesCount : 'Liker'}
+                                </span>
+                            </button>
+
+                            {/* Share Button */}
                             <button
                                 onClick={() => {
                                     if (navigator.share) {
@@ -120,7 +156,7 @@ const NewsDetail = () => {
                                         }).catch(err => console.log('Erreur de partage:', err));
                                     } else {
                                         navigator.clipboard.writeText(window.location.href);
-                                        alert('Lien copié dans le presse-papier !');
+                                        toast.success('Lien copié dans le presse-papier !');
                                     }
                                 }}
                                 className="p-3 bg-white/5 hover:bg-primary-blue text-white rounded-xl transition-all flex items-center space-x-2 group border border-white/5"

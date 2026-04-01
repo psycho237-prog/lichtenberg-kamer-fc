@@ -3,6 +3,7 @@ import { getImageUrl } from '../../utils/imageUtils';
 import React, { useState, useEffect } from 'react';
 import Hero from '../../components/Home/Hero';
 import NextMatch from '../../components/Home/NextMatch';
+import PublicStats from '../../components/Home/PublicStats';
 import { motion } from 'framer-motion';
 import { stripHtml } from '../../utils/textUtils';
 import { FaArrowRight } from 'react-icons/fa';
@@ -157,6 +158,8 @@ const Home = () => {
                     </div>
                 </section>
             )}
+
+            <PublicStats />
 
             {/* Latest News Section */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-32">

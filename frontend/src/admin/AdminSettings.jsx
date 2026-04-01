@@ -13,7 +13,9 @@ const AdminSettings = () => {
         instagram: '',
         twitter: '',
         whatsapp: '',
-        contactWhatsAppMessage: ''
+        contactWhatsAppMessage: '',
+        foundationYear: '',
+        trophiesCount: ''
     });
 
     const fetchSettings = async () => {
@@ -132,6 +134,30 @@ const AdminSettings = () => {
                                         rows="3"
                                         className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none resize-none font-bold italic"
                                         placeholder="Entrez le message qui sera pré-rempli lors d'un clic sur le bouton WhatsApp"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card-gradient rounded-3xl p-8 border border-white/5 space-y-6">
+                            <h3 className="text-white font-black italic uppercase text-lg mb-4 italic tracking-widest">Statistiques Publiques</h3>
+                            <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-6">Modifiez les valeurs manuelles affichées sur la page d'accueil. Les matchs, articles et abonnés sont comptés automatiquement.</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-2 block">Année de création (Fondation)</label>
+                                    <input
+                                        type="number" value={settings.foundationYear || ''} onChange={(e) => handleChange('foundationYear', e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold"
+                                        placeholder="Ex: 2024"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-2 block">Nombre de Trophées</label>
+                                    <input
+                                        type="number" value={settings.trophiesCount || ''} onChange={(e) => handleChange('trophiesCount', e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-blue outline-none font-bold"
+                                        placeholder="Ex: 5"
                                     />
                                 </div>
                             </div>

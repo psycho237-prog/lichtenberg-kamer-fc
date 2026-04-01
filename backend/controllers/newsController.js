@@ -65,3 +65,40 @@ exports.deleteNews = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// @desc    Like a news article
+exports.likeNews = async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ message: 'Email requis' });
+        }
+
+        // Verify newsletter subscription
+        const subscriberQuery = await db.collection('newsletter_subscribers').where('email', '==', email).get();
+        if (subscriberQuery.empty) {
+            return res.status(403).json({ message: 'Vous devez être abonné à la newsletter pour liker un article.' });
+        }
+
+        const newsRef = db.collection('news').doc(req.params.id);
+        const doc = await newsRef.get();
+
+        if (!doc.exists) {
+            return res.status(404).json({ message: 'Article not found' });
+        }
+
+        const newsData = doc.data();
+        const likes = newsData.likes || [];
+
+        if (likes.includes(email)) {
+             return res.status(400).json({ message: 'Vous avez déjà liké cet article.' });
+        }
+
+        likes.push(email);
+        await newsRef.update({ likes });
+
+        res.json({ message: 'Article liké avec succès!', likes });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
