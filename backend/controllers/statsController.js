@@ -19,7 +19,7 @@ exports.getPublicStats = async (req, res) => {
         const articlesCount = newsSnapshot.size;
 
         // 3. Count Newsletter Subscribers
-        const subsSnapshot = await db.collection('newsletter_subscribers').get();
+        const subsSnapshot = await db.collection('subscribers').get();
         const subscribersCount = subsSnapshot.size;
 
         // 4. Get CMS settings for Trophies and Foundation Year

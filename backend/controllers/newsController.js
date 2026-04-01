@@ -75,7 +75,7 @@ exports.likeNews = async (req, res) => {
         }
 
         // Verify newsletter subscription
-        const subscriberQuery = await db.collection('newsletter_subscribers').where('email', '==', email).get();
+        const subscriberQuery = await db.collection('subscribers').where('email', '==', email.toLowerCase()).get();
         if (subscriberQuery.empty) {
             return res.status(403).json({ message: 'Vous devez être abonné à la newsletter pour liker un article.' });
         }
