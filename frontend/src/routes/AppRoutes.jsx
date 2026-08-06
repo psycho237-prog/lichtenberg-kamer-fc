@@ -8,6 +8,8 @@ import NewsDetail from '../pages/News/NewsDetail';
 import Gallery from '../pages/Gallery/Gallery';
 import Contact from '../pages/Contact/Contact';
 import TopScorers from '../pages/TopScorers/TopScorers';
+import BallonDor from '../pages/BallonDor/BallonDor';
+import CandidateProfile from '../pages/BallonDor/CandidateProfile';
 
 // Admin components
 import AdminLogin from '../admin/Login';
@@ -21,6 +23,7 @@ import AdminSponsors from '../admin/AdminSponsors';
 import AdminContact from '../admin/AdminContact';
 import AdminSettings from '../admin/AdminSettings';
 import AdminPlayerStats from '../admin/AdminPlayerStats';
+import AdminBallonDor from '../admin/AdminBallonDor';
 import { useAuth } from '../context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
@@ -40,12 +43,19 @@ const AppRoutes = () => {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/stats" element={<TopScorers />} />
+            <Route path="/ballon-dor" element={<BallonDor />} />
+            <Route path="/ballon-dor/candidate/:candidateId" element={<CandidateProfile />} />
 
             {/* Admin Routes */}
             <Route path="/lkev-admin/login" element={<AdminLogin />} />
             <Route path="/lkev-admin/dashboard" element={
                 <PrivateRoute>
                     <Dashboard />
+                </PrivateRoute>
+            } />
+            <Route path="/lkev-admin/ballon-dor" element={
+                <PrivateRoute>
+                    <AdminBallonDor />
                 </PrivateRoute>
             } />
             <Route path="/lkev-admin/players" element={

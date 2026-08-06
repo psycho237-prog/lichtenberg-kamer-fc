@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaTachometerAlt, FaUsers, FaCalendarAlt, FaNewspaper, FaImages, FaHandshake, FaSignOutAlt, FaCog } from 'react-icons/fa';
+import { FaTachometerAlt, FaUsers, FaCalendarAlt, FaNewspaper, FaImages, FaHandshake, FaSignOutAlt, FaCog, FaCrown } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
@@ -9,6 +9,7 @@ const Sidebar = () => {
 
     const menuItems = [
         { name: 'Dashboard', icon: <FaTachometerAlt />, path: '/lkev-admin/dashboard' },
+        { name: 'Ballon d\'Or LK', icon: <FaCrown />, path: '/lkev-admin/ballon-dor' },
         { name: 'CMS Accueil', icon: <FaNewspaper />, path: '/lkev-admin/home-page' },
         { name: 'Actualités', icon: <FaNewspaper />, path: '/lkev-admin/news' },
         { name: 'Joueurs', icon: <FaUsers />, path: '/lkev-admin/players' },
