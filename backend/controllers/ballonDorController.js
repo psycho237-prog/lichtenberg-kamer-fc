@@ -264,10 +264,30 @@ exports.voteCandidate = async (req, res) => {
             return res.status(400).json({ message: 'categoryId et candidateId sont requis' });
         }
 
-        const categoryRef = db.collection('ballondor_categories').doc(categoryId);
+        // --- IP-based deduplication ---
+        // Get the real client IP (handles proxies / Render / Vercel)
+        const clientIp =
+            req.headers['x-forwarded-for']?.split(',')[0].trim() ||
+            req.headers['x-real-ip'] ||
+            req.socket?.remoteAddress ||
+            'unknown';
 
-        // Transaction or atomic fetch-update
+        // Create a unique vote fingerprint: IP + category
+        const voteKey = `${clientIp}_${categoryId}`;
+        const voteRef = db.collection('ballondor_votes').doc(voteKey);
+        const existingVote = await voteRef.get();
+
+        if (existingVote.exists) {
+            return res.status(409).json({
+                message: 'Vous avez déjà voté dans cette catégorie.',
+                alreadyVoted: true
+            });
+        }
+        // --- End IP check ---
+
+        const categoryRef = db.collection('ballondor_categories').doc(categoryId);
         const doc = await categoryRef.get();
+
         if (!doc.exists) {
             return res.status(404).json({ message: 'Catégorie non trouvée' });
         }
@@ -284,12 +304,22 @@ exports.voteCandidate = async (req, res) => {
             return res.status(404).json({ message: 'Candidat non trouvé' });
         }
 
+        // Increment vote count
         candidates[index].votes = (candidates[index].votes || 0) + 1;
 
-        await categoryRef.update({
-            candidates,
-            updatedAt: new Date().toISOString()
-        });
+        // Write vote record + category update in parallel
+        await Promise.all([
+            categoryRef.update({
+                candidates,
+                updatedAt: new Date().toISOString()
+            }),
+            voteRef.set({
+                ip: clientIp,
+                categoryId,
+                candidateId,
+                votedAt: new Date().toISOString()
+            })
+        ]);
 
         res.json({
             message: 'Vote enregistré avec succès !',

@@ -84,7 +84,15 @@ const CandidateProfile = () => {
                 style: { background: '#1A1D24', color: '#F3B404', border: '1px solid #F3B404' }
             });
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Erreur lors du vote');
+            if (err.response?.status === 409 || err.response?.data?.alreadyVoted) {
+                // Server says IP already voted → sync localStorage
+                const updated = { ...userVotes, [categoryData._id]: candidateData.id };
+                setUserVotes(updated);
+                localStorage.setItem('lk_ballondor_user_votes', JSON.stringify(updated));
+                toast.error('Vous avez déjà voté dans cette catégorie ! 🔒');
+            } else {
+                toast.error(err.response?.data?.message || 'Erreur lors du vote');
+            }
         } finally {
             setVoting(false);
         }

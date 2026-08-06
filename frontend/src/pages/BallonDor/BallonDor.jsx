@@ -84,7 +84,15 @@ const BallonDor = () => {
                 }
             });
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Erreur lors de l\'enregistrement du vote');
+            if (err.response?.status === 409 || err.response?.data?.alreadyVoted) {
+                // Server says IP already voted → sync localStorage
+                const updatedUserVotes = { ...userVotes, [categoryId]: candidateId };
+                setUserVotes(updatedUserVotes);
+                localStorage.setItem('lk_ballondor_user_votes', JSON.stringify(updatedUserVotes));
+                toast.error('Vous avez déjà voté dans cette catégorie ! 🔒');
+            } else {
+                toast.error(err.response?.data?.message || 'Erreur lors de l\'enregistrement du vote');
+            }
         } finally {
             setVotingInProgress(prev => ({ ...prev, [categoryId]: false }));
         }
