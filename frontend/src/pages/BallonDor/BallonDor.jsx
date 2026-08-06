@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { API_BASE } from '../../services/api';
 import { getImageUrl } from '../../utils/imageUtils';
@@ -8,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTrophy, FaCheckCircle, FaStar, FaCrown, FaVoteYea, FaFire, FaShareAlt, FaExternalLinkAlt } from 'react-icons/fa';
 
 const BallonDor = () => {
+    const { t } = useTranslation();
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedCategoryId, setSelectedCategoryId] = useState(null);
@@ -111,7 +113,7 @@ const BallonDor = () => {
                     className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-black uppercase tracking-widest mb-6 shadow-lg shadow-amber-500/10"
                 >
                     <FaCrown className="text-amber-400 text-sm animate-bounce" />
-                    <span>Ballon d'Or LK • Vote Gratuit</span>
+                    <span>{t("Ballon d'Or LK • Vote Gratuit")}</span>
                 </motion.div>
 
                 <motion.h1
@@ -120,7 +122,7 @@ const BallonDor = () => {
                     transition={{ duration: 0.7 }}
                     className="text-5xl md:text-7xl font-black italic uppercase tracking-tight text-white mb-6"
                 >
-                    BALLON D'OR <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-600 drop-shadow-[0_0_25px_rgba(245,158,11,0.3)]">LK {new Date().getFullYear()}</span>
+                    {t("BALLON D'OR")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-600 drop-shadow-[0_0_25px_rgba(245,158,11,0.3)]">LK {new Date().getFullYear()}</span>
                 </motion.h1>
 
                 <motion.p
@@ -129,20 +131,20 @@ const BallonDor = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="max-w-2xl mx-auto text-gray-400 text-sm md:text-base font-semibold uppercase tracking-wider leading-relaxed"
                 >
-                    Élisez vos meilleurs joueurs de Lichtenberg-Kamer e.V pour chaque catégorie. Soutenez vos favoris en un clic !
+                    {t("Élisez vos meilleurs joueurs de Lichtenberg-Kamer e.V pour chaque catégorie. Soutenez vos favoris en un clic !")}
                 </motion.p>
             </div>
 
             {loading ? (
                 <div className="flex flex-col items-center justify-center p-20">
                     <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-4" />
-                    <p className="text-amber-400 font-bold uppercase text-xs tracking-widest">Chargement des catégories...</p>
+                    <p className="text-amber-400 font-bold uppercase text-xs tracking-widest">Chargement...</p>
                 </div>
             ) : categories.length === 0 ? (
                 <div className="max-w-3xl mx-auto px-4 text-center py-16 card-gradient rounded-3xl border border-white/10 p-10">
                     <FaTrophy className="text-6xl text-amber-500/40 mx-auto mb-4" />
-                    <h3 className="text-2xl font-black italic uppercase text-white mb-2">Aucune catégorie disponible pour le moment</h3>
-                    <p className="text-gray-400 text-sm">Les votes du Ballon d'Or LK ouvriront très prochainement. Revenez bientôt !</p>
+                    <h3 className="text-2xl font-black italic uppercase text-white mb-2">Aucune catégorie disponible</h3>
+                    <p className="text-gray-400 text-sm">Les votes ouvriront très prochainement.</p>
                 </div>
             ) : (
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -189,16 +191,16 @@ const BallonDor = () => {
                                     <div>
                                         <div className="flex items-center space-x-3 mb-2">
                                             <span className="px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-black uppercase tracking-widest rounded-md">
-                                                Catégorie Officielle
+                                                {t("Catégorie Officielle")}
                                             </span>
                                             {currentCategory.status === 'active' ? (
                                                 <span className="flex items-center space-x-1 text-emerald-400 text-[10px] font-black uppercase tracking-widest">
                                                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1" />
-                                                    Votes Ouverts
+                                                    {t("Votes Ouverts")}
                                                 </span>
                                             ) : (
                                                 <span className="text-red-400 text-[10px] font-black uppercase tracking-widest">
-                                                    Votes Fermés
+                                                    {t("Votes Fermés")}
                                                 </span>
                                             )}
                                         </div>
@@ -219,7 +221,7 @@ const BallonDor = () => {
                                                 {getCategoryTotalVotes(currentCategory).toLocaleString('fr-FR')}
                                             </div>
                                             <div className="text-[10px] font-black uppercase tracking-widest text-gray-400 mt-1">
-                                                Votes Enregistrés
+                                                {t("Votes Enregistrés")}
                                             </div>
                                         </div>
                                     </div>
@@ -270,7 +272,7 @@ const BallonDor = () => {
                                                             {isLeader && (
                                                                 <span className="ml-auto px-3 py-1 bg-gradient-to-r from-amber-500 to-yellow-600 text-black font-black text-[10px] uppercase tracking-widest rounded-xl shadow-lg flex items-center space-x-1">
                                                                     <FaFire className="text-xs" />
-                                                                    <span>En Tête</span>
+                                                                    <span>{t("En Tête")}</span>
                                                                 </span>
                                                             )}
                                                         </div>
@@ -284,7 +286,7 @@ const BallonDor = () => {
                                                             />
                                                             <div className="absolute inset-0 bg-gradient-to-t from-card-bg via-card-bg/30 to-transparent" />
                                                             <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 text-amber-400 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center space-x-1.5 backdrop-blur-md">
-                                                                <span>Voir profil</span>
+                                                                <span>{t("Voir Profil & Partager")}</span>
                                                                 <FaExternalLinkAlt className="text-[10px]" />
                                                             </div>
                                                         </Link>
@@ -295,7 +297,7 @@ const BallonDor = () => {
                                                                 <div className="flex items-center justify-between text-primary-yellow font-black text-[10px] uppercase tracking-widest italic mb-1">
                                                                     <span>{candidate.position || 'Joueur LK'}</span>
                                                                     <Link to={`/ballon-dor/candidate/${candidate.id}`} className="text-gray-400 hover:text-amber-400 flex items-center space-x-1 text-[10px] lowercase font-semibold">
-                                                                        <span>partager</span>
+                                                                        <span>{t("Partager")}</span>
                                                                         <FaShareAlt className="text-[10px]" />
                                                                     </Link>
                                                                 </div>
@@ -316,7 +318,7 @@ const BallonDor = () => {
                                                             {/* Voting Stats & Progress Bar */}
                                                             <div className="space-y-3">
                                                                 <div className="flex justify-between items-end text-xs font-black uppercase">
-                                                                    <span className="text-gray-400 tracking-wider">Score actuel</span>
+                                                                    <span className="text-gray-400 tracking-wider">{t("Score actuel")}</span>
                                                                     <span className="text-amber-400 font-bold text-sm">{percentage}% <span className="text-gray-500 text-xs">({votes} votes)</span></span>
                                                                 </div>
 
@@ -335,21 +337,21 @@ const BallonDor = () => {
                                                                     {isVoted ? (
                                                                         <div className="w-full py-3 px-4 rounded-xl bg-amber-500/20 border border-amber-400 text-amber-300 font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-2">
                                                                             <FaCheckCircle className="text-amber-400 text-sm" />
-                                                                            <span>VOTÉ POUR CE CANDIDAT</span>
+                                                                            <span>{t("VOTÉ POUR CE CANDIDAT")}</span>
                                                                         </div>
                                                                     ) : hasVotedThisCat ? (
                                                                         <button
                                                                             disabled
                                                                             className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-gray-500 font-black text-xs uppercase tracking-wider cursor-not-allowed text-center"
                                                                         >
-                                                                            Vote effectué dans cette catégorie
+                                                                            {t("Vote effectué dans cette catégorie")}
                                                                         </button>
                                                                     ) : currentCategory.status !== 'active' ? (
                                                                         <button
                                                                             disabled
                                                                             className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-gray-500 font-black text-xs uppercase tracking-wider cursor-not-allowed text-center"
                                                                         >
-                                                                            Votes clôturés
+                                                                            {t("Votes clôturés")}
                                                                         </button>
                                                                     ) : (
                                                                         <button
@@ -358,7 +360,7 @@ const BallonDor = () => {
                                                                             className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-black font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300 flex items-center justify-center space-x-2 active:scale-98 cursor-pointer"
                                                                         >
                                                                             <FaVoteYea className="text-base" />
-                                                                            <span>VOTER POUR {candidate.name.split(' ')[0]}</span>
+                                                                            <span>{t("VOTER POUR")} {candidate.name.split(' ')[0]}</span>
                                                                         </button>
                                                                     )}
 
@@ -367,7 +369,7 @@ const BallonDor = () => {
                                                                         className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-amber-400 font-black text-[11px] uppercase tracking-wider flex items-center justify-center space-x-2 transition-colors block text-center"
                                                                     >
                                                                         <FaShareAlt className="text-xs" />
-                                                                        <span>Voir Profil & Partager</span>
+                                                                        <span>{t("Voir Profil & Partager")}</span>
                                                                     </Link>
                                                                 </div>
                                                             </div>

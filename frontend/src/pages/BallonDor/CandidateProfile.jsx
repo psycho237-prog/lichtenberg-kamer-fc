@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { API_BASE } from '../../services/api';
 import { getImageUrl } from '../../utils/imageUtils';
@@ -11,6 +12,7 @@ import {
 } from 'react-icons/fa';
 
 const CandidateProfile = () => {
+    const { t } = useTranslation();
     const { candidateId } = useParams();
     const [candidateData, setCandidateData] = useState(null);
     const [categoryData, setCategoryData] = useState(null);
@@ -143,7 +145,7 @@ const CandidateProfile = () => {
                     className="inline-flex items-center space-x-2 text-gray-400 hover:text-amber-400 font-black text-xs uppercase tracking-widest transition-colors mb-8"
                 >
                     <FaArrowLeft />
-                    <span>Retour au Ballon d'Or LK</span>
+                    <span>{t("Retour au Ballon d'Or LK")}</span>
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -188,7 +190,7 @@ const CandidateProfile = () => {
                         <div className="bg-card-bg/80 border border-white/10 rounded-3xl p-6 relative overflow-hidden">
                             <div className="flex items-center space-x-2 text-amber-400 text-[10px] font-black uppercase tracking-widest mb-1">
                                 <FaCrown />
-                                <span>Catégorie Officielle</span>
+                                <span>{t("Catégorie Officielle")}</span>
                             </div>
                             <h2 className="text-2xl font-black italic uppercase text-white">
                                 {categoryData.title}
@@ -202,7 +204,7 @@ const CandidateProfile = () => {
                         <div className="bg-card-bg/80 border border-white/10 rounded-3xl p-6 space-y-6">
                             <h3 className="text-lg font-black italic uppercase text-white flex items-center space-x-2">
                                 <FaTrophy className="text-amber-400" />
-                                <span>Présentation & Statistiques</span>
+                                <span>{t("Présentation & Statistiques")}</span>
                             </h3>
 
                             {candidateData.bio ? (
@@ -218,7 +220,7 @@ const CandidateProfile = () => {
                             {/* Live Vote Progress */}
                             <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
                                 <div className="flex justify-between items-end text-xs font-black uppercase">
-                                    <span className="text-gray-400">Pourcentage des suffrages</span>
+                                    <span className="text-gray-400">{t("Pourcentage des suffrages")}</span>
                                     <span className="text-amber-400 text-base font-black">{percentage}% <span className="text-gray-500 text-xs font-bold">({votes} votes)</span></span>
                                 </div>
 
@@ -236,15 +238,15 @@ const CandidateProfile = () => {
                             {isVotedForThisCand ? (
                                 <div className="w-full py-4 px-6 rounded-2xl bg-amber-500/20 border border-amber-400 text-amber-300 font-black text-sm uppercase tracking-wider flex items-center justify-center space-x-3 shadow-lg">
                                     <FaCheckCircle className="text-amber-400 text-lg" />
-                                    <span>VOUS AVEZ VOTÉ POUR CE CANDIDAT</span>
+                                    <span>{t("VOTÉ POUR CE CANDIDAT")}</span>
                                 </div>
                             ) : hasVotedThisCat ? (
                                 <div className="w-full py-4 px-6 rounded-2xl bg-white/5 border border-white/10 text-gray-500 font-black text-xs uppercase tracking-wider text-center">
-                                    Vote déjà effectué dans cette catégorie
+                                    {t("Vote effectué dans cette catégorie")}
                                 </div>
                             ) : categoryData.status !== 'active' ? (
                                 <div className="w-full py-4 px-6 rounded-2xl bg-white/5 border border-white/10 text-gray-500 font-black text-xs uppercase tracking-wider text-center">
-                                    Les votes pour cette catégorie sont clôturés
+                                    {t("Votes clôturés")}
                                 </div>
                             ) : (
                                 <button
@@ -253,7 +255,7 @@ const CandidateProfile = () => {
                                     className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-black font-black text-sm uppercase tracking-wider shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 flex items-center justify-center space-x-3 active:scale-98 cursor-pointer"
                                 >
                                     <FaVoteYea className="text-lg" />
-                                    <span>VOTER POUR {candidateData.name}</span>
+                                    <span>{t("VOTER POUR")} {candidateData.name}</span>
                                 </button>
                             )}
                         </div>
@@ -264,7 +266,7 @@ const CandidateProfile = () => {
                                 <FaShareAlt className="text-amber-400 text-xl" />
                                 <div>
                                     <h4 className="text-lg font-black italic uppercase text-white leading-tight">
-                                        Partagez le lien avec votre communauté
+                                        {t("Partagez le lien avec votre communauté")}
                                     </h4>
                                     <p className="text-gray-400 text-xs font-semibold">
                                         Aidez {candidateData.name} à récolter le maximum de votes !
@@ -285,7 +287,7 @@ const CandidateProfile = () => {
                                     className="px-4 py-2 bg-amber-500 text-black font-black text-xs uppercase rounded-xl flex items-center space-x-1.5 hover:bg-amber-400 transition-colors"
                                 >
                                     <FaCopy />
-                                    <span>{copied ? 'Copié !' : 'Copier'}</span>
+                                    <span>{copied ? t("Copié !") : t("Copier")}</span>
                                 </button>
                             </div>
 
