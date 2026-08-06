@@ -88,10 +88,11 @@ const CandidateProfile = () => {
         }
     };
 
+    const currentYear = new Date().getFullYear();
     const shareUrl = window.location.href;
     const shareMessage = candidateData && categoryData
-        ? `Votez pour ${candidateData.name} dans la catégorie "${categoryData.title}" du Ballon d'Or LK 2026 ! 🏆`
-        : `Votez au Ballon d'Or LK 2026 !`;
+        ? `Votez pour ${candidateData.name} dans la catégorie "${categoryData.title}" du Ballon d'Or LK ${currentYear} ! 🏆`
+        : `Votez au Ballon d'Or LK ${currentYear} !`;
 
     const handleCopyLink = () => {
         navigator.clipboard.writeText(shareUrl);
@@ -210,7 +211,7 @@ const CandidateProfile = () => {
                                 </p>
                             ) : (
                                 <p className="text-gray-500 text-xs italic">
-                                    Nominé officiel au Ballon d'Or LK 2026 pour le club Lichtenberg-Kamer e.V.
+                                    Nominé officiel au Ballon d'Or LK {currentYear} pour le club Lichtenberg-Kamer e.V.
                                 </p>
                             )}
 

@@ -120,7 +120,7 @@ const BallonDor = () => {
                     transition={{ duration: 0.7 }}
                     className="text-5xl md:text-7xl font-black italic uppercase tracking-tight text-white mb-6"
                 >
-                    BALLON D'OR <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-600 drop-shadow-[0_0_25px_rgba(245,158,11,0.3)]">LK 2026</span>
+                    BALLON D'OR <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-600 drop-shadow-[0_0_25px_rgba(245,158,11,0.3)]">LK {new Date().getFullYear()}</span>
                 </motion.h1>
 
                 <motion.p
